@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#c6e4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>ANHS S-System</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #141d38;
+      --navy-soft: #475579;
+      --navy-muted: #6e7d9f;
+      --blue: #2563eb;
+      --blue-bright: #3b82f6;
+      --blue-soft: rgba(59, 130, 246, 0.14);
+      --emerald: #059669;
+      --emerald-soft: rgba(16, 185, 129, 0.16);
+      --amber: #d97706;
+      --amber-soft: rgba(245, 158, 11, 0.16);
+      --rose: #e11d48;
+      --rose-soft: rgba(244, 63, 94, 0.15);
+      --glass-bg: rgba(255, 255, 255, 0.56);
+      --glass-bg-strong: rgba(255, 255, 255, 0.74);
+      --glass-inner: rgba(255, 255, 255, 0.68);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-shadow: 0 18px 42px -12px rgba(31, 56, 118, 0.14), 0 4px 14px -2px rgba(31, 56, 118, 0.06);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--navy);
+      background: linear-gradient(145deg, #c6e4ff 0%, #d5c8ff 48%, #b5dcff 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* 3D Glossy Pastel Spheres in Background */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+
+    .orb-1 {
+      width: 240px;
+      height: 240px;
+      top: -45px;
+      left: -55px;
+      background: radial-gradient(circle at 32% 30%, #f5e8ff 0%, #c8a2ff 48%, #9b74f7 100%);
+      box-shadow: inset -14px -18px 34px rgba(108, 66, 214, 0.35), 0 24px 48px rgba(145, 108, 240, 0.25);
+    }
+
+    .orb-2 {
+      width: 210px;
+      height: 210px;
+      top: 34%;
+      right: -65px;
+      background: radial-gradient(circle at 30% 28%, #e6f7ff 0%, #8ed4ff 52%, #52a8f7 100%);
+      box-shadow: inset -12px -16px 30px rgba(37, 118, 214, 0.28), 0 20px 44px rgba(82, 168, 247, 0.24);
+    }
+
+    .orb-3 {
+      width: 250px;
+      height: 250px;
+      bottom: -60px;
+      left: 12%;
+      background: radial-gradient(circle at 35% 28%, #f0eaff 0%, #b7b5ff 52%, #8685ef 100%);
+      box-shadow: inset -14px -18px 34px rgba(96, 94, 210, 0.3), 0 24px 48px rgba(134, 133, 239, 0.22);
+    }
+
+    /* Main Container */
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: calc(16px + env(safe-area-inset-top)) 16px calc(36px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Frosted Glass Card */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px) saturate(165%);
+      -webkit-backdrop-filter: blur(24px) saturate(165%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--glass-shadow);
+      padding: 18px;
+      position: relative;
+    }
+
+    /* Header Card */
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 10px 20px -4px rgba(37, 99, 235, 0.42), inset 0 1px 1px rgba(255,255,255,0.5);
+    }
+
+    .brand-info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .brand-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-title {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .status-pill.live {
+      background: var(--emerald-soft);
+      color: var(--emerald);
+    }
+
+    .status-pill.local {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .room-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy-soft);
+      cursor: pointer;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .icon-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .glass-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 1.5px solid var(--glass-border);
+      background: var(--glass-inner);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(20, 29, 56, 0.06);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .glass-icon-btn:active {
+      transform: scale(0.94);
+    }
+
+    .role-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.48);
+      border: 1.5px solid rgba(255, 255, 255, 0.78);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+      flex: 1;
+      max-width: 230px;
+    }
+
+    .role-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--navy-soft);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .role-btn.active {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.32);
+    }
+
+    /* Section Header */
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .card-head-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .mini-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--glass-inner);
+      border: 1px solid var(--glass-border);
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(31, 56, 118, 0.06);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+
+    .badge-pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: var(--glass-inner);
+      border: 1px solid var(--glass-border);
+      color: var(--navy-soft);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-pill.running {
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .badge-pill.paused {
+      background: var(--amber-soft);
+      color: var(--amber);
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+
+    /* Radial Timer Dial (Inspired by Reference Lighting Dial) */
+    .dial-wrapper {
+      position: relative;
+      width: 224px;
+      height: 224px;
+      margin: 6px auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dial-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotate(135deg);
+    }
+
+    .dial-track {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.65);
+      stroke-width: 15;
+      stroke-linecap: round;
+    }
+
+    .dial-progress {
+      fill: none;
+      stroke: url(#dialGrad);
+      stroke-width: 15;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.45s ease;
+    }
+
+    .dial-center {
+      width: 146px;
+      height: 146px;
+      border-radius: 50%;
+      background: linear-gradient(155deg, rgba(255,255,255,0.86) 0%, rgba(235,244,255,0.68) 100%);
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 12px 28px rgba(31, 56, 118, 0.12), inset 0 2px 6px rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      z-index: 2;
+    }
+
+    .dial-icon {
+      color: var(--blue);
+      opacity: 0.9;
+    }
+
+    .dial-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 31px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      line-height: 1.05;
+    }
+
+    .dial-sub {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--navy-muted);
+      text-transform: uppercase;
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-primary, .btn-secondary, .btn-danger, .btn-success {
+      border: none;
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 13px 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.14s ease, opacity 0.14s ease;
+    }
+
+    .btn-primary:active, .btn-secondary:active, .btn-danger:active, .btn-success:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 10px 22px -6px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-secondary {
+      background: var(--glass-inner);
+      border: 1.5px solid var(--glass-border);
+      color: var(--navy);
+      box-shadow: 0 6px 16px rgba(20, 29, 56, 0.06);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 18px -5px rgba(5, 150, 105, 0.4);
+    }
+
+    .btn-danger {
+      background: var(--rose-soft);
+      border: 1px solid rgba(225, 29, 72, 0.25);
+      color: var(--rose);
+    }
+
+    /* Points Balance Card */
+    .points-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--glass-inner);
+      border: 1.5px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 14px;
+    }
+
+    .points-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy-soft);
+      margin-bottom: 4px;
+    }
+
+    .points-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .points-unit {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-left: 4px;
+    }
+
+    .rate-chip {
+      padding: 7px 12px;
+      border-radius: 14px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      text-align: right;
+      line-height: 1.35;
+      flex-shrink: 0;
+    }
+
+    .redeem-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .redeem-btn {
+      background: var(--glass-inner);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 11px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      transition: transform 0.14s ease, background 0.14s ease;
+    }
+
+    .redeem-btn:active {
+      transform: scale(0.95);
+      background: #ffffff;
+    }
+
+    .redeem-min {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .redeem-cost {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    /* 7-Day Capsule Bar Chart (Matching Reference Bottom-Right Widget) */
+    .chart-bars {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      align-items: end;
+      padding: 8px 4px 2px;
+    }
+
+    .bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bar-track {
+      width: 14px;
+      height: 78px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 2px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+      min-height: 10px;
+      transition: height 0.4s ease;
+    }
+
+    .bar-col.today .bar-fill {
+      background: linear-gradient(180deg, #38bdf8 0%, #1d4ed8 100%);
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.45);
+    }
+
+    .bar-day {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--navy-soft);
+    }
+
+    .bar-col.today .bar-day {
+      color: var(--blue);
+    }
+
+    /* Filter Pills */
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 999px;
+      padding: 4px;
+      margin-bottom: 14px;
+    }
+
+    .filter-pill {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--navy-soft);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .filter-pill.active {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+    }
+
+    /* Mission & History List Items (No Overlap + Instagram Expandable Text) */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--glass-inner);
+      border: 1.5px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 13px 14px;
+      box-shadow: 0 4px 14px rgba(31, 56, 118, 0.04);
+    }
+
+    .item-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      background: #ffffff;
+      border: 1px solid rgba(219, 234, 254, 0.95);
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .item-body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .item-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .more-link {
+      display: inline;
+      background: none;
+      border: none;
+      padding: 0;
+      margin-left: 3px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy-muted);
+      cursor: pointer;
+    }
+
+    .more-link:hover {
+      color: var(--blue);
+    }
+
+    .item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    .pt-tag {
+      color: var(--blue);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+    }
+
+    .pt-tag.neg {
+      color: var(--rose);
+    }
+
+    .sub-tag {
+      color: var(--navy-muted);
+    }
+
+    .item-action {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      align-self: center;
+    }
+
+    .action-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 15px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.14s ease;
+    }
+
+    .action-btn:active {
+      transform: scale(0.95);
+    }
+
+    .action-btn.blue {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+    }
+
+    .action-btn.pending {
+      background: var(--amber-soft);
+      color: var(--amber);
+      cursor: default;
+    }
+
+    .action-btn.green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      padding: 8px 12px;
+    }
+
+    .action-btn.red {
+      background: var(--rose-soft);
+      color: var(--rose);
+      padding: 8px 11px;
+    }
+
+    /* Inputs & Admin Forms */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .glass-input, .glass-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1.5px solid #ffffff;
+      border-radius: 15px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy);
+      outline: none;
+    }
+
+    .glass-input:focus, .glass-textarea:focus {
+      border-color: var(--blue-bright);
+      background: #ffffff;
+    }
+
+    .glass-textarea {
+      min-height: 82px;
+      resize: vertical;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+    }
+
+    .input-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 110px;
+      gap: 8px;
+    }
+
+    .quick-pt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .quick-pt-btn {
+      border: 1.5px solid var(--glass-border);
+      background: var(--glass-inner);
+      border-radius: 14px;
+      padding: 11px 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+    }
+
+    .quick-pt-btn.plus {
+      color: var(--emerald);
+    }
+
+    .quick-pt-btn.minus {
+      color: var(--rose);
+    }
+
+    .quick-pt-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* PIN Keypad Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(20, 29, 56, 0.34);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1.5px solid #ffffff;
+      border-radius: 30px;
+      padding: 24px 20px;
+      box-shadow: 0 24px 60px rgba(20, 29, 56, 0.22);
+      text-align: center;
+    }
+
+    .pin-dots {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin: 18px 0 22px;
+    }
+
+    .pin-dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid var(--blue);
+      background: transparent;
+      transition: all 0.15s ease;
+    }
+
+    .pin-dot.filled {
+      background: var(--blue);
+      transform: scale(1.1);
+    }
+
+    .pin-dot.error {
+      border-color: var(--rose);
+      background: var(--rose);
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .key-btn {
+      height: 54px;
+      border-radius: 18px;
+      border: 1.5px solid #ffffff;
+      background: rgba(255, 255, 255, 0.78);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(20, 29, 56, 0.06);
+    }
+
+    .key-btn:active {
+      background: var(--blue);
+      color: #ffffff;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: calc(22px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(20, 29, 56, 0.92);
+      color: #ffffff;
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      max-width: 90vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 12px 28px rgba(20, 29, 56, 0.25);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 20px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--navy-muted);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-shell">
+    <!-- HEADER -->
+    <header class="glass-card">
+      <div class="header-top">
+        <div class="brand-group">
+          <div class="brand-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="brand-info">
+            <div class="brand-title-row">
+              <span class="brand-title">ANHS S-System</span>
+              <span id="connStatusPill" class="status-pill local">
+                <span class="status-dot"></span>
+                <span id="connStatusText">LOCAL</span>
+              </span>
+            </div>
+            <button id="roomChipBtn" class="room-chip" title="Ganti Kode Ruang">
+              <span>((•))</span>
+              <span id="roomCodeLabel">anhs-family</span>
+              <span>▾</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="icon-btn-group">
+          <button id="soundToggleBtn" class="glass-icon-btn" title="Suara Alarm">
+            <svg id="soundIconOn" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+            <svg id="soundIconOff" class="hidden" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+          </button>
+          <button id="fullscreenBtn" class="glass-icon-btn" title="Layar Penuh">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="role-switcher">
+          <button id="tabAdikBtn" class="role-btn active">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Adik</span>
+          </button>
+          <button id="tabKakakBtn" class="role-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <span>Kakak</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- VIEW: ADIK (USER) -->
+    <main id="adikView" class="input-group" style="gap: 16px;">
+      <!-- Timer Card -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Durasi Main HP</h2>
+          </div>
+          <span id="timerStateBadge" class="badge-pill">STANDBY</span>
+        </div>
+
+        <div class="dial-wrapper">
+          <svg class="dial-svg" viewBox="0 0 220 220">
+            <defs>
+              <linearGradient id="dialGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#60a5fa" />
+                <stop offset="100%" stop-color="#2563eb" />
+              </linearGradient>
+            </defs>
+            <!-- 270 deg arc = 424 of 565 circumference -->
+            <circle class="dial-track" cx="110" cy="110" r="90" stroke-dasharray="424 566" />
+            <circle id="dialProgressCircle" class="dial-progress" cx="110" cy="110" r="90" stroke-dasharray="424 566" stroke-dashoffset="424" />
+          </svg>
+          <div class="dial-center">
+            <div class="dial-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>
+              </svg>
+            </div>
+            <div id="timerDisplay" class="dial-time">00:00</div>
+            <div class="dial-sub">SISA WAKTU</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button id="timerToggleBtn" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <span id="timerToggleLabel">MULAI</span>
+          </button>
+          <button id="timerResetBtn" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+            </svg>
+            <span>RESET</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Private Points & Exchange Card -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Private Points</h2>
+          </div>
+          <span class="badge-pill">TUKAR DURASI</span>
+        </div>
+
+        <div class="points-hero">
+          <div>
+            <div class="points-label">Saldo Poin Saat Ini</div>
+            <div>
+              <span id="adikPointsValue" class="points-value">0</span>
+              <span class="points-unit">PT</span>
+            </div>
+          </div>
+          <div class="rate-chip">1 PT<br/>= 1 Menit HP</div>
+        </div>
+
+        <div class="redeem-grid">
+          <button class="redeem-btn" data-mins="15">
+            <span class="redeem-min">+15m</span>
+            <span class="redeem-cost">15 PT</span>
+          </button>
+          <button class="redeem-btn" data-mins="30">
+            <span class="redeem-min">+30m</span>
+            <span class="redeem-cost">30 PT</span>
+          </button>
+          <button class="redeem-btn" data-mins="60">
+            <span class="redeem-min">+60m</span>
+            <span class="redeem-cost">60 PT</span>
+          </button>
+          <button id="customRedeemBtn" class="redeem-btn">
+            <span class="redeem-min">Bebas</span>
+            <span class="redeem-cost">Custom</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 7-Day Activity Chart -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Aktivitas 7 Hari</h2>
+          </div>
+          <span id="weeklyTotalBadge" class="badge-pill">+0 PT</span>
+        </div>
+        <div id="weeklyChartBars" class="chart-bars"></div>
+      </section>
+
+      <!-- Missions Card -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Daftar Misi</h2>
+          </div>
+          <span id="missionCountBadge" class="badge-pill">0 MISI</span>
+        </div>
+
+        <div class="filter-row">
+          <button class="filter-pill active" data-filter="all">Semua</button>
+          <button class="filter-pill" data-filter="available">Tersedia</button>
+          <button class="filter-pill" data-filter="pending">Pending</button>
+        </div>
+
+        <div id="adikMissionList" class="item-list"></div>
+      </section>
+
+      <!-- Point History Card -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Riwayat Poin</h2>
+          </div>
+          <span class="badge-pill">TERBARU</span>
+        </div>
+        <div id="adikHistoryList" class="item-list"></div>
+      </section>
+    </main>
+
+    <!-- VIEW: KAKAK (ADMIN) -->
+    <main id="kakakView" class="input-group hidden" style="gap: 16px;">
+      <!-- Admin Live Monitor -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Monitor Adik</h2>
+          </div>
+          <button id="lockAdminBtn" class="badge-pill" style="cursor:pointer;">KUNCI ADMIN</button>
+        </div>
+
+        <div class="points-hero" style="margin-bottom: 12px;">
+          <div>
+            <div class="points-label">Saldo Adik</div>
+            <div>
+              <span id="adminPointsValue" class="points-value">0</span>
+              <span class="points-unit">PT</span>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div class="points-label">Sisa Timer HP</div>
+            <div id="adminTimerValue" style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--blue);">00:00</div>
+          </div>
+        </div>
+
+        <div class="quick-pt-grid">
+          <button class="quick-pt-btn plus" data-delta="10">+10 PT</button>
+          <button class="quick-pt-btn plus" data-delta="25">+25 PT</button>
+          <button class="quick-pt-btn plus" data-delta="50">+50 PT</button>
+          <button class="quick-pt-btn minus" data-delta="-10">-10 PT</button>
+          <button class="quick-pt-btn minus" data-delta="-25">-25 PT</button>
+          <button class="quick-pt-btn minus" data-delta="-50">-50 PT</button>
+        </div>
+      </section>
+
+      <!-- Pending Approvals -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Antrean Persetujuan</h2>
+          </div>
+          <span id="pendingCountBadge" class="badge-pill">0 PENDING</span>
+        </div>
+        <div id="adminPendingList" class="item-list"></div>
+      </section>
+
+      <!-- Manage Missions -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Kelola Daftar Misi</h2>
+          </div>
+        </div>
+
+        <div class="input-group" style="margin-bottom: 14px;">
+          <input id="newMissionTitle" class="glass-input" type="text" placeholder="Nama misi baru (misal: Cuci Piring)" />
+          <div class="input-row-2">
+            <input id="newMissionDesc" class="glass-input" type="text" placeholder="Kategori (Harian)" value="Harian" />
+            <input id="newMissionPts" class="glass-input" type="number" min="1" max="500" placeholder="Poin" value="20" />
+          </div>
+          <button id="addMissionBtn" class="btn-primary" style="width:100%;">+ Tambah Misi</button>
+        </div>
+
+        <div id="adminMissionList" class="item-list"></div>
+      </section>
+
+      <!-- Live Server & Instant Sync Settings -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Sinkronisasi Antar-HP</h2>
+          </div>
+          <span id="syncModeBadge" class="badge-pill">INSTANT</span>
+        </div>
+
+        <!-- Instant Sync Snapshot (Works Zero-Account) -->
+        <div class="input-group" style="margin-bottom: 16px;">
+          <div class="btn-row">
+            <button id="exportSyncBtn" class="btn-secondary">Salin Kode Sync</button>
+            <button id="importSyncBtn" class="btn-secondary">Tempel Kode Sync</button>
+          </div>
+        </div>
+
+        <!-- Live Firebase Cloud Connection (Zero Code) -->
+        <div class="input-group">
+          <div style="font-size:12px; font-weight:800; color:var(--navy-soft);">Live Server Real-Time (Opsional)</div>
+          <textarea id="firebaseConfigInput" class="glass-textarea" placeholder='Tempel firebaseConfig dari Firebase Console di sini agar sinkron otomatis tanpa kirim kode...'></textarea>
+          <div class="btn-row">
+            <button id="saveFirebaseBtn" class="btn-primary">Aktifkan Live</button>
+            <button id="copyInviteLinkBtn" class="btn-success">Link Undangan Adik</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Security Settings -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Pengaturan PIN & Ruang</h2>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="input-row-2">
+            <input id="roomCodeInput" class="glass-input" type="text" placeholder="Kode Ruang" />
+            <button id="saveRoomBtn" class="btn-secondary">Simpan</button>
+          </div>
+          <div class="input-row-2">
+            <input id="newPinInput" class="glass-input" type="password" inputmode="numeric" maxlength="4" placeholder="PIN Baru (4 digit)" />
+            <button id="savePinBtn" class="btn-secondary">Ubah PIN</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- PIN LOCK MODAL -->
+  <div id="pinModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="mini-icon-box" style="margin: 0 auto 10px; width: 46px; height: 46px; border-radius: 16px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div style="font-size: 17px; font-weight: 800; color: var(--navy);">Akses Admin Kakak</div>
+      <div style="font-size: 12px; font-weight: 600; color: var(--navy-muted); margin-top: 3px;">Masukkan 4 digit PIN keamanan</div>
+
+      <div id="pinDots" class="pin-dots">
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+      </div>
+
+      <div class="keypad-grid">
+        <button class="key-btn" data-key="1">1</button>
+        <button class="key-btn" data-key="2">2</button>
+        <button class="key-btn" data-key="3">3</button>
+        <button class="key-btn" data-key="4">4</button>
+        <button class="key-btn" data-key="5">5</button>
+        <button class="key-btn" data-key="6">6</button>
+        <button class="key-btn" data-key="7">7</button>
+        <button class="key-btn" data-key="8">8</button>
+        <button class="key-btn" data-key="9">9</button>
+        <button class="key-btn" id="pinCancelBtn" style="font-size: 13px; color: var(--rose);">Batal</button>
+        <button class="key-btn" data-key="0">0</button>
+        <button class="key-btn" id="pinBackBtn" style="font-size: 15px;">⌫</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getFirestore, doc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+    // Register Service Worker for Standalone PWA Install
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+
+    const STORAGE_KEY = 'anhs_s_system_state_v2';
+    const FB_CFG_KEY = 'anhs_s_system_fb_cfg_v2';
+    const DEFAULT_PIN = '0911';
+
+    const DEFAULT_MISSIONS = [
+      { id: 'default_m1', title: 'Belajar / Kerjakan PR 45 Menit', pts: 25, category: 'Harian', icon: 'book' },
+      { id: 'default_m2', title: 'Rapikan Kamar & Tempat Tidur', pts: 15, category: 'Harian', icon: 'sparkle' },
+      { id: 'default_m3', title: 'Ibadah Tepat Waktu & Mengaji', pts: 20, category: 'Harian', icon: 'heart' },
+      { id: 'default_m4', title: 'Bantu Pekerjaan Rumah Orang Tua', pts: 30, category: 'Bonus', icon: 'star' }
+    ];
+
+    let state = {
+      roomCode: 'anhs-family',
+      adminPin: DEFAULT_PIN,
+      points: 30,
+      timerRemainingSec: 0,
+      timerTotalSec: 0,
+      timerRunning: false,
+      timerEndAt: null,
+      missions: [...DEFAULT_MISSIONS],
+      pending: [],
+      history: [
+        { id: 'h_init', title: 'Saldo Awal Sistem ANHS', delta: 30, time: Date.now() }
+      ],
+      updatedAt: Date.now()
+    };
+
+    let currentRole = 'adik';
+    let missionFilter = 'all';
+    let soundEnabled = true;
+    let expandedTexts = new Set();
+    let pinBuffer = '';
+    let db = null;
+    let unsubRoom = null;
+    let isRemoteUpdate = false;
+
+    // Parse URL hash invite link (#live=...) if Adik opened Kakak's invite link
+    function checkInviteHash() {
+      try {
+        const hash = window.location.hash || '';
+        if (hash.startsWith('#live=')) {
+          const encoded = decodeURIComponent(hash.slice(6));
+          const payload = JSON.parse(atob(encoded));
+          if (payload && payload.fb) {
+            localStorage.setItem(FB_CFG_KEY, JSON.stringify(payload.fb));
+          }
+          if (payload && payload.room) {
+            state.roomCode = payload.room;
+          }
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+          showToast('Terhubung ke ruang ' + state.roomCode);
+        }
+      } catch (e) {}
+    }
+
+    function loadLocalState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          state = {
+            ...state,
+            ...parsed,
+            adminPin: parsed.adminPin || DEFAULT_PIN,
+            missions: Array.isArray(parsed.missions) && parsed.missions.length ? parsed.missions : [...DEFAULT_MISSIONS],
+            pending: Array.isArray(parsed.pending) ? parsed.pending : [],
+            history: Array.isArray(parsed.history) ? parsed.history : []
+          };
+        }
+      } catch (e) {}
+    }
+
+    function saveState() {
+      state.updatedAt = Date.now();
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+      if (db && !isRemoteUpdate) {
+        const roomRef = doc(db, 'anhs_rooms', sanitizeRoom(state.roomCode));
+        setDoc(roomRef, state).catch(() => {});
+      }
+      renderAll();
+    }
+
+    function sanitizeRoom(code) {
+      return (code || 'anhs-family').trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-') || 'anhs-family';
+    }
+
+    function parseFirebaseConfigInput(raw) {
+      const text = (raw || '').trim();
+      if (!text) return null;
+      try {
+        return JSON.parse(text);
+      } catch (_) {
+        const start = text.indexOf('{');
+        const end = text.lastIndexOf('}');
+        if (start === -1 || end === -1) return null;
+        let objStr = text.slice(start, end + 1);
+        objStr = objStr
+          .replace(/\/\/.*$/gm, '')
+          .replace(/\/\*[\s\S]*?\*\//g, '')
+          .replace(/([{,]\s*)([a-zA-Z0-9_]+)\s*:/g, '$1"$2":')
+          .replace(/'/g, '"')
+          .replace(/,\s*}/g, '}');
+        try {
+          return JSON.parse(objStr);
+        } catch (e) {
+          return null;
+        }
+      }
+    }
+
+    function initFirebaseFromStorage() {
+      try {
+        const saved = localStorage.getItem(FB_CFG_KEY);
+        if (!saved) {
+          updateConnBadge(false);
+          return;
+        }
+        const cfg = JSON.parse(saved);
+        if (!cfg || !cfg.apiKey || !cfg.projectId) {
+          updateConnBadge(false);
+          return;
+        }
+        document.getElementById('firebaseConfigInput').value = JSON.stringify(cfg, null, 2);
+        const app = initializeApp(cfg, 'anhs_' + Date.now());
+        db = getFirestore(app);
+        subscribeToRoom();
+      } catch (e) {
+        updateConnBadge(false);
+      }
+    }
+
+    function subscribeToRoom() {
+      if (!db) return;
+      if (unsubRoom) unsubRoom();
+      const roomId = sanitizeRoom(state.roomCode);
+      const roomRef = doc(db, 'anhs_rooms', roomId);
+      unsubRoom = onSnapshot(roomRef, (snap) => {
+        updateConnBadge(true);
+        if (snap.exists()) {
+          const remote = snap.data();
+          if ((remote.updatedAt || 0) > (state.updatedAt || 0)) {
+            isRemoteUpdate = true;
+            state = {
+              ...state,
+              ...remote,
+              adminPin: remote.adminPin || state.adminPin || DEFAULT_PIN
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            renderAll();
+            isRemoteUpdate = false;
+          }
+        } else {
+          setDoc(roomRef, state).catch(() => {});
+        }
+      }, () => {
+        updateConnBadge(false);
+      });
+    }
+
+    function updateConnBadge(isLive) {
+      const pill = document.getElementById('connStatusPill');
+      const txt = document.getElementById('connStatusText');
+      const syncBadge = document.getElementById('syncModeBadge');
+      if (isLive) {
+        pill.className = 'status-pill live';
+        txt.textContent = 'LIVE';
+        syncBadge.textContent = 'LIVE CLOUD';
+      } else {
+        pill.className = 'status-pill local';
+        txt.textContent = 'READY';
+        syncBadge.textContent = 'INSTANT SYNC';
+      }
+    }
+
+    // Audio Chime when Timer Finishes
+    function playChime() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = [523.25, 659.25, 783.99, 1046.5];
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.001, ctx.currentTime + idx * 0.14);
+          gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + idx * 0.14 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.14 + 0.45);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + idx * 0.14);
+          osc.stop(ctx.currentTime + idx * 0.14 + 0.48);
+        });
+      } catch (e) {}
+    }
+
+    // Timer Tick Loop
+    function getEffectiveRemainingSec() {
+      if (state.timerRunning && state.timerEndAt) {
+        const left = Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000));
+        return left;
+      }
+      return Math.max(0, state.timerRemainingSec || 0);
+    }
+
+    setInterval(() => {
+      if (state.timerRunning) {
+        const left = getEffectiveRemainingSec();
+        if (left <= 0) {
+          state.timerRunning = false;
+          state.timerRemainingSec = 0;
+          state.timerEndAt = null;
+          playChime();
+          showToast('Waktu main HP habis!');
+          saveState();
+        } else {
+          renderTimerOnly();
+        }
+      }
+    }, 500);
+
+    function formatMMSS(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    }
+
+    // Instagram-style Expandable Text Helper
+    function renderExpandableText(id, text) {
+      const limit = window.innerWidth < 440 ? 24 : 38;
+      const safe = escapeHtml(text);
+      if (text.length <= limit) {
+        return `<span>${safe}</span>`;
+      }
+      const isExpanded = expandedTexts.has(id);
+      if (isExpanded) {
+        return `<span>${safe}</span> <button type="button" class="more-link" data-expand-id="${id}">lebih sedikit</button>`;
+      }
+      const shortSafe = escapeHtml(text.slice(0, limit).trim());
+      return `<span>${shortSafe}...</span> <button type="button" class="more-link" data-expand-id="${id}">selengkapnya</button>`;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function getMissionIconSvg(type) {
+      if (type === 'sparkle') {
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>`;
+      }
+      if (type === 'heart') {
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`;
+      }
+      if (type === 'star') {
+        return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+      }
+      return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`;
+    }
+
+    function renderTimerOnly() {
+      const rem = getEffectiveRemainingSec();
+      const formatted = formatMMSS(rem);
+      document.getElementById('timerDisplay').textContent = formatted;
+      document.getElementById('adminTimerValue').textContent = formatted;
+
+      const total = Math.max(rem, state.timerTotalSec || 0, 1);
+      const ratio = rem > 0 ? Math.min(1, rem / total) : 0;
+      const arcLen = 424;
+      const offset = arcLen - (arcLen * ratio);
+      document.getElementById('dialProgressCircle').style.strokeDashoffset = String(offset);
+
+      const badge = document.getElementById('timerStateBadge');
+      const toggleLabel = document.getElementById('timerToggleLabel');
+      if (state.timerRunning && rem > 0) {
+        badge.textContent = 'BERJALAN';
+        badge.className = 'badge-pill running';
+        toggleLabel.textContent = 'JEDA';
+      } else if (rem > 0) {
+        badge.textContent = 'DIJEDA';
+        badge.className = 'badge-pill paused';
+        toggleLabel.textContent = 'LANJUT';
+      } else {
+        badge.textContent = 'STANDBY';
+        badge.className = 'badge-pill';
+        toggleLabel.textContent = 'MULAI';
+      }
+    }
+
+    function renderWeeklyChart() {
+      const container = document.getElementById('weeklyChartBars');
+      const dayLetters = ['M', 'S', 'S', 'R', 'K', 'J', 'S'];
+      const now = new Date();
+      const days = [];
+      let total7 = 0;
+
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+        const start = d.getTime();
+        const end = start + 86400000;
+        const earned = (state.history || [])
+          .filter(h => h.delta > 0 && h.time >= start && h.time < end)
+          .reduce((acc, h) => acc + h.delta, 0);
+        total7 += earned;
+        days.push({
+          letter: dayLetters[d.getDay()],
+          earned,
+          isToday: i === 0
+        });
+      }
+
+      const maxVal = Math.max(50, ...days.map(d => d.earned));
+      document.getElementById('weeklyTotalBadge').textContent = '+' + total7 + ' PT';
+
+      container.innerHTML = days.map(d => {
+        const pct = Math.max(12, Math.round((d.earned / maxVal) * 100));
+        return `
+          <div class="bar-col ${d.isToday ? 'today' : ''}">
+            <div class="bar-track">
+              <div class="bar-fill" style="height: ${pct}%"></div>
+            </div>
+            <span class="bar-day">${d.letter}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAll() {
+      document.getElementById('roomCodeLabel').textContent = state.roomCode;
+      document.getElementById('roomCodeInput').value = state.roomCode;
+      document.getElementById('adikPointsValue').textContent = state.points;
+      document.getElementById('adminPointsValue').textContent = state.points;
+
+      renderTimerOnly();
+      renderWeeklyChart();
+
+      // Adik Missions List
+      const pendingMissionIds = new Set((state.pending || []).map(p => p.missionId));
+      const filteredMissions = (state.missions || []).filter(m => {
+        const isPend = pendingMissionIds.has(m.id);
+        if (missionFilter === 'available') return !isPend;
+        if (missionFilter === 'pending') return isPend;
+        return true;
+      });
+
+      document.getElementById('missionCountBadge').textContent = (state.missions || []).length + ' MISI';
+      const adikMissionEl = document.getElementById('adikMissionList');
+      if (!filteredMissions.length) {
+        adikMissionEl.innerHTML = `<div class="empty-state">Tidak ada misi pada kategori ini.</div>`;
+      } else {
+        adikMissionEl.innerHTML = filteredMissions.map(m => {
+          const isPend = pendingMissionIds.has(m.id);
+          return `
+            <div class="list-item">
+              <div class="item-left">
+                <div class="item-icon">${getMissionIconSvg(m.icon)}</div>
+                <div class="item-body">
+                  <div class="item-title">${renderExpandableText('am_' + m.id, m.title)}</div>
+                  <div class="item-meta">
+                    <span class="pt-tag">+${m.pts} PT</span>
+                    <span class="sub-tag">${escapeHtml(m.category || 'Harian')}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-action">
+                ${isPend
+                  ? `<button class="action-btn pending" disabled>Menunggu</button>`
+                  : `<button class="action-btn blue" data-submit-mission="${m.id}">Ajukan</button>`
+                }
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Adik History List
+      const adikHistEl = document.getElementById('adikHistoryList');
+      const histSlice = (state.history || []).slice(0, 15);
+      if (!histSlice.length) {
+        adikHistEl.innerHTML = `<div class="empty-state">Belum ada riwayat transaksi poin.</div>`;
+      } else {
+        adikHistEl.innerHTML = histSlice.map(h => {
+          const isPos = h.delta >= 0;
+          const timeStr = new Date(h.time).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+          return `
+            <div class="list-item">
+              <div class="item-left">
+                <div class="item-icon">${getMissionIconSvg(isPos ? 'star' : 'sparkle')}</div>
+                <div class="item-body">
+                  <div class="item-title">${renderExpandableText('hi_' + h.id, h.title)}</div>
+                  <div class="item-meta">
+                    <span class="pt-tag ${isPos ? '' : 'neg'}">${isPos ? '+' : ''}${h.delta} PT</span>
+                    <span class="sub-tag">${timeStr}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Admin Pending Queue
+      const pendList = state.pending || [];
+      document.getElementById('pendingCountBadge').textContent = pendList.length + ' PENDING';
+      const adminPendEl = document.getElementById('adminPendingList');
+      if (!pendList.length) {
+        adminPendEl.innerHTML = `<div class="empty-state">Belum ada pengajuan tugas dari Adik.</div>`;
+      } else {
+        adminPendEl.innerHTML = pendList.map(p => `
+          <div class="list-item">
+            <div class="item-left">
+              <div class="item-icon">${getMissionIconSvg('book')}</div>
+              <div class="item-body">
+                <div class="item-title">${renderExpandableText('ap_' + p.id, p.title)}</div>
+                <div class="item-meta">
+                  <span class="pt-tag">+${p.pts} PT</span>
+                  <span class="sub-tag">Menunggu ACC</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-action">
+              <button class="action-btn green" data-approve-id="${p.id}">ACC</button>
+              <button class="action-btn red" data-reject-id="${p.id}">Tolak</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Admin Mission Management
+      const adminMissionEl = document.getElementById('adminMissionList');
+      adminMissionEl.innerHTML = (state.missions || []).map(m => `
+        <div class="list-item">
+          <div class="item-left">
+            <div class="item-icon">${getMissionIconSvg(m.icon)}</div>
+            <div class="item-body">
+              <div class="item-title">${renderExpandableText('km_' + m.id, m.title)}</div>
+              <div class="item-meta">
+                <span class="pt-tag">+${m.pts} PT</span>
+                <span class="sub-tag">${escapeHtml(m.category || 'Harian')}</span>
+              </div>
+            </div>
+          </div>
+          <div class="item-action">
+            <button class="action-btn red" data-del-mission="${m.id}">Hapus</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    function addHistory(title, delta) {
+      state.history = [
+        { id: 'h_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6), title, delta, time: Date.now() },
+        ...(state.history || [])
+      ].slice(0, 50);
+    }
+
+    function exchangeMinutes(mins) {
+      const m = parseInt(mins, 10);
+      if (!m || m <= 0) return;
+      if (state.points < m) {
+        showToast('Poin tidak cukup (' + state.points + ' PT tersedia)');
+        return;
+      }
+      state.points -= m;
+      const currentRem = getEffectiveRemainingSec();
+      const addedSec = m * 60;
+      const newRem = currentRem + addedSec;
+      state.timerRemainingSec = newRem;
+      state.timerTotalSec = Math.max(state.timerTotalSec || 0, newRem);
+      if (state.timerRunning) {
+        state.timerEndAt = Date.now() + newRem * 1000;
+      }
+      addHistory('Tukar Durasi Main HP +' + m + ' Menit', -m);
+      showToast('Berhasil tukar +' + m + ' menit!');
+      saveState();
+    }
+
+    // Event Delegation
+    document.addEventListener('click', (e) => {
+      // Expand / Collapse Instagram text
+      const expBtn = e.target.closest('[data-expand-id]');
+      if (expBtn) {
+        const id = expBtn.getAttribute('data-expand-id');
+        if (expandedTexts.has(id)) expandedTexts.delete(id);
+        else expandedTexts.add(id);
+        renderAll();
+        return;
+      }
+
+      // Redeem preset minutes
+      const redBtn = e.target.closest('[data-mins]');
+      if (redBtn) {
+        exchangeMinutes(redBtn.getAttribute('data-mins'));
+        return;
+      }
+
+      // Filter pills
+      const fBtn = e.target.closest('[data-filter]');
+      if (fBtn) {
+        missionFilter = fBtn.getAttribute('data-filter');
+        document.querySelectorAll('.filter-pill').forEach(b => b.classList.toggle('active', b === fBtn));
+        renderAll();
+        return;
+      }
+
+      // Adik submits mission
+      const subBtn = e.target.closest('[data-submit-mission]');
+      if (subBtn) {
+        const mid = subBtn.getAttribute('data-submit-mission');
+        const mission = (state.missions || []).find(x => x.id === mid);
+        if (!mission) return;
+        if ((state.pending || []).some(p => p.missionId === mid)) return;
+        state.pending = [
+          { id: 'p_' + Date.now(), missionId: mission.id, title: mission.title, pts: mission.pts, time: Date.now() },
+          ...(state.pending || [])
+        ];
+        showToast('Misi diajukan ke Kakak!');
+        saveState();
+        return;
+      }
+
+      // Kakak approves mission
+      const appBtn = e.target.closest('[data-approve-id]');
+      if (appBtn) {
+        const pid = appBtn.getAttribute('data-approve-id');
+        const item = (state.pending || []).find(p => p.id === pid);
+        if (!item) return;
+        state.pending = (state.pending || []).filter(p => p.id !== pid);
+        state.points += item.pts;
+        addHistory('Misi ACC: ' + item.title, item.pts);
+        showToast('ACC! +' + item.pts + ' PT diberikan');
+        saveState();
+        return;
+      }
+
+      // Kakak rejects mission
+      const rejBtn = e.target.closest('[data-reject-id]');
+      if (rejBtn) {
+        const pid = rejBtn.getAttribute('data-reject-id');
+        state.pending = (state.pending || []).filter(p => p.id !== pid);
+        showToast('Pengajuan tugas ditolak');
+        saveState();
+        return;
+      }
+
+      // Kakak deletes mission
+      const delBtn = e.target.closest('[data-del-mission]');
+      if (delBtn) {
+        const mid = delBtn.getAttribute('data-del-mission');
+        state.missions = (state.missions || []).filter(m => m.id !== mid);
+        showToast('Misi dihapus');
+        saveState();
+        return;
+      }
+
+      // Quick points delta
+      const qBtn = e.target.closest('[data-delta]');
+      if (qBtn) {
+        const delta = parseInt(qBtn.getAttribute('data-delta'), 10);
+        state.points = Math.max(0, state.points + delta);
+        addHistory(delta > 0 ? 'Bonus Poin dari Kakak' : 'Penalti Poin dari Kakak', delta);
+        showToast((delta > 0 ? '+' : '') + delta + ' PT diterapkan');
+        saveState();
+        return;
+      }
+
+      // PIN keypad
+      const keyBtn = e.target.closest('[data-key]');
+      if (keyBtn) {
+        if (pinBuffer.length < 4) {
+          pinBuffer += keyBtn.getAttribute('data-key');
+          updatePinDots();
+          if (pinBuffer.length === 4) {
+            setTimeout(() => {
+              if (pinBuffer === (state.adminPin || DEFAULT_PIN)) {
+                document.getElementById('pinModal').classList.add('hidden');
+                pinBuffer = '';
+                switchRole('kakak');
+              } else {
+                document.querySelectorAll('.pin-dot').forEach(d => d.classList.add('error'));
+                setTimeout(() => {
+                  pinBuffer = '';
+                  updatePinDots();
+                }, 420);
+              }
+            }, 120);
+          }
+        }
+      }
+    });
+
+    function updatePinDots() {
+      document.querySelectorAll('.pin-dot').forEach((dot, idx) => {
+        dot.classList.remove('error');
+        dot.classList.toggle('filled', idx < pinBuffer.length);
+      });
+    }
+
+    function switchRole(role) {
+      currentRole = role;
+      document.getElementById('tabAdikBtn').classList.toggle('active', role === 'adik');
+      document.getElementById('tabKakakBtn').classList.toggle('active', role === 'kakak');
+      document.getElementById('adikView').classList.toggle('hidden', role !== 'adik');
+      document.getElementById('kakakView').classList.toggle('hidden', role !== 'kakak');
+      renderAll();
+    }
+
+    document.getElementById('tabAdikBtn').addEventListener('click', () => switchRole('adik'));
+    document.getElementById('tabKakakBtn').addEventListener('click', () => {
+      if (currentRole === 'kakak') return;
+      pinBuffer = '';
+      updatePinDots();
+      document.getElementById('pinModal').classList.remove('hidden');
+    });
+    document.getElementById('lockAdminBtn').addEventListener('click', () => switchRole('adik'));
+    document.getElementById('pinCancelBtn').addEventListener('click', () => {
+      pinBuffer = '';
+      document.getElementById('pinModal').classList.add('hidden');
+    });
+    document.getElementById('pinBackBtn').addEventListener('click', () => {
+      pinBuffer = pinBuffer.slice(0, -1);
+      updatePinDots();
+    });
+
+    // Timer Controls
+    document.getElementById('timerToggleBtn').addEventListener('click', () => {
+      const rem = getEffectiveRemainingSec();
+      if (rem <= 0) {
+        showToast('Tukar poin dulu untuk menambah waktu!');
+        return;
+      }
+      if (state.timerRunning) {
+        state.timerRemainingSec = rem;
+        state.timerRunning = false;
+        state.timerEndAt = null;
+      } else {
+        state.timerRunning = true;
+        state.timerEndAt = Date.now() + rem * 1000;
+      }
+      saveState();
+    });
+
+    document.getElementById('timerResetBtn').addEventListener('click', () => {
+      state.timerRunning = false;
+      state.timerRemainingSec = 0;
+      state.timerTotalSec = 0;
+      state.timerEndAt = null;
+      saveState();
+    });
+
+    document.getElementById('customRedeemBtn').addEventListener('click', () => {
+      const val = prompt('Masukkan jumlah menit main HP yang ingin ditukar (1 PT = 1 Menit):');
+      if (val) exchangeMinutes(val);
+    });
+
+    // Add Mission
+    document.getElementById('addMissionBtn').addEventListener('click', () => {
+      const title = document.getElementById('newMissionTitle').value.trim();
+      const category = document.getElementById('newMissionDesc').value.trim() || 'Harian';
+      const pts = parseInt(document.getElementById('newMissionPts').value, 10) || 15;
+      if (!title) {
+        showToast('Tulis nama misi terlebih dahulu');
+        return;
+      }
+      const icons = ['book', 'sparkle', 'heart', 'star'];
+      const icon = icons[(state.missions || []).length % icons.length];
+      state.missions = [
+        { id: 'm_' + Date.now(), title, pts: Math.max(1, pts), category, icon },
+        ...(state.missions || [])
+      ];
+      document.getElementById('newMissionTitle').value = '';
+      showToast('Misi baru ditambahkan');
+      saveState();
+    });
+
+    // Room Code & PIN Settings
+    document.getElementById('roomChipBtn').addEventListener('click', () => {
+      const next = prompt('Masukkan Kode Ruang Keluarga (samakan di HP Kakak & Adik):', state.roomCode);
+      if (next && next.trim()) {
+        state.roomCode = sanitizeRoom(next);
+        saveState();
+        subscribeToRoom();
+        showToast('Ruang diubah ke ' + state.roomCode);
+      }
+    });
+
+    document.getElementById('saveRoomBtn').addEventListener('click', () => {
+      const val = document.getElementById('roomCodeInput').value.trim();
+      if (!val) return;
+      state.roomCode = sanitizeRoom(val);
+      saveState();
+      subscribeToRoom();
+      showToast('Kode ruang disimpan: ' + state.roomCode);
+    });
+
+    document.getElementById('savePinBtn').addEventListener('click', () => {
+      const val = document.getElementById('newPinInput').value.trim();
+      if (!/^\d{4}$/.test(val)) {
+        showToast('PIN harus 4 digit angka');
+        return;
+      }
+      state.adminPin = val;
+      document.getElementById('newPinInput').value = '';
+      saveState();
+      showToast('PIN Admin berhasil diperbarui');
+    });
+
+    // Instant Sync Code (Zero-Server Backup / WhatsApp Sync)
+    document.getElementById('exportSyncBtn').addEventListener('click', async () => {
+      try {
+        const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+        await navigator.clipboard.writeText(code);
+        showToast('Kode Sync disalin! Kirim ke HP Adik');
+      } catch (e) {
+        showToast('Gagal menyalin kode sync');
+      }
+    });
+
+    document.getElementById('importSyncBtn').addEventListener('click', () => {
+      const raw = prompt('Tempel Kode Sync yang dikirim dari HP sebelah:');
+      if (!raw) return;
+      try {
+        const imported = JSON.parse(decodeURIComponent(escape(atob(raw.trim()))));
+        if (imported && typeof imported.points === 'number') {
+          state = { ...state, ...imported };
+          saveState();
+          showToast('Data berhasil disinkronkan!');
+        }
+      } catch (e) {
+        showToast('Kode Sync tidak valid');
+      }
+    });
+
+    // Live Firebase Config Setup
+    document.getElementById('saveFirebaseBtn').addEventListener('click', () => {
+      const raw = document.getElementById('firebaseConfigInput').value;
+      const cfg = parseFirebaseConfigInput(raw);
+      if (!cfg || !cfg.apiKey || !cfg.projectId) {
+        showToast('Format firebaseConfig tidak valid');
+        return;
+      }
+      localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
+      initFirebaseFromStorage();
+      showToast('Live Server aktif!');
+    });
+
+    document.getElementById('copyInviteLinkBtn').addEventListener('click', async () => {
+      try {
+        const rawFb = localStorage.getItem(FB_CFG_KEY);
+        const payload = {
+          room: state.roomCode,
+          fb: rawFb ? JSON.parse(rawFb) : null
+        };
+        const baseUrl = window.location.origin + window.location.pathname;
+        const inviteUrl = baseUrl + '#live=' + encodeURIComponent(btoa(JSON.stringify(payload)));
+        await navigator.clipboard.writeText(inviteUrl);
+        showToast('Link Undangan Adik disalin!');
+      } catch (e) {
+        showToast('Gagal membuat link undangan');
+      }
+    });
+
+    // Sound & Fullscreen
+    document.getElementById('soundToggleBtn').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundIconOn').classList.toggle('hidden', !soundEnabled);
+      document.getElementById('soundIconOff').classList.toggle('hidden', soundEnabled);
+      showToast(soundEnabled ? 'Suara aktif' : 'Suara dimatikan');
+    });
+
+    function requestFullscreenSafe() {
+      const el = document.documentElement;
+      if (!document.fullscreenElement && el.requestFullscreen) {
+        el.requestFullscreen().catch(() => {});
+      }
+    }
+
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      } else {
+        requestFullscreenSafe();
+      }
+    });
+
+    // Auto Fullscreen on first touch when opened in browser tab
+    document.addEventListener('pointerdown', function onFirstTap() {
+      if (!window.matchMedia('(display-mode: standalone)').matches) {
+        requestFullscreenSafe();
+      }
+      document.removeEventListener('pointerdown', onFirstTap);
+    }, { once: true });
+
+    // Initialize
+    loadLocalState();
+    checkInviteHash();
+    initFirebaseFromStorage();
+    renderAll();
+  </script>
+</body>
+</html>
