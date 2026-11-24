@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="theme-color" content="#c6e4ff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -29,7 +32,7 @@
       --rose: #e11d48;
       --rose-soft: rgba(244, 63, 94, 0.15);
       --glass-bg: rgba(255, 255, 255, 0.56);
-      --glass-bg-strong: rgba(255, 255, 255, 0.74);
+      --glass-bg-strong: rgba(255, 255, 255, 0.78);
       --glass-inner: rgba(255, 255, 255, 0.68);
       --glass-border: rgba(255, 255, 255, 0.85);
       --glass-shadow: 0 18px 42px -12px rgba(31, 56, 118, 0.14), 0 4px 14px -2px rgba(31, 56, 118, 0.06);
@@ -273,10 +276,11 @@
       padding: 4px;
       gap: 4px;
       flex: 1;
-      max-width: 215px;
+      max-width: 225px;
     }
 
     .role-btn {
+      position: relative;
       flex: 1;
       border: none;
       background: transparent;
@@ -299,6 +303,26 @@
       background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
       color: #ffffff;
       box-shadow: 0 6px 16px rgba(37, 99, 235, 0.32);
+    }
+
+    .notif-badge {
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: #e11d48;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+      box-shadow: 0 3px 8px rgba(225, 29, 72, 0.4);
     }
 
     .card-head {
@@ -797,7 +821,7 @@
       gap: 10px;
     }
 
-    .glass-input, .glass-textarea {
+    .glass-input {
       width: 100%;
       background: rgba(255, 255, 255, 0.78);
       border: 1.5px solid #ffffff;
@@ -810,16 +834,9 @@
       outline: none;
     }
 
-    .glass-input:focus, .glass-textarea:focus {
+    .glass-input:focus {
       border-color: var(--blue-bright);
       background: #ffffff;
-    }
-
-    .glass-textarea {
-      min-height: 82px;
-      resize: vertical;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
     }
 
     .input-row-2 {
@@ -858,13 +875,37 @@
       transform: scale(0.95);
     }
 
+    .diag-box {
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      border-radius: 14px;
+      padding: 11px 13px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--navy-soft);
+      line-height: 1.55;
+      word-break: break-all;
+    }
+
+    .setup-banner {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1.5px solid #ffffff;
+      border-radius: 22px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.12);
+    }
+
     .modal-backdrop {
       position: fixed;
       inset: 0;
       z-index: 50;
-      background: rgba(20, 29, 56, 0.34);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(20, 29, 56, 0.42);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -874,13 +915,13 @@
     .modal-card {
       width: 100%;
       max-width: 360px;
-      background: rgba(255, 255, 255, 0.84);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border: 1.5px solid #ffffff;
       border-radius: 30px;
       padding: 24px 20px;
-      box-shadow: 0 24px 60px rgba(20, 29, 56, 0.22);
+      box-shadow: 0 24px 60px rgba(20, 29, 56, 0.24);
       text-align: center;
     }
 
@@ -999,9 +1040,9 @@
                 <span id="connStatusText">LOCAL</span>
               </span>
             </div>
-            <button id="roomChipBtn" class="room-chip" title="Ganti Kode Ruang">
+            <button id="roomChipBtn" class="room-chip" title="Atur Ruang Cloud npoint.io">
               <span>((•))</span>
-              <span id="roomCodeLabel">anhs-family</span>
+              <span id="roomCodeLabel">Belum tersambung</span>
               <span>▾</span>
             </button>
           </div>
@@ -1010,7 +1051,7 @@
 
       <div class="header-controls">
         <div class="icon-btn-group">
-          <button id="forceSyncBtn" class="glass-icon-btn" title="Tarik Data Server Sekarang">
+          <button id="forceSyncBtn" class="glass-icon-btn" title="Sinkronkan Sekarang">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
             </svg>
@@ -1042,10 +1083,20 @@
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
             <span>Kakak</span>
+            <span id="kakakPendingBadge" class="notif-badge hidden">0</span>
           </button>
         </div>
       </div>
     </header>
+
+    <!-- QUICK SETUP BANNER WHEN NOT CONNECTED -->
+    <div id="setupBanner" class="setup-banner">
+      <div style="min-width:0; flex:1;">
+        <div style="font-size:13px; font-weight:800; color:var(--navy);">Belum Tersambung Antar-HP</div>
+        <div style="font-size:11.5px; font-weight:600; color:var(--navy-soft); margin-top:2px;">Masuk tab Kakak (PIN 0911) untuk buat ruang Cloud 1-klik.</div>
+      </div>
+      <button id="quickGoKakakBtn" class="action-btn blue">Setup</button>
+    </div>
 
     <!-- VIEW: ADIK (USER) -->
     <main id="adikView" class="input-group" style="gap: 16px;">
@@ -1204,6 +1255,42 @@
 
     <!-- VIEW: KAKAK (ADMIN) -->
     <main id="kakakView" class="input-group hidden" style="gap: 16px;">
+      <!-- Cloud npoint.io Sync Settings (Placed First for Easy Setup) -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Cloud Sync (npoint.io)</h2>
+          </div>
+          <span id="syncModeBadge" class="badge-pill">SIAP</span>
+        </div>
+
+        <div id="syncDiagBox" class="diag-box" style="margin-bottom: 12px;">
+          Status Cloud: Belum ada ruang terhubung. Klik "Buat Ruang Cloud Baru" di bawah.
+        </div>
+
+        <div class="input-group">
+          <div class="btn-row">
+            <button id="createNpointBtn" class="btn-primary">Buat Ruang Cloud Baru</button>
+            <button id="copyInviteLinkBtn" class="btn-success">Link Undangan Adik</button>
+          </div>
+
+          <div class="input-row-2">
+            <input id="npointIdInput" class="glass-input" type="text" placeholder="Atau tempel ID / Link npoint.io..." />
+            <button id="connectNpointBtn" class="btn-secondary">Hubungkan</button>
+          </div>
+
+          <div class="btn-row">
+            <button id="exportSyncBtn" class="btn-secondary">Salin Kode Manual</button>
+            <button id="importSyncBtn" class="btn-secondary">Tempel Kode Manual</button>
+          </div>
+        </div>
+      </section>
+
       <!-- Admin Live Monitor -->
       <section class="glass-card">
         <div class="card-head">
@@ -1283,37 +1370,6 @@
         <div id="adminMissionList" class="item-list"></div>
       </section>
 
-      <!-- Live Server & Instant Sync Settings -->
-      <section class="glass-card">
-        <div class="card-head">
-          <div class="card-head-left">
-            <div class="mini-icon-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-              </svg>
-            </div>
-            <h2 class="card-title">Sinkronisasi Antar-HP</h2>
-          </div>
-          <span id="syncModeBadge" class="badge-pill">INSTANT</span>
-        </div>
-
-        <div class="input-group" style="margin-bottom: 16px;">
-          <div class="btn-row">
-            <button id="exportSyncBtn" class="btn-secondary">Salin Kode Sync</button>
-            <button id="importSyncBtn" class="btn-secondary">Tempel Kode Sync</button>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <div style="font-size:12px; font-weight:800; color:var(--navy-soft);">Live Server Real-Time (Firebase)</div>
-          <textarea id="firebaseConfigInput" class="glass-textarea" placeholder='Tempel firebaseConfig dari Firebase Console di sini agar sinkron otomatis...'></textarea>
-          <div class="btn-row">
-            <button id="saveFirebaseBtn" class="btn-primary">Aktifkan Live</button>
-            <button id="copyInviteLinkBtn" class="btn-success">Link Undangan Adik</button>
-          </div>
-        </div>
-      </section>
-
       <!-- Security Settings -->
       <section class="glass-card">
         <div class="card-head">
@@ -1323,18 +1379,12 @@
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
             </div>
-            <h2 class="card-title">Pengaturan PIN & Ruang</h2>
+            <h2 class="card-title">Ubah PIN Admin</h2>
           </div>
         </div>
-        <div class="input-group">
-          <div class="input-row-2">
-            <input id="roomCodeInput" class="glass-input" type="text" placeholder="Kode Ruang" />
-            <button id="saveRoomBtn" class="btn-secondary">Simpan</button>
-          </div>
-          <div class="input-row-2">
-            <input id="newPinInput" class="glass-input" type="password" inputmode="numeric" maxlength="4" placeholder="PIN Baru (4 digit)" />
-            <button id="savePinBtn" class="btn-secondary">Ubah PIN</button>
-          </div>
+        <div class="input-row-2">
+          <input id="newPinInput" class="glass-input" type="password" inputmode="numeric" maxlength="4" placeholder="PIN Baru (4 digit)" />
+          <button id="savePinBtn" class="btn-secondary">Ubah PIN</button>
         </div>
       </section>
     </main>
@@ -1375,18 +1425,33 @@
     </div>
   </div>
 
+  <!-- TIME UP MODAL -->
+  <div id="timeUpModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="mini-icon-box" style="margin: 0 auto 12px; width: 52px; height: 52px; border-radius: 18px; color: var(--rose); background: var(--rose-soft);">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div style="font-size: 19px; font-weight: 800; color: var(--navy);">Waktu Main HP Habis!</div>
+      <div style="font-size: 12.5px; font-weight: 600; color: var(--navy-soft); margin: 6px 0 18px; line-height: 1.45;">
+        Durasi bermain sudah mencapai 00:00. Selesaikan misi atau tukar Private Points untuk lanjut bermain.
+      </div>
+      <button id="dismissTimeUpBtn" class="btn-primary" style="width: 100%;">Tutup & Tukar Poin</button>
+    </div>
+  </div>
+
   <div id="toast" class="toast"></div>
 
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-
+  <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
+      navigator.serviceWorker.register('./sw.js').then((reg) => {
+        reg.update().catch(() => {});
+      }).catch(() => {});
     }
 
-    const STORAGE_KEY = 'anhs_s_system_state_v2';
-    const FB_CFG_KEY = 'anhs_s_system_fb_cfg_v2';
+    const STORAGE_KEY = 'anhs_s_system_npoint_state_v5';
+    const NPOINT_ID_KEY = 'anhs_s_system_npoint_bin_id_v5';
     const DEFAULT_PIN = '0911';
 
     const DEFAULT_MISSIONS = [
@@ -1397,8 +1462,6 @@
     ];
 
     let state = {
-      rev: 1,
-      roomCode: 'anhs-family',
       adminPin: DEFAULT_PIN,
       points: 30,
       timerRemainingSec: 0,
@@ -1413,25 +1476,48 @@
       updatedAt: Date.now()
     };
 
+    let npointBinId = '';
     let currentRole = 'adik';
     let missionFilter = 'all';
     let soundEnabled = true;
     let expandedTexts = new Set();
     let pinBuffer = '';
-    let db = null;
-    let activeProjectId = '';
-    let unsubRoom = null;
-    let isRemoteUpdate = false;
+    let isSyncing = false;
+    let lastSyncTime = null;
+    let lastError = '';
 
-    function loadLocalState() {
+    function extractBinId(raw) {
+      const s = (raw || '').trim();
+      if (!s) return '';
+      const match = s.match(/npoint\.io\/(?:docs\/)?([a-zA-Z0-9_-]+)/i);
+      if (match && match[1]) return match[1];
+      if (/^[a-zA-Z0-9_-]{8,40}$/.test(s)) return s;
+      return '';
+    }
+
+    function getApiUrl(binId) {
+      return 'https://api.npoint.io/' + binId;
+    }
+
+    function persistLocal() {
       try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (npointBinId) {
+          localStorage.setItem(NPOINT_ID_KEY, npointBinId);
+        }
+      } catch (e) {}
+    }
+
+    function loadLocal() {
+      try {
+        const savedId = localStorage.getItem(NPOINT_ID_KEY);
+        if (savedId) npointBinId = extractBinId(savedId);
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
           state = {
             ...state,
             ...parsed,
-            rev: Number(parsed.rev) || 1,
             adminPin: parsed.adminPin || DEFAULT_PIN,
             missions: Array.isArray(parsed.missions) && parsed.missions.length ? parsed.missions : [...DEFAULT_MISSIONS],
             pending: Array.isArray(parsed.pending) ? parsed.pending : [],
@@ -1444,156 +1530,167 @@
     function checkInviteHash() {
       try {
         const hash = window.location.hash || '';
-        if (hash.startsWith('#live=')) {
-          const encoded = decodeURIComponent(hash.slice(6));
-          const payload = JSON.parse(atob(encoded));
-          if (payload && payload.fb) {
-            localStorage.setItem(FB_CFG_KEY, JSON.stringify(payload.fb));
+        if (hash.startsWith('#npoint=')) {
+          const id = extractBinId(decodeURIComponent(hash.slice(8)));
+          if (id) {
+            npointBinId = id;
+            persistLocal();
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+            showToast('Terhubung ke Cloud Ruang: ' + id);
           }
-          if (payload && payload.room) {
-            state.roomCode = sanitizeRoom(payload.room);
-          }
-          state.rev = 0;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          history.replaceState(null, '', window.location.pathname + window.location.search);
-          showToast('Ruang ' + state.roomCode + ' terhubung!');
         }
       } catch (e) {}
     }
 
-    function saveState() {
-      state.rev = (Number(state.rev) || 0) + 1;
-      state.updatedAt = Date.now();
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (e) {}
-      if (db && !isRemoteUpdate) {
-        const roomRef = doc(db, 'anhs_rooms', sanitizeRoom(state.roomCode));
-        setDoc(roomRef, state).catch((err) => {
-          if (err && err.code === 'permission-denied') {
-            setConnStatus('error', 'RULES BLOCKED', 'RULES ERROR');
-            showToast('Firebase Rules memblokir! Ubah ke allow read, write: if true;');
-          }
-        });
-      }
-      renderAll();
-    }
-
-    function sanitizeRoom(code) {
-      return (code || 'anhs-family').trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-') || 'anhs-family';
-    }
-
-    function parseFirebaseConfigInput(raw) {
-      const text = (raw || '').trim();
-      if (!text) return null;
-      try {
-        return JSON.parse(text);
-      } catch (_) {
-        const start = text.indexOf('{');
-        const end = text.lastIndexOf('}');
-        if (start === -1 || end === -1) return null;
-        let objStr = text.slice(start, end + 1);
-        objStr = objStr
-          .replace(/\/\/.*$/gm, '')
-          .replace(/\/\*[\s\S]*?\*\//g, '')
-          .replace(/([{,]\s*)([a-zA-Z0-9_]+)\s*:/g, '$1"$2":')
-          .replace(/'/g, '"')
-          .replace(/,\s*}/g, '}');
-        try {
-          return JSON.parse(objStr);
-        } catch (e) {
-          return null;
-        }
-      }
-    }
-
-    function setConnStatus(mode, pillLabel, syncLabel) {
+    function setConnStatus(mode, pillLabel, badgeLabel) {
       const pill = document.getElementById('connStatusPill');
       const txt = document.getElementById('connStatusText');
-      const syncBadge = document.getElementById('syncModeBadge');
+      const badge = document.getElementById('syncModeBadge');
       pill.className = 'status-pill ' + mode;
       txt.textContent = pillLabel;
-      if (syncBadge && syncLabel) {
-        syncBadge.textContent = syncLabel;
-      }
+      if (badge && badgeLabel) badge.textContent = badgeLabel;
     }
 
-    function applyRemoteDoc(remote) {
-      if (!remote) return;
-      isRemoteUpdate = true;
-      state = {
-        ...state,
-        ...remote,
-        rev: Math.max(Number(state.rev) || 0, Number(remote.rev) || 1),
+    function updateDiagBox() {
+      const box = document.getElementById('syncDiagBox');
+      if (!box) return;
+      if (!npointBinId) {
+        box.textContent = 'Status Cloud: Belum ada ruang terhubung. Klik "Buat Ruang Cloud Baru" untuk mulai.';
+        return;
+      }
+      const timeStr = lastSyncTime ? new Date(lastSyncTime).toLocaleTimeString('id-ID') : 'menghubungkan...';
+      let msg = `ID Ruang: ${npointBinId} | Sync Terakhir: ${timeStr}`;
+      if (lastError) msg += ` | Catatan: ${lastError}`;
+      box.textContent = msg;
+    }
+
+    function normalizeRemoteState(remote) {
+      if (!remote || typeof remote !== 'object') return null;
+      return {
         adminPin: remote.adminPin || state.adminPin || DEFAULT_PIN,
-        missions: Array.isArray(remote.missions) ? remote.missions : state.missions,
+        points: typeof remote.points === 'number' ? remote.points : 0,
+        timerRemainingSec: typeof remote.timerRemainingSec === 'number' ? remote.timerRemainingSec : 0,
+        timerTotalSec: typeof remote.timerTotalSec === 'number' ? remote.timerTotalSec : 0,
+        timerRunning: Boolean(remote.timerRunning),
+        timerEndAt: remote.timerEndAt || null,
+        missions: Array.isArray(remote.missions) ? remote.missions : [...DEFAULT_MISSIONS],
         pending: Array.isArray(remote.pending) ? remote.pending : [],
-        history: Array.isArray(remote.history) ? remote.history : []
+        history: Array.isArray(remote.history) ? remote.history : [],
+        updatedAt: remote.updatedAt || Date.now()
       };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      renderAll();
-      isRemoteUpdate = false;
     }
 
-    function initFirebaseFromStorage() {
+    async function fetchRemoteState() {
+      if (!npointBinId) return null;
+      const res = await fetch(getApiUrl(npointBinId) + '?t=' + Date.now(), {
+        method: 'GET',
+        cache: 'no-store'
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      return normalizeRemoteState(data);
+    }
+
+    async function pullFromCloud(notifyUser = false) {
+      if (!npointBinId || isSyncing) return;
+      isSyncing = true;
       try {
-        const saved = localStorage.getItem(FB_CFG_KEY);
-        if (!saved) {
-          activeProjectId = '';
-          setConnStatus('local', 'LOCAL', 'INSTANT SYNC');
-          renderAll();
-          return;
+        const remote = await fetchRemoteState();
+        lastSyncTime = Date.now();
+        lastError = '';
+        setConnStatus('live', 'LIVE', 'TERHUBUNG');
+
+        if (remote) {
+          const prevPending = (state.pending || []).length;
+          const prevPoints = state.points || 0;
+          const changed = JSON.stringify(remote) !== JSON.stringify(state);
+
+          if (changed) {
+            state = remote;
+            persistLocal();
+            renderAll();
+
+            if (state.pending.length > prevPending && currentRole === 'kakak') {
+              playChime();
+              showToast('Tugas baru masuk dari Adik!');
+            } else if (state.pending.length > prevPending && currentRole === 'adik') {
+              playChime();
+            } else if (state.points > prevPoints && currentRole === 'adik') {
+              playChime();
+              showToast('Poin bertambah! Saldo sekarang ' + state.points + ' PT');
+            }
+          } else {
+            updateDiagBox();
+          }
         }
-        const cfg = JSON.parse(saved);
-        if (!cfg || !cfg.apiKey || !cfg.projectId) {
-          activeProjectId = '';
-          setConnStatus('local', 'LOCAL', 'INSTANT SYNC');
-          renderAll();
-          return;
+        if (notifyUser) {
+          showToast('Tersinkron • ' + (state.pending || []).length + ' tugas pending');
         }
-        activeProjectId = cfg.projectId;
-        document.getElementById('firebaseConfigInput').value = JSON.stringify(cfg, null, 2);
-        setConnStatus('syncing', 'SYNCING...', 'CONNECTING');
-        const app = initializeApp(cfg, 'anhs_' + Date.now());
-        db = getFirestore(app);
-        renderAll();
-        subscribeToRoom();
-      } catch (e) {
-        setConnStatus('error', 'CFG ERROR', 'CHECK CONFIG');
+      } catch (err) {
+        lastError = err.message || 'Gagal mengambil data';
+        setConnStatus('error', 'OFFLINE', 'GANGGUAN');
+        updateDiagBox();
+        if (notifyUser) showToast('Gagal terhubung ke npoint.io');
+      } finally {
+        isSyncing = false;
       }
     }
 
-    function subscribeToRoom() {
-      if (!db) return;
-      if (unsubRoom) unsubRoom();
-      const roomId = sanitizeRoom(state.roomCode);
-      const roomRef = doc(db, 'anhs_rooms', roomId);
-      unsubRoom = onSnapshot(roomRef, (snap) => {
-        setConnStatus('live', 'LIVE', 'LIVE CLOUD');
-        if (snap.exists()) {
-          const remote = snap.data();
-          const remoteRev = Number(remote.rev) || 0;
-          const localRev = Number(state.rev) || 0;
-          if (!snap.metadata.hasPendingWrites && (remoteRev >= localRev || localRev === 0)) {
-            applyRemoteDoc(remote);
-          }
-        } else {
-          setDoc(roomRef, state).catch((err) => {
-            if (err && err.code === 'permission-denied') {
-              setConnStatus('error', 'RULES BLOCKED', 'RULES ERROR');
-              showToast('Firestore Rules memblokir akses tulis!');
-            }
-          });
-        }
-      }, (err) => {
-        if (err && err.code === 'permission-denied') {
-          setConnStatus('error', 'RULES BLOCKED', 'RULES ERROR');
-          showToast('Firestore Rules memblokir akses baca!');
-        } else {
-          setConnStatus('syncing', 'OFFLINE', 'RETRYING');
-        }
-      });
+    // Read-Merge-Write mutation so 2 phones never overwrite each other's actions
+    async function mutateCloudState(mutatorFn, successToast) {
+      // 1. Apply locally immediately for instant UI responsiveness
+      mutatorFn(state);
+      state.updatedAt = Date.now();
+      persistLocal();
+      renderAll();
+      if (successToast) showToast(successToast);
+
+      if (!npointBinId) return;
+
+      isSyncing = true;
+      setConnStatus('syncing', 'SYNCING...', 'MENGIRIM...');
+      try {
+        // 2. Fetch latest server snapshot first, then apply exact same mutation
+        let baseState = await fetchRemoteState();
+        if (!baseState) baseState = { ...state };
+        else mutatorFn(baseState);
+
+        baseState.updatedAt = Date.now();
+        const postRes = await fetch(getApiUrl(npointBinId), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(baseState)
+        });
+        if (!postRes.ok) throw new Error('HTTP ' + postRes.status);
+
+        state = baseState;
+        lastSyncTime = Date.now();
+        lastError = '';
+        persistLocal();
+        setConnStatus('live', 'LIVE', 'TERHUBUNG');
+        renderAll();
+      } catch (err) {
+        lastError = err.message || 'Gagal mengirim data';
+        setConnStatus('error', 'SYNC ERROR', 'GAGAL KIRIM');
+        updateDiagBox();
+        showToast('Gagal kirim ke server, cek koneksi internet');
+      } finally {
+        isSyncing = false;
+      }
     }
+
+    // Automatic background polling every 2.5 seconds
+    setInterval(() => {
+      if (npointBinId && document.visibilityState === 'visible') {
+        pullFromCloud(false);
+      }
+    }, 2500);
+
+    document.addEventListener('visibilitychange', () => {
+      if (npointBinId && document.visibilityState === 'visible') {
+        pullFromCloud(false);
+      }
+    });
 
     function playChime() {
       if (!soundEnabled) return;
@@ -1627,12 +1724,15 @@
       if (state.timerRunning) {
         const left = getEffectiveRemainingSec();
         if (left <= 0) {
-          state.timerRunning = false;
-          state.timerRemainingSec = 0;
-          state.timerEndAt = null;
           playChime();
-          showToast('Waktu main HP habis!');
-          saveState();
+          if (currentRole === 'adik') {
+            document.getElementById('timeUpModal').classList.remove('hidden');
+          }
+          mutateCloudState((s) => {
+            s.timerRunning = false;
+            s.timerRemainingSec = 0;
+            s.timerEndAt = null;
+          }, 'Waktu main HP habis!');
         } else {
           renderTimerOnly();
         }
@@ -1748,12 +1848,29 @@
     }
 
     function renderAll() {
-      const projTag = activeProjectId ? ` • ${activeProjectId.slice(0, 12)}` : '';
-      document.getElementById('roomCodeLabel').textContent = state.roomCode + projTag;
-      document.getElementById('roomCodeInput').value = state.roomCode;
+      const setupBanner = document.getElementById('setupBanner');
+      if (npointBinId) {
+        setupBanner.classList.add('hidden');
+        document.getElementById('roomCodeLabel').textContent = 'npoint/' + npointBinId.slice(0, 10) + '...';
+        document.getElementById('npointIdInput').value = npointBinId;
+      } else {
+        setupBanner.classList.remove('hidden');
+        document.getElementById('roomCodeLabel').textContent = 'Belum tersambung';
+      }
+
+      const pendCount = (state.pending || []).length;
+      const kakakBadge = document.getElementById('kakakPendingBadge');
+      if (pendCount > 0) {
+        kakakBadge.textContent = pendCount;
+        kakakBadge.classList.remove('hidden');
+      } else {
+        kakakBadge.classList.add('hidden');
+      }
+
       document.getElementById('adikPointsValue').textContent = state.points;
       document.getElementById('adminPointsValue').textContent = state.points;
 
+      updateDiagBox();
       renderTimerOnly();
       renderWeeklyChart();
 
@@ -1874,11 +1991,13 @@
       t._timer = setTimeout(() => t.classList.remove('show'), 2800);
     }
 
-    function addHistory(title, delta) {
-      state.history = [
-        { id: 'h_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6), title, delta, time: Date.now() },
-        ...(state.history || [])
-      ].slice(0, 50);
+    function makeHistoryItem(title, delta) {
+      return {
+        id: 'h_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        title,
+        delta,
+        time: Date.now()
+      };
     }
 
     function exchangeMinutes(mins) {
@@ -1888,18 +2007,21 @@
         showToast('Poin tidak cukup (' + state.points + ' PT tersedia)');
         return;
       }
-      state.points -= m;
-      const currentRem = getEffectiveRemainingSec();
-      const addedSec = m * 60;
-      const newRem = currentRem + addedSec;
-      state.timerRemainingSec = newRem;
-      state.timerTotalSec = Math.max(state.timerTotalSec || 0, newRem);
-      if (state.timerRunning) {
-        state.timerEndAt = Date.now() + newRem * 1000;
-      }
-      addHistory('Tukar Durasi Main HP +' + m + ' Menit', -m);
-      showToast('Berhasil tukar +' + m + ' menit!');
-      saveState();
+      const histItem = makeHistoryItem('Tukar Durasi Main HP +' + m + ' Menit', -m);
+      mutateCloudState((s) => {
+        if (s.points < m) return;
+        s.points -= m;
+        const currentRem = (s.timerRunning && s.timerEndAt)
+          ? Math.max(0, Math.ceil((s.timerEndAt - Date.now()) / 1000))
+          : Math.max(0, s.timerRemainingSec || 0);
+        const newRem = currentRem + m * 60;
+        s.timerRemainingSec = newRem;
+        s.timerTotalSec = Math.max(s.timerTotalSec || 0, newRem);
+        if (s.timerRunning) {
+          s.timerEndAt = Date.now() + newRem * 1000;
+        }
+        s.history = [histItem, ...(s.history || [])].slice(0, 50);
+      }, 'Berhasil tukar +' + m + ' menit!');
     }
 
     document.addEventListener('click', (e) => {
@@ -1932,12 +2054,18 @@
         const mission = (state.missions || []).find(x => x.id === mid);
         if (!mission) return;
         if ((state.pending || []).some(p => p.missionId === mid)) return;
-        state.pending = [
-          { id: 'p_' + Date.now(), missionId: mission.id, title: mission.title, pts: mission.pts, time: Date.now() },
-          ...(state.pending || [])
-        ];
-        showToast('Misi diajukan ke Kakak!');
-        saveState();
+        const newReq = {
+          id: 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+          missionId: mission.id,
+          title: mission.title,
+          pts: mission.pts,
+          time: Date.now()
+        };
+        mutateCloudState((s) => {
+          if (!(s.pending || []).some(p => p.missionId === mid)) {
+            s.pending = [newReq, ...(s.pending || [])];
+          }
+        }, 'Misi dikirim ke HP Kakak!');
         return;
       }
 
@@ -1946,39 +2074,45 @@
         const pid = appBtn.getAttribute('data-approve-id');
         const item = (state.pending || []).find(p => p.id === pid);
         if (!item) return;
-        state.pending = (state.pending || []).filter(p => p.id !== pid);
-        state.points += item.pts;
-        addHistory('Misi ACC: ' + item.title, item.pts);
-        showToast('ACC! +' + item.pts + ' PT diberikan');
-        saveState();
+        const histItem = makeHistoryItem('Misi ACC: ' + item.title, item.pts);
+        mutateCloudState((s) => {
+          const target = (s.pending || []).find(p => p.id === pid);
+          if (!target) return;
+          s.pending = (s.pending || []).filter(p => p.id !== pid);
+          s.points = (s.points || 0) + target.pts;
+          s.history = [histItem, ...(s.history || [])].slice(0, 50);
+        }, 'ACC! +' + item.pts + ' PT diberikan');
         return;
       }
 
       const rejBtn = e.target.closest('[data-reject-id]');
       if (rejBtn) {
         const pid = rejBtn.getAttribute('data-reject-id');
-        state.pending = (state.pending || []).filter(p => p.id !== pid);
-        showToast('Pengajuan tugas ditolak');
-        saveState();
+        mutateCloudState((s) => {
+          s.pending = (s.pending || []).filter(p => p.id !== pid);
+        }, 'Pengajuan tugas ditolak');
         return;
       }
 
       const delBtn = e.target.closest('[data-del-mission]');
       if (delBtn) {
         const mid = delBtn.getAttribute('data-del-mission');
-        state.missions = (state.missions || []).filter(m => m.id !== mid);
-        showToast('Misi dihapus');
-        saveState();
+        mutateCloudState((s) => {
+          s.missions = (s.missions || []).filter(m => m.id !== mid);
+        }, 'Misi dihapus');
         return;
       }
 
       const qBtn = e.target.closest('[data-delta]');
       if (qBtn) {
         const delta = parseInt(qBtn.getAttribute('data-delta'), 10);
-        state.points = Math.max(0, state.points + delta);
-        addHistory(delta > 0 ? 'Bonus Poin dari Kakak' : 'Penalti Poin dari Kakak', delta);
-        showToast((delta > 0 ? '+' : '') + delta + ' PT diterapkan');
-        saveState();
+        mutateCloudState((s) => {
+          const nextPts = Math.max(0, (s.points || 0) + delta);
+          const actualDelta = nextPts - (s.points || 0);
+          s.points = nextPts;
+          const histItem = makeHistoryItem(delta > 0 ? 'Bonus Poin dari Kakak' : 'Penalti Poin dari Kakak', actualDelta);
+          s.history = [histItem, ...(s.history || [])].slice(0, 50);
+        }, (delta > 0 ? '+' : '') + delta + ' PT diterapkan');
         return;
       }
 
@@ -2013,6 +2147,13 @@
       });
     }
 
+    function openPinPrompt() {
+      if (currentRole === 'kakak') return;
+      pinBuffer = '';
+      updatePinDots();
+      document.getElementById('pinModal').classList.remove('hidden');
+    }
+
     function switchRole(role) {
       currentRole = role;
       document.getElementById('tabAdikBtn').classList.toggle('active', role === 'adik');
@@ -2023,12 +2164,9 @@
     }
 
     document.getElementById('tabAdikBtn').addEventListener('click', () => switchRole('adik'));
-    document.getElementById('tabKakakBtn').addEventListener('click', () => {
-      if (currentRole === 'kakak') return;
-      pinBuffer = '';
-      updatePinDots();
-      document.getElementById('pinModal').classList.remove('hidden');
-    });
+    document.getElementById('tabKakakBtn').addEventListener('click', openPinPrompt);
+    document.getElementById('quickGoKakakBtn').addEventListener('click', openPinPrompt);
+    document.getElementById('roomChipBtn').addEventListener('click', openPinPrompt);
     document.getElementById('lockAdminBtn').addEventListener('click', () => switchRole('adik'));
     document.getElementById('pinCancelBtn').addEventListener('click', () => {
       pinBuffer = '';
@@ -2039,25 +2177,16 @@
       updatePinDots();
     });
 
-    document.getElementById('forceSyncBtn').addEventListener('click', async () => {
-      if (!db) {
-        showToast('Mode Lokal aktif (belum konek Firebase)');
+    document.getElementById('dismissTimeUpBtn').addEventListener('click', () => {
+      document.getElementById('timeUpModal').classList.add('hidden');
+    });
+
+    document.getElementById('forceSyncBtn').addEventListener('click', () => {
+      if (!npointBinId) {
+        showToast('Belum ada ruang cloud terhubung');
         return;
       }
-      try {
-        showToast('Menarik data terbaru...');
-        const roomRef = doc(db, 'anhs_rooms', sanitizeRoom(state.roomCode));
-        const snap = await getDoc(roomRef);
-        if (snap.exists()) {
-          applyRemoteDoc(snap.data());
-          showToast('Sinkronisasi berhasil! (' + state.roomCode + ')');
-        } else {
-          await setDoc(roomRef, state);
-          showToast('Ruang dibuat di server!');
-        }
-      } catch (e) {
-        showToast('Gagal menarik data: periksa koneksi / Rules');
-      }
+      pullFromCloud(true);
     });
 
     document.getElementById('timerToggleBtn').addEventListener('click', () => {
@@ -2066,23 +2195,28 @@
         showToast('Tukar poin dulu untuk menambah waktu!');
         return;
       }
-      if (state.timerRunning) {
-        state.timerRemainingSec = rem;
-        state.timerRunning = false;
-        state.timerEndAt = null;
-      } else {
-        state.timerRunning = true;
-        state.timerEndAt = Date.now() + rem * 1000;
-      }
-      saveState();
+      mutateCloudState((s) => {
+        const curRem = (s.timerRunning && s.timerEndAt)
+          ? Math.max(0, Math.ceil((s.timerEndAt - Date.now()) / 1000))
+          : Math.max(0, s.timerRemainingSec || 0);
+        if (s.timerRunning) {
+          s.timerRemainingSec = curRem;
+          s.timerRunning = false;
+          s.timerEndAt = null;
+        } else {
+          s.timerRunning = true;
+          s.timerEndAt = Date.now() + curRem * 1000;
+        }
+      });
     });
 
     document.getElementById('timerResetBtn').addEventListener('click', () => {
-      state.timerRunning = false;
-      state.timerRemainingSec = 0;
-      state.timerTotalSec = 0;
-      state.timerEndAt = null;
-      saveState();
+      mutateCloudState((s) => {
+        s.timerRunning = false;
+        s.timerRemainingSec = 0;
+        s.timerTotalSec = 0;
+        s.timerEndAt = null;
+      }, 'Timer direset ke 00:00');
     });
 
     document.getElementById('customRedeemBtn').addEventListener('click', () => {
@@ -2100,36 +2234,74 @@
       }
       const icons = ['book', 'sparkle', 'heart', 'star'];
       const icon = icons[(state.missions || []).length % icons.length];
-      state.missions = [
-        { id: 'm_' + Date.now(), title, pts: Math.max(1, pts), category, icon },
-        ...(state.missions || [])
-      ];
+      const newMission = { id: 'm_' + Date.now(), title, pts: Math.max(1, pts), category, icon };
       document.getElementById('newMissionTitle').value = '';
-      showToast('Misi baru ditambahkan');
-      saveState();
+      mutateCloudState((s) => {
+        s.missions = [newMission, ...(s.missions || [])];
+      }, 'Misi baru ditambahkan');
     });
 
-    document.getElementById('roomChipBtn').addEventListener('click', () => {
-      const next = prompt('Masukkan Kode Ruang Keluarga (samakan di HP Kakak & Adik):', state.roomCode);
-      if (next && next.trim()) {
-        state.roomCode = sanitizeRoom(next);
-        state.rev = 0;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    // Create new npoint.io bin in 1 click
+    document.getElementById('createNpointBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('createNpointBtn');
+      btn.disabled = true;
+      btn.textContent = 'Membuat...';
+      try {
+        const res = await fetch('https://api.npoint.io/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(state)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const created = await res.json();
+        const newId = extractBinId(created.id || created.binId || created.url || '');
+        if (!newId) throw new Error('ID ruang tidak ditemukan');
+        npointBinId = newId;
+        lastSyncTime = Date.now();
+        lastError = '';
+        persistLocal();
+        setConnStatus('live', 'LIVE', 'TERHUBUNG');
         renderAll();
-        subscribeToRoom();
-        showToast('Ruang diubah ke ' + state.roomCode);
+        showToast('Ruang Cloud dibuat! Salin Link Undangan Adik');
+      } catch (err) {
+        lastError = err.message || 'Gagal membuat ruang';
+        setConnStatus('error', 'GAGAL', 'ERROR');
+        updateDiagBox();
+        showToast('Gagal membuat ruang npoint.io');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Buat Ruang Cloud Baru';
       }
     });
 
-    document.getElementById('saveRoomBtn').addEventListener('click', () => {
-      const val = document.getElementById('roomCodeInput').value.trim();
-      if (!val) return;
-      state.roomCode = sanitizeRoom(val);
-      state.rev = 0;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    // Connect to existing npoint.io ID / URL
+    document.getElementById('connectNpointBtn').addEventListener('click', async () => {
+      const raw = document.getElementById('npointIdInput').value;
+      const id = extractBinId(raw);
+      if (!id) {
+        showToast('ID atau Link npoint.io tidak valid');
+        return;
+      }
+      npointBinId = id;
+      persistLocal();
       renderAll();
-      subscribeToRoom();
-      showToast('Kode ruang disimpan: ' + state.roomCode);
+      await pullFromCloud(true);
+    });
+
+    // Copy invite link for Adik
+    document.getElementById('copyInviteLinkBtn').addEventListener('click', async () => {
+      if (!npointBinId) {
+        showToast('Klik "Buat Ruang Cloud Baru" dulu!');
+        return;
+      }
+      try {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const inviteUrl = baseUrl + '#npoint=' + encodeURIComponent(npointBinId);
+        await navigator.clipboard.writeText(inviteUrl);
+        showToast('Link Undangan Adik disalin! Kirim ke HP Adik');
+      } catch (e) {
+        showToast('Gagal menyalin link undangan');
+      }
     });
 
     document.getElementById('savePinBtn').addEventListener('click', () => {
@@ -2138,62 +2310,34 @@
         showToast('PIN harus 4 digit angka');
         return;
       }
-      state.adminPin = val;
       document.getElementById('newPinInput').value = '';
-      saveState();
-      showToast('PIN Admin berhasil diperbarui');
+      mutateCloudState((s) => {
+        s.adminPin = val;
+      }, 'PIN Admin berhasil diperbarui');
     });
 
     document.getElementById('exportSyncBtn').addEventListener('click', async () => {
       try {
         const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
         await navigator.clipboard.writeText(code);
-        showToast('Kode Sync disalin! Kirim ke HP Adik');
+        showToast('Kode Manual disalin!');
       } catch (e) {
-        showToast('Gagal menyalin kode sync');
+        showToast('Gagal menyalin kode');
       }
     });
 
     document.getElementById('importSyncBtn').addEventListener('click', () => {
-      const raw = prompt('Tempel Kode Sync yang dikirim dari HP sebelah:');
+      const raw = prompt('Tempel Kode Manual yang dikirim dari HP sebelah:');
       if (!raw) return;
       try {
         const imported = JSON.parse(decodeURIComponent(escape(atob(raw.trim()))));
         if (imported && typeof imported.points === 'number') {
-          state = { ...state, ...imported };
-          saveState();
-          showToast('Data berhasil disinkronkan!');
+          mutateCloudState((s) => {
+            Object.assign(s, imported);
+          }, 'Data berhasil disinkronkan!');
         }
       } catch (e) {
-        showToast('Kode Sync tidak valid');
-      }
-    });
-
-    document.getElementById('saveFirebaseBtn').addEventListener('click', () => {
-      const raw = document.getElementById('firebaseConfigInput').value;
-      const cfg = parseFirebaseConfigInput(raw);
-      if (!cfg || !cfg.apiKey || !cfg.projectId) {
-        showToast('Format firebaseConfig tidak valid');
-        return;
-      }
-      localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
-      initFirebaseFromStorage();
-      showToast('Menghubungkan Live Server...');
-    });
-
-    document.getElementById('copyInviteLinkBtn').addEventListener('click', async () => {
-      try {
-        const rawFb = localStorage.getItem(FB_CFG_KEY);
-        const payload = {
-          room: state.roomCode,
-          fb: rawFb ? JSON.parse(rawFb) : null
-        };
-        const baseUrl = window.location.origin + window.location.pathname;
-        const inviteUrl = baseUrl + '#live=' + encodeURIComponent(btoa(JSON.stringify(payload)));
-        await navigator.clipboard.writeText(inviteUrl);
-        showToast('Link Undangan Adik disalin!');
-      } catch (e) {
-        showToast('Gagal membuat link undangan');
+        showToast('Kode Manual tidak valid');
       }
     });
 
@@ -2226,10 +2370,13 @@
       document.removeEventListener('pointerdown', onFirstTap);
     }, { once: true });
 
-    loadLocalState();
+    loadLocal();
     checkInviteHash();
-    initFirebaseFromStorage();
     renderAll();
+    if (npointBinId) {
+      setConnStatus('syncing', 'SYNCING...', 'MENGHUBUNGKAN');
+      pullFromCloud(false);
+    }
   </script>
 </body>
 </html>
