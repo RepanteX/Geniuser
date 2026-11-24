@@ -1,6 +1,6 @@
 {
-  "name": "ANHS S-System \u2014 Poin & Durasi HP",
-  "short_name": "ANHS S-System",
+  "name": "Tuntasin \u2014 Poin & Durasi HP",
+  "short_name": "Tuntasin",
   "description": "Sistem Poin Tugas & Penukaran Durasi Main HP",
   "start_url": "./index.html",
   "scope": "./",

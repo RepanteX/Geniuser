@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select: no, viewport-fit=cover" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <title>ANHS S-System</title>
+  <title>Tuntasin</title>
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/svg+xml" href="./icon.svg" />
   <link rel="apple-touch-icon" href="./icon.svg" />
@@ -166,7 +166,7 @@
     }
 
     .brand-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--navy);
@@ -501,9 +501,30 @@
     }
 
     .btn-danger {
+      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 18px -5px rgba(225, 29, 72, 0.42);
+    }
+
+    .btn-danger-soft {
+      border: 1px solid rgba(225, 29, 72, 0.28);
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 9px 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
       background: var(--rose-soft);
-      border: 1px solid rgba(225, 29, 72, 0.25);
       color: var(--rose);
+      transition: transform 0.14s ease;
+    }
+
+    .btn-danger-soft:active {
+      transform: scale(0.96);
     }
 
     .points-hero {
@@ -899,6 +920,23 @@
       box-shadow: 0 10px 26px rgba(37, 99, 235, 0.12);
     }
 
+    .alarm-admin-banner {
+      background: linear-gradient(135deg, rgba(255, 235, 238, 0.94) 0%, rgba(254, 205, 211, 0.92) 100%);
+      border: 2px solid #fb7185;
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 14px 32px rgba(225, 29, 72, 0.25);
+      animation: pulseBorder 1.4s infinite ease-in-out;
+    }
+
+    @keyframes pulseBorder {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.35), 0 14px 32px rgba(225, 29, 72, 0.22); }
+      50% { box-shadow: 0 0 0 8px rgba(225, 29, 72, 0), 0 14px 32px rgba(225, 29, 72, 0.32); }
+    }
+
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -910,6 +948,53 @@
       align-items: center;
       justify-content: center;
       padding: 18px;
+    }
+
+    .alarm-lock-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(136, 19, 55, 0.72);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .alarm-lock-card {
+      width: 100%;
+      max-width: 370px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 2.5px solid #fb7185;
+      border-radius: 32px;
+      padding: 28px 22px;
+      box-shadow: 0 28px 70px rgba(136, 19, 55, 0.48);
+      text-align: center;
+      animation: pulseBorder 1.3s infinite ease-in-out;
+    }
+
+    .alarm-bell-ring {
+      margin: 0 auto 14px;
+      width: 64px;
+      height: 64px;
+      border-radius: 22px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 26px rgba(225, 29, 72, 0.45);
+      animation: ringShake 0.6s infinite ease-in-out;
+    }
+
+    @keyframes ringShake {
+      0%, 100% { transform: rotate(0deg); }
+      20% { transform: rotate(-14deg); }
+      40% { transform: rotate(14deg); }
+      60% { transform: rotate(-10deg); }
+      80% { transform: rotate(10deg); }
     }
 
     .modal-card {
@@ -1034,7 +1119,7 @@
           </div>
           <div class="brand-info">
             <div class="brand-title-row">
-              <span class="brand-title">ANHS S-System</span>
+              <span class="brand-title">Tuntasin</span>
               <span id="connStatusPill" class="status-pill local">
                 <span class="status-dot"></span>
                 <span id="connStatusText">LOCAL</span>
@@ -1056,7 +1141,7 @@
               <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
             </svg>
           </button>
-          <button id="soundToggleBtn" class="glass-icon-btn" title="Suara Alarm">
+          <button id="soundToggleBtn" class="glass-icon-btn" title="Suara Notifikasi">
             <svg id="soundIconOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
             </svg>
@@ -1093,7 +1178,7 @@
     <div id="setupBanner" class="setup-banner">
       <div style="min-width:0; flex:1;">
         <div style="font-size:13px; font-weight:800; color:var(--navy);">Belum Tersambung Antar-HP</div>
-        <div style="font-size:11.5px; font-weight:600; color:var(--navy-soft); margin-top:2px;">Masuk tab Kakak (PIN 0911) untuk buat ruang Cloud 1-klik.</div>
+        <div style="font-size:11.5px; font-weight:600; color:var(--navy-soft); margin-top:2px;">Masuk tab Kakak (PIN 0911) untuk hubungkan ruang Cloud.</div>
       </div>
       <button id="quickGoKakakBtn" class="action-btn blue">Setup</button>
     </div>
@@ -1247,7 +1332,7 @@
             </div>
             <h2 class="card-title">Riwayat Poin</h2>
           </div>
-          <span class="badge-pill">TERBARU</span>
+          <span class="badge-pill">AUTO-HAPUS 48J</span>
         </div>
         <div id="adikHistoryList" class="item-list"></div>
       </section>
@@ -1255,7 +1340,25 @@
 
     <!-- VIEW: KAKAK (ADMIN) -->
     <main id="kakakView" class="input-group hidden" style="gap: 16px;">
-      <!-- Cloud npoint.io Sync Settings (Placed First for Easy Setup) -->
+      <!-- ACTIVE ALARM REMOTE CONTROL BANNER (VISIBLE WHEN ALARM RINGING ON ADIK) -->
+      <section id="adminAlarmBanner" class="alarm-admin-banner hidden">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:44px; height:44px; border-radius:15px; background:#e11d48; color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </div>
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:14.5px; font-weight:800; color:#9f1239;">ALARM HP ADIK BERBUNYI!</div>
+            <div style="font-size:12px; font-weight:600; color:#be123c; margin-top:2px;">Layar HP Adik terkunci. Hanya Kakak yang bisa mematikan alarm ini.</div>
+          </div>
+        </div>
+        <button id="stopAlarmBtn" class="btn-danger" style="width:100%; font-size:14px; padding:14px;">
+          Matikan Alarm HP Adik
+        </button>
+      </section>
+
+      <!-- Cloud npoint.io Sync Settings -->
       <section class="glass-card">
         <div class="card-head">
           <div class="card-head-left">
@@ -1270,18 +1373,18 @@
         </div>
 
         <div id="syncDiagBox" class="diag-box" style="margin-bottom: 12px;">
-          Status Cloud: Belum ada ruang terhubung. Klik "Buat Ruang Cloud Baru" di bawah.
+          Status Cloud: Belum ada ruang terhubung. Tempel ID/Link npoint.io di bawah.
         </div>
 
         <div class="input-group">
-          <div class="btn-row">
-            <button id="createNpointBtn" class="btn-primary">Buat Ruang Cloud Baru</button>
-            <button id="copyInviteLinkBtn" class="btn-success">Link Undangan Adik</button>
+          <div class="input-row-2">
+            <input id="npointIdInput" class="glass-input" type="text" placeholder="Tempel ID / Link npoint.io..." />
+            <button id="connectNpointBtn" class="btn-primary">Hubungkan</button>
           </div>
 
-          <div class="input-row-2">
-            <input id="npointIdInput" class="glass-input" type="text" placeholder="Atau tempel ID / Link npoint.io..." />
-            <button id="connectNpointBtn" class="btn-secondary">Hubungkan</button>
+          <div class="btn-row">
+            <a href="https://www.npoint.io/" target="_blank" rel="noopener" class="btn-secondary" style="text-decoration:none;">Buka npoint.io ↗</a>
+            <button id="copyInviteLinkBtn" class="btn-success">Link Undangan Adik</button>
           </div>
 
           <div class="btn-row">
@@ -1370,6 +1473,25 @@
         <div id="adminMissionList" class="item-list"></div>
       </section>
 
+      <!-- Manage History (Admin Cleanup + 48h Auto-Delete Info) -->
+      <section class="glass-card">
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="mini-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+            </div>
+            <h2 class="card-title">Riwayat Poin</h2>
+          </div>
+          <button id="clearHistoryBtn" class="btn-danger-soft">Hapus Semua</button>
+        </div>
+        <div style="font-size:11.5px; font-weight:600; color:var(--navy-soft); margin-bottom:12px;">
+          Riwayat poin otomatis terhapus setelah <strong>48 jam</strong> agar tidak spam, atau hapus seluruhnya secara manual kapan saja.
+        </div>
+        <div id="adminHistoryList" class="item-list"></div>
+      </section>
+
       <!-- Security Settings -->
       <section class="glass-card">
         <div class="card-head">
@@ -1425,19 +1547,24 @@
     </div>
   </div>
 
-  <!-- TIME UP MODAL -->
-  <div id="timeUpModal" class="modal-backdrop hidden">
-    <div class="modal-card">
-      <div class="mini-icon-box" style="margin: 0 auto 12px; width: 52px; height: 52px; border-radius: 18px; color: var(--rose); background: var(--rose-soft);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  <!-- UNCLOSABLE ALARM LOCK MODAL FOR ADIK (ONLY KAKAK CAN DISMISS REMOTELY) -->
+  <div id="timeUpModal" class="alarm-lock-backdrop hidden">
+    <div class="alarm-lock-card">
+      <div class="alarm-bell-ring">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
         </svg>
       </div>
-      <div style="font-size: 19px; font-weight: 800; color: var(--navy);">Waktu Main HP Habis!</div>
-      <div style="font-size: 12.5px; font-weight: 600; color: var(--navy-soft); margin: 6px 0 18px; line-height: 1.45;">
-        Durasi bermain sudah mencapai 00:00. Selesaikan misi atau tukar Private Points untuk lanjut bermain.
+      <div style="font-size: 21px; font-weight: 800; color: #9f1239; letter-spacing: -0.02em;">Waktu Main HP Habis!</div>
+      <div style="font-size: 13px; font-weight: 700; color: #be123c; margin: 8px 0 16px; line-height: 1.5;">
+        Alarm terkunci dan tidak bisa ditutup atau dimatikan dari HP Adik.
       </div>
-      <button id="dismissTimeUpBtn" class="btn-primary" style="width: 100%;">Tutup & Tukar Poin</button>
+      <div style="background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 16px; padding: 12px 14px; font-size: 12px; font-weight: 700; color: #881337; line-height: 1.45;">
+        Serahkan HP atau minta <strong>Kakak</strong> menekan tombol <em>"Matikan Alarm HP Adik"</em> dari HP Kakak.
+      </div>
+      <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #e11d48;">
+        ● Menunggu perintah matikan dari HP Kakak...
+      </div>
     </div>
   </div>
 
@@ -1450,9 +1577,12 @@
       }).catch(() => {});
     }
 
-    const STORAGE_KEY = 'anhs_s_system_npoint_state_v5';
-    const NPOINT_ID_KEY = 'anhs_s_system_npoint_bin_id_v5';
+    const STORAGE_KEY = 'tuntasin_npoint_state_v6';
+    const NPOINT_ID_KEY = 'tuntasin_npoint_bin_id_v6';
+    const LEGACY_STORAGE_KEY = 'anhs_s_system_npoint_state_v5';
+    const LEGACY_NPOINT_ID_KEY = 'anhs_s_system_npoint_bin_id_v5';
     const DEFAULT_PIN = '0911';
+    const HISTORY_TTL_MS = 48 * 60 * 60 * 1000; // 48 jam
 
     const DEFAULT_MISSIONS = [
       { id: 'default_m1', title: 'Belajar / Kerjakan PR 45 Menit', pts: 25, category: 'Harian', icon: 'book' },
@@ -1468,10 +1598,12 @@
       timerTotalSec: 0,
       timerRunning: false,
       timerEndAt: null,
+      alarmActive: false,
+      alarmTriggeredAt: null,
       missions: [...DEFAULT_MISSIONS],
       pending: [],
       history: [
-        { id: 'h_init', title: 'Saldo Awal Sistem ANHS', delta: 30, time: Date.now() }
+        { id: 'h_init', title: 'Saldo Awal Sistem Tuntasin', delta: 30, time: Date.now() }
       ],
       updatedAt: Date.now()
     };
@@ -1485,6 +1617,13 @@
     let isSyncing = false;
     let lastSyncTime = null;
     let lastError = '';
+    let sharedAudioCtx = null;
+
+    function pruneExpiredHistory(list) {
+      if (!Array.isArray(list)) return [];
+      const cutoff = Date.now() - HISTORY_TTL_MS;
+      return list.filter((item) => item && typeof item.time === 'number' && item.time > cutoff);
+    }
 
     function extractBinId(raw) {
       const s = (raw || '').trim();
@@ -1501,6 +1640,7 @@
 
     function persistLocal() {
       try {
+        state.history = pruneExpiredHistory(state.history);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         if (npointBinId) {
           localStorage.setItem(NPOINT_ID_KEY, npointBinId);
@@ -1510,19 +1650,25 @@
 
     function loadLocal() {
       try {
-        const savedId = localStorage.getItem(NPOINT_ID_KEY);
-        if (savedId) npointBinId = extractBinId(savedId);
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const savedId = localStorage.getItem(NPOINT_ID_KEY) || localStorage.getItem(LEGACY_NPOINT_ID_KEY);
+        if (savedId) {
+          npointBinId = extractBinId(savedId);
+          if (npointBinId) localStorage.setItem(NPOINT_ID_KEY, npointBinId);
+        }
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
           state = {
             ...state,
             ...parsed,
             adminPin: parsed.adminPin || DEFAULT_PIN,
+            alarmActive: Boolean(parsed.alarmActive),
+            alarmTriggeredAt: parsed.alarmTriggeredAt || null,
             missions: Array.isArray(parsed.missions) && parsed.missions.length ? parsed.missions : [...DEFAULT_MISSIONS],
             pending: Array.isArray(parsed.pending) ? parsed.pending : [],
-            history: Array.isArray(parsed.history) ? parsed.history : []
+            history: pruneExpiredHistory(parsed.history)
           };
+          persistLocal();
         }
       } catch (e) {}
     }
@@ -1555,7 +1701,7 @@
       const box = document.getElementById('syncDiagBox');
       if (!box) return;
       if (!npointBinId) {
-        box.textContent = 'Status Cloud: Belum ada ruang terhubung. Klik "Buat Ruang Cloud Baru" untuk mulai.';
+        box.textContent = 'Status Cloud: Belum ada ruang terhubung. Tempel ID/Link npoint.io di bawah.';
         return;
       }
       const timeStr = lastSyncTime ? new Date(lastSyncTime).toLocaleTimeString('id-ID') : 'menghubungkan...';
@@ -1573,9 +1719,11 @@
         timerTotalSec: typeof remote.timerTotalSec === 'number' ? remote.timerTotalSec : 0,
         timerRunning: Boolean(remote.timerRunning),
         timerEndAt: remote.timerEndAt || null,
+        alarmActive: Boolean(remote.alarmActive),
+        alarmTriggeredAt: remote.alarmTriggeredAt || null,
         missions: Array.isArray(remote.missions) ? remote.missions : [...DEFAULT_MISSIONS],
         pending: Array.isArray(remote.pending) ? remote.pending : [],
-        history: Array.isArray(remote.history) ? remote.history : [],
+        history: pruneExpiredHistory(remote.history),
         updatedAt: remote.updatedAt || Date.now()
       };
     }
@@ -1603,12 +1751,24 @@
         if (remote) {
           const prevPending = (state.pending || []).length;
           const prevPoints = state.points || 0;
+          const prevAlarm = Boolean(state.alarmActive);
           const changed = JSON.stringify(remote) !== JSON.stringify(state);
 
           if (changed) {
             state = remote;
             persistLocal();
             renderAll();
+
+            if (!prevAlarm && state.alarmActive) {
+              if (currentRole === 'adik') {
+                playAlarmBurst();
+              } else {
+                playChime();
+                showToast('Waktu main HP Adik habis! Alarm HP Adik berbunyi.');
+              }
+            } else if (prevAlarm && !state.alarmActive && currentRole === 'adik') {
+              showToast('Alarm telah dimatikan oleh Kakak');
+            }
 
             if (state.pending.length > prevPending && currentRole === 'kakak') {
               playChime();
@@ -1636,10 +1796,9 @@
       }
     }
 
-    // Read-Merge-Write mutation so 2 phones never overwrite each other's actions
     async function mutateCloudState(mutatorFn, successToast) {
-      // 1. Apply locally immediately for instant UI responsiveness
       mutatorFn(state);
+      state.history = pruneExpiredHistory(state.history);
       state.updatedAt = Date.now();
       persistLocal();
       renderAll();
@@ -1650,11 +1809,14 @@
       isSyncing = true;
       setConnStatus('syncing', 'SYNCING...', 'MENGIRIM...');
       try {
-        // 2. Fetch latest server snapshot first, then apply exact same mutation
         let baseState = await fetchRemoteState();
-        if (!baseState) baseState = { ...state };
-        else mutatorFn(baseState);
+        if (!baseState) {
+          baseState = { ...state };
+        } else {
+          mutatorFn(baseState);
+        }
 
+        baseState.history = pruneExpiredHistory(baseState.history);
         baseState.updatedAt = Date.now();
         const postRes = await fetch(getApiUrl(npointBinId), {
           method: 'POST',
@@ -1679,7 +1841,6 @@
       }
     }
 
-    // Automatic background polling every 2.5 seconds
     setInterval(() => {
       if (npointBinId && document.visibilityState === 'visible') {
         pullFromCloud(false);
@@ -1692,10 +1853,24 @@
       }
     });
 
-    function playChime() {
-      if (!soundEnabled) return;
+    function ensureAudioContext() {
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (!sharedAudioCtx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) sharedAudioCtx = new AudioCtx();
+        }
+        if (sharedAudioCtx && sharedAudioCtx.state === 'suspended') {
+          sharedAudioCtx.resume().catch(() => {});
+        }
+      } catch (e) {}
+      return sharedAudioCtx;
+    }
+
+    function playChime() {
+      if (!soundEnabled && !(state.alarmActive && currentRole === 'adik')) return;
+      try {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
         const notes = [523.25, 659.25, 783.99, 1046.5];
         notes.forEach((freq, idx) => {
           const osc = ctx.createOscillator();
@@ -1713,6 +1888,36 @@
       } catch (e) {}
     }
 
+    // Loud, persistent alarm tone burst for HP Adik until Kakak turns it off
+    function playAlarmBurst() {
+      try {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const pattern = [987.77, 1318.51, 987.77, 1318.51];
+        pattern.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          const start = ctx.currentTime + idx * 0.18;
+          gain.gain.setValueAtTime(0.001, start);
+          gain.gain.exponentialRampToValueAtTime(0.32, start + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.001, start + 0.16);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(start);
+          osc.stop(start + 0.17);
+        });
+      } catch (e) {}
+    }
+
+    // Continuous alarm loop while alarmActive is true on Adik's phone
+    setInterval(() => {
+      if (state.alarmActive && currentRole === 'adik') {
+        playAlarmBurst();
+      }
+    }, 1500);
+
     function getEffectiveRemainingSec() {
       if (state.timerRunning && state.timerEndAt) {
         return Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000));
@@ -1724,15 +1929,18 @@
       if (state.timerRunning) {
         const left = getEffectiveRemainingSec();
         if (left <= 0) {
-          playChime();
           if (currentRole === 'adik') {
-            document.getElementById('timeUpModal').classList.remove('hidden');
+            playAlarmBurst();
+          } else {
+            playChime();
           }
           mutateCloudState((s) => {
             s.timerRunning = false;
             s.timerRemainingSec = 0;
             s.timerEndAt = null;
-          }, 'Waktu main HP habis!');
+            s.alarmActive = true;
+            s.alarmTriggeredAt = Date.now();
+          }, 'Waktu main HP habis! Alarm berbunyi.');
         } else {
           renderTimerOnly();
         }
@@ -1848,6 +2056,24 @@
     }
 
     function renderAll() {
+      state.history = pruneExpiredHistory(state.history);
+
+      // Sync alarm lock UI for Adik vs Kakak
+      const timeUpModal = document.getElementById('timeUpModal');
+      const adminAlarmBanner = document.getElementById('adminAlarmBanner');
+      if (state.alarmActive) {
+        if (currentRole === 'adik') {
+          timeUpModal.classList.remove('hidden');
+          adminAlarmBanner.classList.add('hidden');
+        } else {
+          timeUpModal.classList.add('hidden');
+          adminAlarmBanner.classList.remove('hidden');
+        }
+      } else {
+        timeUpModal.classList.add('hidden');
+        adminAlarmBanner.classList.add('hidden');
+      }
+
       const setupBanner = document.getElementById('setupBanner');
       if (npointBinId) {
         setupBanner.classList.add('hidden');
@@ -1915,7 +2141,7 @@
       const adikHistEl = document.getElementById('adikHistoryList');
       const histSlice = (state.history || []).slice(0, 15);
       if (!histSlice.length) {
-        adikHistEl.innerHTML = `<div class="empty-state">Belum ada riwayat transaksi poin.</div>`;
+        adikHistEl.innerHTML = `<div class="empty-state">Belum ada riwayat transaksi poin dalam 48 jam terakhir.</div>`;
       } else {
         adikHistEl.innerHTML = histSlice.map(h => {
           const isPos = h.delta >= 0;
@@ -1935,6 +2161,33 @@
             </div>
           `;
         }).join('');
+      }
+
+      const adminHistEl = document.getElementById('adminHistoryList');
+      if (adminHistEl) {
+        const adminHistSlice = (state.history || []).slice(0, 15);
+        if (!adminHistSlice.length) {
+          adminHistEl.innerHTML = `<div class="empty-state">Riwayat poin kosong.</div>`;
+        } else {
+          adminHistEl.innerHTML = adminHistSlice.map(h => {
+            const isPos = h.delta >= 0;
+            const timeStr = new Date(h.time).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            return `
+              <div class="list-item">
+                <div class="item-left">
+                  <div class="item-icon">${getMissionIconSvg(isPos ? 'star' : 'sparkle')}</div>
+                  <div class="item-body">
+                    <div class="item-title">${renderExpandableText('khi_' + h.id, h.title)}</div>
+                    <div class="item-meta">
+                      <span class="pt-tag ${isPos ? '' : 'neg'}">${isPos ? '+' : ''}${h.delta} PT</span>
+                      <span class="sub-tag">${timeStr}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
       }
 
       const pendList = state.pending || [];
@@ -2025,6 +2278,8 @@
     }
 
     document.addEventListener('click', (e) => {
+      ensureAudioContext();
+
       const expBtn = e.target.closest('[data-expand-id]');
       if (expBtn) {
         const id = expBtn.getAttribute('data-expand-id');
@@ -2177,8 +2432,23 @@
       updatePinDots();
     });
 
-    document.getElementById('dismissTimeUpBtn').addEventListener('click', () => {
-      document.getElementById('timeUpModal').classList.add('hidden');
+    // Kakak remote stop alarm button
+    document.getElementById('stopAlarmBtn').addEventListener('click', () => {
+      mutateCloudState((s) => {
+        s.alarmActive = false;
+        s.alarmTriggeredAt = null;
+      }, 'Alarm HP Adik dimatikan!');
+    });
+
+    // Admin clear all point history button
+    document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+      if (!(state.history || []).length) {
+        showToast('Riwayat poin sudah kosong');
+        return;
+      }
+      mutateCloudState((s) => {
+        s.history = [];
+      }, 'Seluruh riwayat poin berhasil dihapus!');
     });
 
     document.getElementById('forceSyncBtn').addEventListener('click', () => {
@@ -2241,40 +2511,6 @@
       }, 'Misi baru ditambahkan');
     });
 
-    // Create new npoint.io bin in 1 click
-    document.getElementById('createNpointBtn').addEventListener('click', async () => {
-      const btn = document.getElementById('createNpointBtn');
-      btn.disabled = true;
-      btn.textContent = 'Membuat...';
-      try {
-        const res = await fetch('https://api.npoint.io/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(state)
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const created = await res.json();
-        const newId = extractBinId(created.id || created.binId || created.url || '');
-        if (!newId) throw new Error('ID ruang tidak ditemukan');
-        npointBinId = newId;
-        lastSyncTime = Date.now();
-        lastError = '';
-        persistLocal();
-        setConnStatus('live', 'LIVE', 'TERHUBUNG');
-        renderAll();
-        showToast('Ruang Cloud dibuat! Salin Link Undangan Adik');
-      } catch (err) {
-        lastError = err.message || 'Gagal membuat ruang';
-        setConnStatus('error', 'GAGAL', 'ERROR');
-        updateDiagBox();
-        showToast('Gagal membuat ruang npoint.io');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Buat Ruang Cloud Baru';
-      }
-    });
-
-    // Connect to existing npoint.io ID / URL
     document.getElementById('connectNpointBtn').addEventListener('click', async () => {
       const raw = document.getElementById('npointIdInput').value;
       const id = extractBinId(raw);
@@ -2288,10 +2524,9 @@
       await pullFromCloud(true);
     });
 
-    // Copy invite link for Adik
     document.getElementById('copyInviteLinkBtn').addEventListener('click', async () => {
       if (!npointBinId) {
-        showToast('Klik "Buat Ruang Cloud Baru" dulu!');
+        showToast('Hubungkan ID npoint.io dulu!');
         return;
       }
       try {
@@ -2342,6 +2577,10 @@
     });
 
     document.getElementById('soundToggleBtn').addEventListener('click', () => {
+      if (state.alarmActive && currentRole === 'adik') {
+        showToast('Alarm terkunci! Hanya bisa dimatikan dari HP Kakak');
+        return;
+      }
       soundEnabled = !soundEnabled;
       document.getElementById('soundIconOn').classList.toggle('hidden', !soundEnabled);
       document.getElementById('soundIconOff').classList.toggle('hidden', soundEnabled);
@@ -2360,6 +2599,13 @@
         document.exitFullscreen().catch(() => {});
       } else {
         requestFullscreenSafe();
+      }
+    });
+
+    document.addEventListener('pointerdown', function onAnyTap() {
+      ensureAudioContext();
+      if (state.alarmActive && currentRole === 'adik') {
+        playAlarmBurst();
       }
     });
 
