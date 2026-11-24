@@ -55,7 +55,6 @@
       user-select: none;
     }
 
-    /* 3D Glossy Pastel Spheres in Background */
     .bg-orbs {
       position: fixed;
       inset: 0;
@@ -97,7 +96,6 @@
       box-shadow: inset -14px -18px 34px rgba(96, 94, 210, 0.3), 0 24px 48px rgba(134, 133, 239, 0.22);
     }
 
-    /* Main Container */
     .app-shell {
       position: relative;
       z-index: 1;
@@ -109,7 +107,6 @@
       gap: 16px;
     }
 
-    /* Frosted Glass Card */
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(24px) saturate(165%);
@@ -121,7 +118,6 @@
       position: relative;
     }
 
-    /* Header Card */
     .header-top {
       display: flex;
       align-items: center;
@@ -135,6 +131,7 @@
       align-items: center;
       gap: 12px;
       min-width: 0;
+      flex: 1;
     }
 
     .brand-icon {
@@ -152,9 +149,10 @@
 
     .brand-info {
       min-width: 0;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
     }
 
     .brand-title-row {
@@ -190,6 +188,16 @@
       color: var(--emerald);
     }
 
+    .status-pill.syncing {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .status-pill.error {
+      background: var(--rose-soft);
+      color: var(--rose);
+    }
+
     .status-pill.local {
       background: var(--blue-soft);
       color: var(--blue);
@@ -206,17 +214,20 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: rgba(255, 255, 255, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 999px;
       padding: 3px 10px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       color: var(--navy-soft);
       cursor: pointer;
       width: fit-content;
       max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .header-controls {
@@ -229,14 +240,14 @@
     .icon-btn-group {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       flex-shrink: 0;
     }
 
     .glass-icon-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
       border: 1.5px solid var(--glass-border);
       background: var(--glass-inner);
       color: var(--navy);
@@ -262,7 +273,7 @@
       padding: 4px;
       gap: 4px;
       flex: 1;
-      max-width: 230px;
+      max-width: 215px;
     }
 
     .role-btn {
@@ -273,12 +284,12 @@
       font-family: inherit;
       font-size: 13px;
       font-weight: 700;
-      padding: 8px 12px;
+      padding: 8px 10px;
       border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       cursor: pointer;
       transition: all 0.2s ease;
       white-space: nowrap;
@@ -290,7 +301,6 @@
       box-shadow: 0 6px 16px rgba(37, 99, 235, 0.32);
     }
 
-    /* Section Header */
     .card-head {
       display: flex;
       align-items: center;
@@ -352,7 +362,6 @@
       border-color: rgba(245, 158, 11, 0.35);
     }
 
-    /* Radial Timer Dial (Inspired by Reference Lighting Dial) */
     .dial-wrapper {
       position: relative;
       width: 224px;
@@ -423,7 +432,6 @@
       text-transform: uppercase;
     }
 
-    /* Buttons */
     .btn-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -474,7 +482,6 @@
       color: var(--rose);
     }
 
-    /* Points Balance Card */
     .points-hero {
       display: flex;
       align-items: center;
@@ -558,7 +565,6 @@
       color: var(--blue);
     }
 
-    /* 7-Day Capsule Bar Chart (Matching Reference Bottom-Right Widget) */
     .chart-bars {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -609,7 +615,6 @@
       color: var(--blue);
     }
 
-    /* Filter Pills */
     .filter-row {
       display: flex;
       align-items: center;
@@ -642,7 +647,6 @@
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
     }
 
-    /* Mission & History List Items (No Overlap + Instagram Expandable Text) */
     .item-list {
       display: flex;
       flex-direction: column;
@@ -787,7 +791,6 @@
       padding: 8px 11px;
     }
 
-    /* Inputs & Admin Forms */
     .input-group {
       display: flex;
       flex-direction: column;
@@ -855,7 +858,6 @@
       transform: scale(0.95);
     }
 
-    /* PIN Keypad Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -932,7 +934,6 @@
       color: #ffffff;
     }
 
-    /* Toast */
     .toast {
       position: fixed;
       bottom: calc(22px + env(safe-area-inset-bottom));
@@ -1009,16 +1010,21 @@
 
       <div class="header-controls">
         <div class="icon-btn-group">
+          <button id="forceSyncBtn" class="glass-icon-btn" title="Tarik Data Server Sekarang">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+          </button>
           <button id="soundToggleBtn" class="glass-icon-btn" title="Suara Alarm">
-            <svg id="soundIconOn" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg id="soundIconOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
             </svg>
-            <svg id="soundIconOff" class="hidden" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg id="soundIconOff" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
             </svg>
           </button>
           <button id="fullscreenBtn" class="glass-icon-btn" title="Layar Penuh">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
             </svg>
           </button>
@@ -1065,7 +1071,6 @@
                 <stop offset="100%" stop-color="#2563eb" />
               </linearGradient>
             </defs>
-            <!-- 270 deg arc = 424 of 565 circumference -->
             <circle class="dial-track" cx="110" cy="110" r="90" stroke-dasharray="424 566" />
             <circle id="dialProgressCircle" class="dial-progress" cx="110" cy="110" r="90" stroke-dasharray="424 566" stroke-dashoffset="424" />
           </svg>
@@ -1292,7 +1297,6 @@
           <span id="syncModeBadge" class="badge-pill">INSTANT</span>
         </div>
 
-        <!-- Instant Sync Snapshot (Works Zero-Account) -->
         <div class="input-group" style="margin-bottom: 16px;">
           <div class="btn-row">
             <button id="exportSyncBtn" class="btn-secondary">Salin Kode Sync</button>
@@ -1300,10 +1304,9 @@
           </div>
         </div>
 
-        <!-- Live Firebase Cloud Connection (Zero Code) -->
         <div class="input-group">
-          <div style="font-size:12px; font-weight:800; color:var(--navy-soft);">Live Server Real-Time (Opsional)</div>
-          <textarea id="firebaseConfigInput" class="glass-textarea" placeholder='Tempel firebaseConfig dari Firebase Console di sini agar sinkron otomatis tanpa kirim kode...'></textarea>
+          <div style="font-size:12px; font-weight:800; color:var(--navy-soft);">Live Server Real-Time (Firebase)</div>
+          <textarea id="firebaseConfigInput" class="glass-textarea" placeholder='Tempel firebaseConfig dari Firebase Console di sini agar sinkron otomatis...'></textarea>
           <div class="btn-row">
             <button id="saveFirebaseBtn" class="btn-primary">Aktifkan Live</button>
             <button id="copyInviteLinkBtn" class="btn-success">Link Undangan Adik</button>
@@ -1376,9 +1379,8 @@
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getFirestore, doc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-    // Register Service Worker for Standalone PWA Install
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
@@ -1395,6 +1397,7 @@
     ];
 
     let state = {
+      rev: 1,
       roomCode: 'anhs-family',
       adminPin: DEFAULT_PIN,
       points: 30,
@@ -1416,10 +1419,28 @@
     let expandedTexts = new Set();
     let pinBuffer = '';
     let db = null;
+    let activeProjectId = '';
     let unsubRoom = null;
     let isRemoteUpdate = false;
 
-    // Parse URL hash invite link (#live=...) if Adik opened Kakak's invite link
+    function loadLocalState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          state = {
+            ...state,
+            ...parsed,
+            rev: Number(parsed.rev) || 1,
+            adminPin: parsed.adminPin || DEFAULT_PIN,
+            missions: Array.isArray(parsed.missions) && parsed.missions.length ? parsed.missions : [...DEFAULT_MISSIONS],
+            pending: Array.isArray(parsed.pending) ? parsed.pending : [],
+            history: Array.isArray(parsed.history) ? parsed.history : []
+          };
+        }
+      } catch (e) {}
+    }
+
     function checkInviteHash() {
       try {
         const hash = window.location.hash || '';
@@ -1430,39 +1451,30 @@
             localStorage.setItem(FB_CFG_KEY, JSON.stringify(payload.fb));
           }
           if (payload && payload.room) {
-            state.roomCode = payload.room;
+            state.roomCode = sanitizeRoom(payload.room);
           }
+          state.rev = 0;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
           history.replaceState(null, '', window.location.pathname + window.location.search);
-          showToast('Terhubung ke ruang ' + state.roomCode);
-        }
-      } catch (e) {}
-    }
-
-    function loadLocalState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          state = {
-            ...state,
-            ...parsed,
-            adminPin: parsed.adminPin || DEFAULT_PIN,
-            missions: Array.isArray(parsed.missions) && parsed.missions.length ? parsed.missions : [...DEFAULT_MISSIONS],
-            pending: Array.isArray(parsed.pending) ? parsed.pending : [],
-            history: Array.isArray(parsed.history) ? parsed.history : []
-          };
+          showToast('Ruang ' + state.roomCode + ' terhubung!');
         }
       } catch (e) {}
     }
 
     function saveState() {
+      state.rev = (Number(state.rev) || 0) + 1;
       state.updatedAt = Date.now();
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (e) {}
       if (db && !isRemoteUpdate) {
         const roomRef = doc(db, 'anhs_rooms', sanitizeRoom(state.roomCode));
-        setDoc(roomRef, state).catch(() => {});
+        setDoc(roomRef, state).catch((err) => {
+          if (err && err.code === 'permission-denied') {
+            setConnStatus('error', 'RULES BLOCKED', 'RULES ERROR');
+            showToast('Firebase Rules memblokir! Ubah ke allow read, write: if true;');
+          }
+        });
       }
       renderAll();
     }
@@ -1495,24 +1507,59 @@
       }
     }
 
+    function setConnStatus(mode, pillLabel, syncLabel) {
+      const pill = document.getElementById('connStatusPill');
+      const txt = document.getElementById('connStatusText');
+      const syncBadge = document.getElementById('syncModeBadge');
+      pill.className = 'status-pill ' + mode;
+      txt.textContent = pillLabel;
+      if (syncBadge && syncLabel) {
+        syncBadge.textContent = syncLabel;
+      }
+    }
+
+    function applyRemoteDoc(remote) {
+      if (!remote) return;
+      isRemoteUpdate = true;
+      state = {
+        ...state,
+        ...remote,
+        rev: Math.max(Number(state.rev) || 0, Number(remote.rev) || 1),
+        adminPin: remote.adminPin || state.adminPin || DEFAULT_PIN,
+        missions: Array.isArray(remote.missions) ? remote.missions : state.missions,
+        pending: Array.isArray(remote.pending) ? remote.pending : [],
+        history: Array.isArray(remote.history) ? remote.history : []
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+      isRemoteUpdate = false;
+    }
+
     function initFirebaseFromStorage() {
       try {
         const saved = localStorage.getItem(FB_CFG_KEY);
         if (!saved) {
-          updateConnBadge(false);
+          activeProjectId = '';
+          setConnStatus('local', 'LOCAL', 'INSTANT SYNC');
+          renderAll();
           return;
         }
         const cfg = JSON.parse(saved);
         if (!cfg || !cfg.apiKey || !cfg.projectId) {
-          updateConnBadge(false);
+          activeProjectId = '';
+          setConnStatus('local', 'LOCAL', 'INSTANT SYNC');
+          renderAll();
           return;
         }
+        activeProjectId = cfg.projectId;
         document.getElementById('firebaseConfigInput').value = JSON.stringify(cfg, null, 2);
+        setConnStatus('syncing', 'SYNCING...', 'CONNECTING');
         const app = initializeApp(cfg, 'anhs_' + Date.now());
         db = getFirestore(app);
+        renderAll();
         subscribeToRoom();
       } catch (e) {
-        updateConnBadge(false);
+        setConnStatus('error', 'CFG ERROR', 'CHECK CONFIG');
       }
     }
 
@@ -1522,44 +1569,32 @@
       const roomId = sanitizeRoom(state.roomCode);
       const roomRef = doc(db, 'anhs_rooms', roomId);
       unsubRoom = onSnapshot(roomRef, (snap) => {
-        updateConnBadge(true);
+        setConnStatus('live', 'LIVE', 'LIVE CLOUD');
         if (snap.exists()) {
           const remote = snap.data();
-          if ((remote.updatedAt || 0) > (state.updatedAt || 0)) {
-            isRemoteUpdate = true;
-            state = {
-              ...state,
-              ...remote,
-              adminPin: remote.adminPin || state.adminPin || DEFAULT_PIN
-            };
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            renderAll();
-            isRemoteUpdate = false;
+          const remoteRev = Number(remote.rev) || 0;
+          const localRev = Number(state.rev) || 0;
+          if (!snap.metadata.hasPendingWrites && (remoteRev >= localRev || localRev === 0)) {
+            applyRemoteDoc(remote);
           }
         } else {
-          setDoc(roomRef, state).catch(() => {});
+          setDoc(roomRef, state).catch((err) => {
+            if (err && err.code === 'permission-denied') {
+              setConnStatus('error', 'RULES BLOCKED', 'RULES ERROR');
+              showToast('Firestore Rules memblokir akses tulis!');
+            }
+          });
         }
-      }, () => {
-        updateConnBadge(false);
+      }, (err) => {
+        if (err && err.code === 'permission-denied') {
+          setConnStatus('error', 'RULES BLOCKED', 'RULES ERROR');
+          showToast('Firestore Rules memblokir akses baca!');
+        } else {
+          setConnStatus('syncing', 'OFFLINE', 'RETRYING');
+        }
       });
     }
 
-    function updateConnBadge(isLive) {
-      const pill = document.getElementById('connStatusPill');
-      const txt = document.getElementById('connStatusText');
-      const syncBadge = document.getElementById('syncModeBadge');
-      if (isLive) {
-        pill.className = 'status-pill live';
-        txt.textContent = 'LIVE';
-        syncBadge.textContent = 'LIVE CLOUD';
-      } else {
-        pill.className = 'status-pill local';
-        txt.textContent = 'READY';
-        syncBadge.textContent = 'INSTANT SYNC';
-      }
-    }
-
-    // Audio Chime when Timer Finishes
     function playChime() {
       if (!soundEnabled) return;
       try {
@@ -1581,11 +1616,9 @@
       } catch (e) {}
     }
 
-    // Timer Tick Loop
     function getEffectiveRemainingSec() {
       if (state.timerRunning && state.timerEndAt) {
-        const left = Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000));
-        return left;
+        return Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000));
       }
       return Math.max(0, state.timerRemainingSec || 0);
     }
@@ -1612,7 +1645,6 @@
       return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
     }
 
-    // Instagram-style Expandable Text Helper
     function renderExpandableText(id, text) {
       const limit = window.innerWidth < 440 ? 24 : 38;
       const safe = escapeHtml(text);
@@ -1716,7 +1748,8 @@
     }
 
     function renderAll() {
-      document.getElementById('roomCodeLabel').textContent = state.roomCode;
+      const projTag = activeProjectId ? ` • ${activeProjectId.slice(0, 12)}` : '';
+      document.getElementById('roomCodeLabel').textContent = state.roomCode + projTag;
       document.getElementById('roomCodeInput').value = state.roomCode;
       document.getElementById('adikPointsValue').textContent = state.points;
       document.getElementById('adminPointsValue').textContent = state.points;
@@ -1724,7 +1757,6 @@
       renderTimerOnly();
       renderWeeklyChart();
 
-      // Adik Missions List
       const pendingMissionIds = new Set((state.pending || []).map(p => p.missionId));
       const filteredMissions = (state.missions || []).filter(m => {
         const isPend = pendingMissionIds.has(m.id);
@@ -1763,7 +1795,6 @@
         }).join('');
       }
 
-      // Adik History List
       const adikHistEl = document.getElementById('adikHistoryList');
       const histSlice = (state.history || []).slice(0, 15);
       if (!histSlice.length) {
@@ -1789,7 +1820,6 @@
         }).join('');
       }
 
-      // Admin Pending Queue
       const pendList = state.pending || [];
       document.getElementById('pendingCountBadge').textContent = pendList.length + ' PENDING';
       const adminPendEl = document.getElementById('adminPendingList');
@@ -1816,7 +1846,6 @@
         `).join('');
       }
 
-      // Admin Mission Management
       const adminMissionEl = document.getElementById('adminMissionList');
       adminMissionEl.innerHTML = (state.missions || []).map(m => `
         <div class="list-item">
@@ -1842,7 +1871,7 @@
       t.textContent = msg;
       t.classList.add('show');
       clearTimeout(t._timer);
-      t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+      t._timer = setTimeout(() => t.classList.remove('show'), 2800);
     }
 
     function addHistory(title, delta) {
@@ -1873,9 +1902,7 @@
       saveState();
     }
 
-    // Event Delegation
     document.addEventListener('click', (e) => {
-      // Expand / Collapse Instagram text
       const expBtn = e.target.closest('[data-expand-id]');
       if (expBtn) {
         const id = expBtn.getAttribute('data-expand-id');
@@ -1885,14 +1912,12 @@
         return;
       }
 
-      // Redeem preset minutes
       const redBtn = e.target.closest('[data-mins]');
       if (redBtn) {
         exchangeMinutes(redBtn.getAttribute('data-mins'));
         return;
       }
 
-      // Filter pills
       const fBtn = e.target.closest('[data-filter]');
       if (fBtn) {
         missionFilter = fBtn.getAttribute('data-filter');
@@ -1901,7 +1926,6 @@
         return;
       }
 
-      // Adik submits mission
       const subBtn = e.target.closest('[data-submit-mission]');
       if (subBtn) {
         const mid = subBtn.getAttribute('data-submit-mission');
@@ -1917,7 +1941,6 @@
         return;
       }
 
-      // Kakak approves mission
       const appBtn = e.target.closest('[data-approve-id]');
       if (appBtn) {
         const pid = appBtn.getAttribute('data-approve-id');
@@ -1931,7 +1954,6 @@
         return;
       }
 
-      // Kakak rejects mission
       const rejBtn = e.target.closest('[data-reject-id]');
       if (rejBtn) {
         const pid = rejBtn.getAttribute('data-reject-id');
@@ -1941,7 +1963,6 @@
         return;
       }
 
-      // Kakak deletes mission
       const delBtn = e.target.closest('[data-del-mission]');
       if (delBtn) {
         const mid = delBtn.getAttribute('data-del-mission');
@@ -1951,7 +1972,6 @@
         return;
       }
 
-      // Quick points delta
       const qBtn = e.target.closest('[data-delta]');
       if (qBtn) {
         const delta = parseInt(qBtn.getAttribute('data-delta'), 10);
@@ -1962,7 +1982,6 @@
         return;
       }
 
-      // PIN keypad
       const keyBtn = e.target.closest('[data-key]');
       if (keyBtn) {
         if (pinBuffer.length < 4) {
@@ -2020,7 +2039,27 @@
       updatePinDots();
     });
 
-    // Timer Controls
+    document.getElementById('forceSyncBtn').addEventListener('click', async () => {
+      if (!db) {
+        showToast('Mode Lokal aktif (belum konek Firebase)');
+        return;
+      }
+      try {
+        showToast('Menarik data terbaru...');
+        const roomRef = doc(db, 'anhs_rooms', sanitizeRoom(state.roomCode));
+        const snap = await getDoc(roomRef);
+        if (snap.exists()) {
+          applyRemoteDoc(snap.data());
+          showToast('Sinkronisasi berhasil! (' + state.roomCode + ')');
+        } else {
+          await setDoc(roomRef, state);
+          showToast('Ruang dibuat di server!');
+        }
+      } catch (e) {
+        showToast('Gagal menarik data: periksa koneksi / Rules');
+      }
+    });
+
     document.getElementById('timerToggleBtn').addEventListener('click', () => {
       const rem = getEffectiveRemainingSec();
       if (rem <= 0) {
@@ -2051,7 +2090,6 @@
       if (val) exchangeMinutes(val);
     });
 
-    // Add Mission
     document.getElementById('addMissionBtn').addEventListener('click', () => {
       const title = document.getElementById('newMissionTitle').value.trim();
       const category = document.getElementById('newMissionDesc').value.trim() || 'Harian';
@@ -2071,12 +2109,13 @@
       saveState();
     });
 
-    // Room Code & PIN Settings
     document.getElementById('roomChipBtn').addEventListener('click', () => {
       const next = prompt('Masukkan Kode Ruang Keluarga (samakan di HP Kakak & Adik):', state.roomCode);
       if (next && next.trim()) {
         state.roomCode = sanitizeRoom(next);
-        saveState();
+        state.rev = 0;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        renderAll();
         subscribeToRoom();
         showToast('Ruang diubah ke ' + state.roomCode);
       }
@@ -2086,7 +2125,9 @@
       const val = document.getElementById('roomCodeInput').value.trim();
       if (!val) return;
       state.roomCode = sanitizeRoom(val);
-      saveState();
+      state.rev = 0;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
       subscribeToRoom();
       showToast('Kode ruang disimpan: ' + state.roomCode);
     });
@@ -2103,7 +2144,6 @@
       showToast('PIN Admin berhasil diperbarui');
     });
 
-    // Instant Sync Code (Zero-Server Backup / WhatsApp Sync)
     document.getElementById('exportSyncBtn').addEventListener('click', async () => {
       try {
         const code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
@@ -2129,7 +2169,6 @@
       }
     });
 
-    // Live Firebase Config Setup
     document.getElementById('saveFirebaseBtn').addEventListener('click', () => {
       const raw = document.getElementById('firebaseConfigInput').value;
       const cfg = parseFirebaseConfigInput(raw);
@@ -2139,7 +2178,7 @@
       }
       localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
       initFirebaseFromStorage();
-      showToast('Live Server aktif!');
+      showToast('Menghubungkan Live Server...');
     });
 
     document.getElementById('copyInviteLinkBtn').addEventListener('click', async () => {
@@ -2158,7 +2197,6 @@
       }
     });
 
-    // Sound & Fullscreen
     document.getElementById('soundToggleBtn').addEventListener('click', () => {
       soundEnabled = !soundEnabled;
       document.getElementById('soundIconOn').classList.toggle('hidden', !soundEnabled);
@@ -2181,7 +2219,6 @@
       }
     });
 
-    // Auto Fullscreen on first touch when opened in browser tab
     document.addEventListener('pointerdown', function onFirstTap() {
       if (!window.matchMedia('(display-mode: standalone)').matches) {
         requestFullscreenSafe();
@@ -2189,7 +2226,6 @@
       document.removeEventListener('pointerdown', onFirstTap);
     }, { once: true });
 
-    // Initialize
     loadLocalState();
     checkInviteHash();
     initFirebaseFromStorage();
