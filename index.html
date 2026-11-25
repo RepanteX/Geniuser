@@ -11,6 +11,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="mobile-web-app-capable" content="yes" />
   <title>Tuntasin</title>
+  <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/svg+xml" href="./icon.svg" />
   <link rel="apple-touch-icon" href="./icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1099,6 +1100,16 @@
     }
 
     /* ================= ENTRANCE SPLASH SCREEN ================= */
+    html.is-webapk-standalone .tuntasin-loader {
+      display: none !important;
+    }
+
+    html.is-webapk-standalone .app-shell {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
     .tuntasin-loader {
       position: fixed;
       inset: 0;
@@ -1299,6 +1310,11 @@
   </style>
 </head>
 <body>
+  <script>
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+      document.documentElement.classList.add('is-webapk-standalone');
+    }
+  </script>
   <!-- ENTRANCE SPLASH SCREEN -->
   <div id="tuntasinLoader" class="tuntasin-loader" aria-hidden="true">
     <div class="loader-ambient-orb orb-a"></div>
@@ -2840,9 +2856,16 @@
     const TuntasinEntrance = (() => {
       const loaderEl = document.getElementById('tuntasinLoader');
       const appEl = document.querySelector('.app-shell');
+      const isStandalone = document.documentElement.classList.contains('is-webapk-standalone');
       const bootAt = performance.now();
-      const MIN_SPLASH_MS = 950;
+      const MIN_SPLASH_MS = isStandalone ? 0 : 750;
       let dismissed = false;
+
+      if (isStandalone) {
+        if (loaderEl && loaderEl.parentNode) loaderEl.remove();
+        if (appEl) appEl.classList.add('is-ready');
+        dismissed = true;
+      }
 
       function hide() {
         if (dismissed) return;
