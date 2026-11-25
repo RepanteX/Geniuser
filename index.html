@@ -1099,167 +1099,7 @@
       display: none !important;
     }
 
-    /* ================= ENTRANCE SPLASH SCREEN ================= */
-    html.is-webapk-standalone .tuntasin-loader {
-      display: none !important;
-    }
 
-    html.is-webapk-standalone .app-shell {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
-    }
-
-    .tuntasin-loader {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(145deg, #c6e4ff 0%, #d5c8ff 48%, #b5dcff 100%);
-      transition: opacity 0.62s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
-                  filter 0.62s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, transform, filter;
-      overflow: hidden;
-    }
-
-    .tuntasin-loader.is-hidden {
-      opacity: 0;
-      transform: scale(1.06);
-      filter: blur(12px);
-      pointer-events: none;
-    }
-
-    .loader-ambient-orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .loader-ambient-orb.orb-a {
-      width: 260px;
-      height: 260px;
-      top: -60px;
-      left: -60px;
-      background: radial-gradient(circle at 32% 30%, #f5e8ff 0%, #c8a2ff 48%, #9b74f7 100%);
-      opacity: 0.72;
-      animation: loaderOrbFloat 3.6s ease-in-out infinite;
-    }
-
-    .loader-ambient-orb.orb-b {
-      width: 240px;
-      height: 240px;
-      bottom: -55px;
-      right: -55px;
-      background: radial-gradient(circle at 30% 28%, #e6f7ff 0%, #8ed4ff 52%, #52a8f7 100%);
-      opacity: 0.75;
-      animation: loaderOrbFloat 4s ease-in-out infinite reverse;
-    }
-
-    .loader-glow-ring {
-      position: absolute;
-      width: 190px;
-      height: 190px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.28) 0%, rgba(139, 92, 246, 0.08) 55%, transparent 74%);
-      filter: blur(16px);
-      animation: loaderPulseGlow 2.2s ease-in-out infinite;
-    }
-
-    .loader-core {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .loader-glass-emblem {
-      width: 86px;
-      height: 86px;
-      border-radius: 26px;
-      background: rgba(255, 255, 255, 0.56);
-      backdrop-filter: blur(24px) saturate(165%);
-      -webkit-backdrop-filter: blur(24px) saturate(165%);
-      border: 1.5px solid rgba(255, 255, 255, 0.92);
-      box-shadow: 0 22px 44px -12px rgba(31, 56, 118, 0.22),
-                  inset 0 2px 4px rgba(255, 255, 255, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transform: scale(0.82) translateY(12px);
-      animation: loaderEmblemIn 0.68s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    .loader-icon-box {
-      width: 58px;
-      height: 58px;
-      border-radius: 19px;
-      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-      box-shadow: 0 10px 22px -4px rgba(37, 99, 235, 0.48),
-                  inset 0 1px 1px rgba(255, 255, 255, 0.55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .loader-shield-path {
-      stroke-dasharray: 64;
-      stroke-dashoffset: 64;
-      animation: loaderStrokeDraw 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.14s forwards;
-    }
-
-    .loader-check-path {
-      stroke-dasharray: 24;
-      stroke-dashoffset: 24;
-      animation: loaderStrokeDraw 0.48s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
-    }
-
-    .loader-brand-title {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--navy);
-      opacity: 0;
-      transform: translateY(8px);
-      animation: loaderFadeUp 0.56s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
-    }
-
-    .loader-track {
-      width: 116px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.68);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(6px);
-      animation: loaderFadeUp 0.48s ease 0.34s forwards;
-    }
-
-    .loader-bar {
-      width: 46%;
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #3b82f6 0%, #6366f1 50%, #2563eb 100%);
-      animation: loaderBarSlide 1.05s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    }
-
-    .app-shell {
-      opacity: 0;
-      transform: translateY(10px) scale(0.982);
-      transition: opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1) 0.08s,
-                  transform 0.58s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
-    }
-
-    .app-shell.is-ready {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
 
     /* ================= POINTS NUMBER COUNTER ANIMATION ================= */
     .points-value {
@@ -1280,62 +1120,10 @@
     .points-value.is-locked {
       transform: scale(1.09);
     }
-
-    @keyframes loaderEmblemIn {
-      to { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    @keyframes loaderStrokeDraw {
-      to { stroke-dashoffset: 0; }
-    }
-
-    @keyframes loaderFadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes loaderBarSlide {
-      0% { transform: translateX(-115%); }
-      100% { transform: translateX(235%); }
-    }
-
-    @keyframes loaderPulseGlow {
-      0%, 100% { transform: scale(0.94); opacity: 0.72; }
-      50% { transform: scale(1.08); opacity: 1; }
-    }
-
-    @keyframes loaderOrbFloat {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-10px) scale(1.03); }
-    }
+  
   </style>
 </head>
 <body>
-  <script>
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-      document.documentElement.classList.add('is-webapk-standalone');
-    }
-  </script>
-  <!-- ENTRANCE SPLASH SCREEN -->
-  <div id="tuntasinLoader" class="tuntasin-loader" aria-hidden="true">
-    <div class="loader-ambient-orb orb-a"></div>
-    <div class="loader-ambient-orb orb-b"></div>
-    <div class="loader-glow-ring"></div>
-    <div class="loader-core">
-      <div class="loader-glass-emblem">
-        <div class="loader-icon-box">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <path class="loader-shield-path" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <polyline class="loader-check-path" points="9 12 11 14 15 10"/>
-          </svg>
-        </div>
-      </div>
-      <div class="loader-brand-title">Tuntasin</div>
-      <div class="loader-track">
-        <div class="loader-bar"></div>
-      </div>
-    </div>
-  </div>
-
   <div class="bg-orbs">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
@@ -2850,44 +2638,6 @@
       }
       document.removeEventListener('pointerdown', onFirstTap);
     }, { once: true });
-
-
-    /* ================= ENTRANCE SPLASH CONTROLLER ================= */
-    const TuntasinEntrance = (() => {
-      const loaderEl = document.getElementById('tuntasinLoader');
-      const appEl = document.querySelector('.app-shell');
-      const isStandalone = document.documentElement.classList.contains('is-webapk-standalone');
-      const bootAt = performance.now();
-      const MIN_SPLASH_MS = isStandalone ? 0 : 750;
-      let dismissed = false;
-
-      if (isStandalone) {
-        if (loaderEl && loaderEl.parentNode) loaderEl.remove();
-        if (appEl) appEl.classList.add('is-ready');
-        dismissed = true;
-      }
-
-      function hide() {
-        if (dismissed) return;
-        dismissed = true;
-        const elapsed = performance.now() - bootAt;
-        const waitMs = Math.max(0, MIN_SPLASH_MS - elapsed);
-
-        setTimeout(() => {
-          if (loaderEl) loaderEl.classList.add('is-hidden');
-          if (appEl) appEl.classList.add('is-ready');
-          setTimeout(() => {
-            if (loaderEl && loaderEl.parentNode) loaderEl.remove();
-          }, 680);
-        }, waitMs);
-      }
-
-      // Safety fallback so slow network never blocks entry
-      setTimeout(hide, 3200);
-
-      return { hide };
-    })();
-
     /* ================= BALANCE COUNTER (SLOWDOWN 3 DIGIT TERAKHIR) ================= */
     function animatePointsCounter(element, rawTarget) {
       if (!element) return;
@@ -3014,11 +2764,7 @@
     renderAll();
     if (npointBinId) {
       setConnStatus('syncing', 'SYNCING...', 'MENGHUBUNGKAN');
-      pullFromCloud(false).finally(() => {
-        TuntasinEntrance.hide();
-      });
-    } else {
-      TuntasinEntrance.hide();
+      pullFromCloud(false);
     }
   </script>
 </body>

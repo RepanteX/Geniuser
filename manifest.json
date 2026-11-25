@@ -1,7 +1,7 @@
 {
-  "name": "",
-  "short_name": "",
-  "description": "",
+  "name": "Tuntasin",
+  "short_name": "Tuntasin",
+  "description": "Sistem Poin Tugas & Penukaran Durasi Main HP",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

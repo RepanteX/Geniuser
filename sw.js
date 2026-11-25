@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tuntasin-npoint-v9';
+const CACHE_NAME = 'tuntasin-npoint-v10';
 const ASSETS = ['./manifest.json', './icon.svg'];
 
 self.addEventListener('install', (event) => {
