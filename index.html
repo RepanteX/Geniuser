@@ -868,31 +868,232 @@
 
     .quick-pt-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     .quick-pt-btn {
       border: 1.5px solid var(--glass-border);
       background: var(--glass-inner);
-      border-radius: 14px;
-      padding: 11px 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 800;
+      border-radius: 16px;
+      height: 48px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      transition: transform 0.12s ease;
+      box-shadow: 0 6px 16px rgba(20, 29, 56, 0.05);
+      transition: transform 0.13s ease, background 0.15s ease, box-shadow 0.15s ease;
     }
 
     .quick-pt-btn.plus {
       color: var(--emerald);
+      background: linear-gradient(145deg, rgba(236, 253, 245, 0.85) 0%, rgba(255, 255, 255, 0.72) 100%);
+      border-color: rgba(16, 185, 129, 0.32);
     }
 
     .quick-pt-btn.minus {
       color: var(--rose);
+      background: linear-gradient(145deg, rgba(255, 241, 242, 0.85) 0%, rgba(255, 255, 255, 0.72) 100%);
+      border-color: rgba(244, 63, 94, 0.32);
     }
 
     .quick-pt-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* ================= MISSION HEADER ADD BUTTON & DRAG HANDLER ================= */
+    .card-head-right {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+    }
+
+    .mini-plus-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(59, 130, 246, 0.32);
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .mini-plus-btn:active {
+      transform: scale(0.92);
+    }
+
+    .mission-card-item {
+      position: relative;
+      touch-action: pan-y;
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      will-change: transform;
+    }
+
+    .mission-card-item.is-hold-primed {
+      transform: scale(0.985);
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(59, 130, 246, 0.45);
+    }
+
+    .mission-card-item.is-dragging {
+      z-index: 25;
+      transition: none;
+      background: rgba(255, 255, 255, 0.96);
+      border-color: var(--blue-bright);
+      box-shadow: 0 18px 36px -8px rgba(37, 99, 235, 0.28), 0 4px 14px rgba(20, 29, 56, 0.1);
+      opacity: 0.97;
+    }
+
+    .drag-handle {
+      width: 26px;
+      height: 38px;
+      margin-left: -4px;
+      margin-right: -2px;
+      border-radius: 10px;
+      color: var(--navy-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .drag-handle:hover,
+    .mission-card-item.is-dragging .drag-handle {
+      color: var(--blue);
+      background: var(--blue-soft);
+      cursor: grabbing;
+    }
+
+    .req-status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    /* ================= CONTEXT WINDOW & DIALOG STYLES ================= */
+    .context-card {
+      width: 100%;
+      max-width: 350px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(28px) saturate(170%);
+      -webkit-backdrop-filter: blur(28px) saturate(170%);
+      border: 1.5px solid #ffffff;
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: 0 24px 60px rgba(20, 29, 56, 0.26);
+      text-align: left;
+      animation: popScaleIn 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes popScaleIn {
+      from { opacity: 0; transform: scale(0.94) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .context-mission-preview {
+      background: rgba(241, 245, 255, 0.85);
+      border: 1px solid rgba(219, 234, 254, 0.95);
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+
+    .context-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .context-option-btn {
+      width: 100%;
+      border: 1.5px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.13s ease, background 0.13s ease;
+    }
+
+    .context-option-btn:active {
+      transform: scale(0.97);
+      background: #ffffff;
+    }
+
+    .context-option-btn.salary {
+      color: var(--blue);
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .context-option-btn.danger {
+      color: var(--rose);
+      border-color: rgba(244, 63, 94, 0.25);
+      background: rgba(255, 241, 242, 0.72);
+    }
+
+    .context-option-btn.cancel {
+      justify-content: center;
+      color: var(--navy-soft);
+      background: rgba(241, 245, 249, 0.75);
+      margin-top: 2px;
+    }
+
+    .ctx-opt-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #ffffff;
+      box-shadow: 0 3px 8px rgba(20, 29, 56, 0.06);
+    }
+
+    .chip-select-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .chip-opt-btn {
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      background: var(--blue-soft);
+      color: var(--blue);
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .chip-opt-btn:active {
       transform: scale(0.95);
     }
 
@@ -1614,7 +1815,14 @@
             </div>
             <h2 class="card-title">Daftar Misi</h2>
           </div>
-          <span id="missionCountBadge" class="badge-pill">0 MISI</span>
+          <div class="card-head-right">
+            <span id="missionCountBadge" class="badge-pill">0 MISI</span>
+            <button id="openReqNewMissionBtn" type="button" class="mini-plus-btn" title="Request Misi Baru" aria-label="Request Misi Baru">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div class="filter-row">
@@ -1740,12 +1948,16 @@
         </div>
 
         <div class="quick-pt-grid">
-          <button class="quick-pt-btn plus" data-delta="10">+10 PT</button>
-          <button class="quick-pt-btn plus" data-delta="25">+25 PT</button>
-          <button class="quick-pt-btn plus" data-delta="50">+50 PT</button>
-          <button class="quick-pt-btn minus" data-delta="-10">-10 PT</button>
-          <button class="quick-pt-btn minus" data-delta="-25">-25 PT</button>
-          <button class="quick-pt-btn minus" data-delta="-50">-50 PT</button>
+          <button id="openBonusModalBtn" type="button" class="quick-pt-btn plus" title="Tambah Bonus Poin" aria-label="Tambah Bonus Poin">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button id="openPenaltyModalBtn" type="button" class="quick-pt-btn minus" title="Kurangi / Penalti Poin" aria-label="Kurangi / Penalti Poin">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
         </div>
       </section>
 
@@ -1885,6 +2097,122 @@
     </div>
   </div>
 
+  <!-- MISSION LONG-PRESS CONTEXT WINDOW -->
+  <div id="missionContextModal" class="modal-backdrop hidden">
+    <div class="context-card">
+      <div class="context-mission-preview">
+        <div style="font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--blue); margin-bottom: 3px;">Opsi Misi</div>
+        <div id="ctxMissionTitle" style="font-size: 14px; font-weight: 800; color: var(--navy); line-height: 1.35;">Nama Misi</div>
+        <div id="ctxMissionMeta" style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; color: var(--navy-soft); margin-top: 4px;">+0 PT • Harian</div>
+      </div>
+      <div class="context-menu-list">
+        <button id="ctxUpSalaryBtn" type="button" class="context-option-btn salary">
+          <span class="ctx-opt-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </span>
+          <span>Request Up Salary</span>
+        </button>
+        <button id="ctxDeleteMissionBtn" type="button" class="context-option-btn danger">
+          <span class="ctx-opt-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </span>
+          <span>Request Delete Mission</span>
+        </button>
+        <button id="ctxCancelBtn" type="button" class="context-option-btn cancel">
+          <span>Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUEST UP SALARY DIALOG -->
+  <div id="upSalaryModal" class="modal-backdrop hidden">
+    <div class="modal-card" style="text-align: left;">
+      <div style="font-size: 17px; font-weight: 800; color: var(--navy);">Request Up Salary</div>
+      <div id="upSalaryMissionLabel" style="font-size: 12px; font-weight: 600; color: var(--navy-soft); margin-top: 4px; margin-bottom: 12px;">Misi</div>
+      <div class="input-group">
+        <div style="font-size: 11.5px; font-weight: 700; color: var(--navy-soft);">
+          Poin saat ini: <strong id="upSalaryCurrentPts" style="color: var(--blue); font-family: 'JetBrains Mono', monospace;">0 PT</strong>
+        </div>
+        <input id="upSalaryNewPtsInput" class="glass-input" type="number" inputmode="numeric" min="1" max="1000" placeholder="Usulan poin baru (PT)" />
+        <div class="chip-select-row">
+          <button type="button" class="chip-opt-btn" data-salary-boost="5">+5 PT</button>
+          <button type="button" class="chip-opt-btn" data-salary-boost="10">+10 PT</button>
+          <button type="button" class="chip-opt-btn" data-salary-boost="15">+15 PT</button>
+        </div>
+        <div class="btn-row" style="margin-top: 4px;">
+          <button id="upSalaryCancelBtn" type="button" class="btn-secondary">Batal</button>
+          <button id="upSalarySubmitBtn" type="button" class="btn-primary">Kirim Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUEST DELETE MISSION DIALOG -->
+  <div id="reqDeleteMissionModal" class="modal-backdrop hidden">
+    <div class="modal-card" style="text-align: left;">
+      <div style="font-size: 17px; font-weight: 800; color: var(--rose);">Request Delete Mission</div>
+      <div style="font-size: 12.5px; font-weight: 600; color: var(--navy-soft); margin-top: 4px; margin-bottom: 12px;">
+        Ajukan penghapusan misi ini ke Kakak?
+      </div>
+      <div id="reqDeleteMissionBox" class="context-mission-preview" style="background: rgba(255,241,242,0.8); border-color: rgba(254,205,211,0.95); font-size: 13px; font-weight: 800; color: var(--navy);">
+        Nama Misi
+      </div>
+      <div class="btn-row" style="margin-top: 6px;">
+        <button id="reqDeleteCancelBtn" type="button" class="btn-secondary">Batal</button>
+        <button id="reqDeleteSubmitBtn" type="button" class="btn-danger">Kirim Request</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUEST NEW MISSION DIALOG (ADIK) -->
+  <div id="reqNewMissionModal" class="modal-backdrop hidden">
+    <div class="modal-card" style="text-align: left;">
+      <div style="font-size: 17px; font-weight: 800; color: var(--navy);">Request New Mission</div>
+      <div style="font-size: 12px; font-weight: 600; color: var(--navy-soft); margin-top: 3px; margin-bottom: 12px;">
+        Usulkan misi baru untuk di-ACC oleh Kakak
+      </div>
+      <div class="input-group">
+        <input id="reqNewMissionTitle" class="glass-input" type="text" placeholder="Nama misi baru (misal: Cuci Piring)" />
+        <div class="input-row-2">
+          <input id="reqNewMissionCat" class="glass-input" type="text" placeholder="Kategori" value="Harian" />
+          <input id="reqNewMissionPts" class="glass-input" type="number" inputmode="numeric" min="1" max="500" placeholder="Poin" value="20" />
+        </div>
+        <div class="chip-select-row">
+          <button type="button" class="chip-opt-btn" data-req-cat="Harian">Harian</button>
+          <button type="button" class="chip-opt-btn" data-req-cat="Belajar">Belajar</button>
+          <button type="button" class="chip-opt-btn" data-req-cat="Bonus">Bonus</button>
+        </div>
+        <div class="btn-row" style="margin-top: 4px;">
+          <button id="reqNewMissionCancelBtn" type="button" class="btn-secondary">Batal</button>
+          <button id="reqNewMissionSubmitBtn" type="button" class="btn-primary">Kirim Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KAKAK BONUS / PENALTY INPUT DIALOG -->
+  <div id="adjustPtsModal" class="modal-backdrop hidden">
+    <div class="modal-card" style="text-align: left;">
+      <div id="adjustPtsTitle" style="font-size: 17px; font-weight: 800; color: var(--navy);">Kasih Bonus Poin (+)</div>
+      <div id="adjustPtsSub" style="font-size: 12px; font-weight: 600; color: var(--navy-soft); margin-top: 3px; margin-bottom: 12px;">
+        Masukkan nominal poin yang akan ditambahkan
+      </div>
+      <div class="input-group">
+        <input id="adjustPtsAmountInput" class="glass-input" type="number" inputmode="numeric" min="1" max="5000" placeholder="Nominal poin (misal: 25)" />
+        <input id="adjustPtsNoteInput" class="glass-input" type="text" placeholder="Catatan (opsional)" />
+        <div class="btn-row" style="margin-top: 4px;">
+          <button id="adjustPtsCancelBtn" type="button" class="btn-secondary">Batal</button>
+          <button id="adjustPtsSubmitBtn" type="button" class="btn-primary">Terapkan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="toast"></div>
 
   <script>
@@ -1932,6 +2260,10 @@
     let expandedTexts = new Set();
     let pinBuffer = '';
     let isSyncing = false;
+    let activeContextMissionId = null;
+    let adjustPtsMode = 'bonus';
+    let isDraggingMission = false;
+    let suppressNextClick = false;
     let lastSyncTime = null;
     let lastError = '';
     let sharedAudioCtx = null;
@@ -2078,7 +2410,7 @@
           if (changed) {
             state = remote;
             persistLocal();
-            renderAll();
+            if (!isDraggingMission) renderAll();
 
             if (!prevAlarm && state.alarmActive) {
               if (currentRole === 'adik') {
@@ -2436,9 +2768,20 @@
       renderTimerOnly();
       renderWeeklyChart();
 
-      const pendingMissionIds = new Set((state.pending || []).map(p => p.missionId));
+      const pendingClaimIds = new Set(
+        (state.pending || [])
+          .filter(p => !p.type || p.type === 'claim')
+          .map(p => p.missionId)
+      );
+      const pendingMetaByMission = new Map();
+      (state.pending || []).forEach(p => {
+        if (p.missionId && (p.type === 'up_salary' || p.type === 'delete_mission')) {
+          pendingMetaByMission.set(p.missionId, p.type);
+        }
+      });
+
       const filteredMissions = (state.missions || []).filter(m => {
-        const isPend = pendingMissionIds.has(m.id);
+        const isPend = pendingClaimIds.has(m.id);
         if (missionFilter === 'available') return !isPend;
         if (missionFilter === 'pending') return isPend;
         return true;
@@ -2450,16 +2793,28 @@
         adikMissionEl.innerHTML = `<div class="empty-state">Tidak ada misi pada kategori ini.</div>`;
       } else {
         adikMissionEl.innerHTML = filteredMissions.map(m => {
-          const isPend = pendingMissionIds.has(m.id);
+          const isPend = pendingClaimIds.has(m.id);
+          const reqType = pendingMetaByMission.get(m.id);
+          const reqBadge = reqType === 'up_salary'
+            ? `<span class="req-status-pill">Req Up Salary</span>`
+            : (reqType === 'delete_mission' ? `<span class="req-status-pill">Req Hapus</span>` : '');
           return `
-            <div class="list-item">
+            <div class="list-item mission-card-item" data-mission-id="${m.id}">
               <div class="item-left">
+                <div class="drag-handle" data-drag-handle="${m.id}" title="Tahan & geser untuk ubah urutan" aria-label="Geser urutan misi">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/>
+                    <circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/>
+                    <circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/>
+                  </svg>
+                </div>
                 <div class="item-icon">${getMissionIconSvg(m.icon)}</div>
                 <div class="item-body">
                   <div class="item-title">${renderExpandableText('am_' + m.id, m.title)}</div>
                   <div class="item-meta">
                     <span class="pt-tag">+${m.pts} PT</span>
                     <span class="sub-tag">${escapeHtml(m.category || 'Harian')}</span>
+                    ${reqBadge}
                   </div>
                 </div>
               </div>
@@ -2532,24 +2887,38 @@
       if (!pendList.length) {
         adminPendEl.innerHTML = `<div class="empty-state">Belum ada pengajuan tugas dari Adik.</div>`;
       } else {
-        adminPendEl.innerHTML = pendList.map(p => `
-          <div class="list-item">
-            <div class="item-left">
-              <div class="item-icon">${getMissionIconSvg('book')}</div>
-              <div class="item-body">
-                <div class="item-title">${renderExpandableText('ap_' + p.id, p.title)}</div>
-                <div class="item-meta">
-                  <span class="pt-tag">+${p.pts} PT</span>
-                  <span class="sub-tag">Menunggu ACC</span>
+        adminPendEl.innerHTML = pendList.map(p => {
+          const reqType = p.type || 'claim';
+          let iconName = 'book';
+          let metaHtml = `<span class="pt-tag">+${p.pts} PT</span><span class="sub-tag">Klaim Misi</span>`;
+          if (reqType === 'up_salary') {
+            iconName = 'star';
+            metaHtml = `<span class="pt-tag">${p.oldPts} → ${p.newPts} PT</span><span class="sub-tag">Req Up Salary</span>`;
+          } else if (reqType === 'delete_mission') {
+            iconName = 'sparkle';
+            metaHtml = `<span class="pt-tag neg">Hapus Misi</span><span class="sub-tag">${p.pts} PT</span>`;
+          } else if (reqType === 'new_mission') {
+            iconName = 'heart';
+            metaHtml = `<span class="pt-tag">+${p.pts} PT</span><span class="sub-tag">Req Misi Baru • ${escapeHtml(p.category || 'Harian')}</span>`;
+          }
+          return `
+            <div class="list-item">
+              <div class="item-left">
+                <div class="item-icon">${getMissionIconSvg(iconName)}</div>
+                <div class="item-body">
+                  <div class="item-title">${renderExpandableText('ap_' + p.id, p.title)}</div>
+                  <div class="item-meta">
+                    ${metaHtml}
+                  </div>
                 </div>
               </div>
+              <div class="item-action">
+                <button class="action-btn green" data-approve-id="${p.id}">ACC</button>
+                <button class="action-btn red" data-reject-id="${p.id}">Tolak</button>
+              </div>
             </div>
-            <div class="item-action">
-              <button class="action-btn green" data-approve-id="${p.id}">ACC</button>
-              <button class="action-btn red" data-reject-id="${p.id}">Tolak</button>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       }
 
       const adminMissionEl = document.getElementById('adminMissionList');
@@ -2614,6 +2983,12 @@
     }
 
     document.addEventListener('click', (e) => {
+      if (suppressNextClick) {
+        suppressNextClick = false;
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
       ensureAudioContext();
 
       const expBtn = e.target.closest('[data-expand-id]');
@@ -2644,16 +3019,18 @@
         const mid = subBtn.getAttribute('data-submit-mission');
         const mission = (state.missions || []).find(x => x.id === mid);
         if (!mission) return;
-        if ((state.pending || []).some(p => p.missionId === mid)) return;
+        const isAlreadyClaimed = (state.pending || []).some(p => p.missionId === mid && (!p.type || p.type === 'claim'));
+        if (isAlreadyClaimed) return;
         const newReq = {
           id: 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+          type: 'claim',
           missionId: mission.id,
           title: mission.title,
           pts: mission.pts,
           time: Date.now()
         };
         mutateCloudState((s) => {
-          if (!(s.pending || []).some(p => p.missionId === mid)) {
+          if (!(s.pending || []).some(p => p.missionId === mid && (!p.type || p.type === 'claim'))) {
             s.pending = [newReq, ...(s.pending || [])];
           }
         }, 'Misi dikirim ke HP Kakak!');
@@ -2665,14 +3042,49 @@
         const pid = appBtn.getAttribute('data-approve-id');
         const item = (state.pending || []).find(p => p.id === pid);
         if (!item) return;
-        const histItem = makeHistoryItem('Misi ACC: ' + item.title, item.pts);
+        const reqType = item.type || 'claim';
+        let toastMsg = 'ACC! +' + item.pts + ' PT diberikan';
+        if (reqType === 'up_salary') {
+          toastMsg = 'Up Salary di-ACC (' + item.newPts + ' PT)!';
+        } else if (reqType === 'delete_mission') {
+          toastMsg = 'Penghapusan misi di-ACC!';
+        } else if (reqType === 'new_mission') {
+          toastMsg = 'Misi baru di-ACC & ditambahkan!';
+        }
+
         mutateCloudState((s) => {
           const target = (s.pending || []).find(p => p.id === pid);
           if (!target) return;
           s.pending = (s.pending || []).filter(p => p.id !== pid);
-          s.points = (s.points || 0) + target.pts;
-          s.history = [histItem, ...(s.history || [])].slice(0, 50);
-        }, 'ACC! +' + item.pts + ' PT diberikan');
+          const tType = target.type || 'claim';
+          if (tType === 'up_salary') {
+            s.missions = (s.missions || []).map(m =>
+              m.id === target.missionId ? { ...m, pts: Number(target.newPts) || m.pts } : m
+            );
+            const hItem = makeHistoryItem(`Up Salary ACC: ${target.title} (${target.oldPts}→${target.newPts} PT)`, 0);
+            s.history = [hItem, ...(s.history || [])].slice(0, 50);
+          } else if (tType === 'delete_mission') {
+            s.missions = (s.missions || []).filter(m => m.id !== target.missionId);
+            const hItem = makeHistoryItem(`Hapus Misi ACC: ${target.title}`, 0);
+            s.history = [hItem, ...(s.history || [])].slice(0, 50);
+          } else if (tType === 'new_mission') {
+            const icons = ['book', 'sparkle', 'heart', 'star'];
+            const newM = {
+              id: 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+              title: target.title,
+              pts: Math.max(1, Number(target.pts) || 15),
+              category: target.category || 'Harian',
+              icon: icons[(s.missions || []).length % icons.length]
+            };
+            s.missions = [newM, ...(s.missions || [])];
+            const hItem = makeHistoryItem(`Misi Baru ACC: ${target.title} (+${newM.pts} PT)`, 0);
+            s.history = [hItem, ...(s.history || [])].slice(0, 50);
+          } else {
+            s.points = (s.points || 0) + (Number(target.pts) || 0);
+            const hItem = makeHistoryItem('Misi ACC: ' + target.title, Number(target.pts) || 0);
+            s.history = [hItem, ...(s.history || [])].slice(0, 50);
+          }
+        }, toastMsg);
         return;
       }
 
@@ -2694,16 +3106,18 @@
         return;
       }
 
-      const qBtn = e.target.closest('[data-delta]');
-      if (qBtn) {
-        const delta = parseInt(qBtn.getAttribute('data-delta'), 10);
-        mutateCloudState((s) => {
-          const nextPts = Math.max(0, (s.points || 0) + delta);
-          const actualDelta = nextPts - (s.points || 0);
-          s.points = nextPts;
-          const histItem = makeHistoryItem(delta > 0 ? 'Bonus Poin dari Kakak' : 'Penalti Poin dari Kakak', actualDelta);
-          s.history = [histItem, ...(s.history || [])].slice(0, 50);
-        }, (delta > 0 ? '+' : '') + delta + ' PT diterapkan');
+      const salaryBoostBtn = e.target.closest('[data-salary-boost]');
+      if (salaryBoostBtn) {
+        const boost = parseInt(salaryBoostBtn.getAttribute('data-salary-boost'), 10) || 0;
+        const m = (state.missions || []).find(x => x.id === activeContextMissionId);
+        const base = m ? Number(m.pts) || 0 : 0;
+        document.getElementById('upSalaryNewPtsInput').value = String(base + boost);
+        return;
+      }
+
+      const reqCatBtn = e.target.closest('[data-req-cat]');
+      if (reqCatBtn) {
+        document.getElementById('reqNewMissionCat').value = reqCatBtn.getAttribute('data-req-cat');
         return;
       }
 
@@ -3093,6 +3507,373 @@
 
       rafId = requestAnimationFrame(tickFast);
     }
+
+    /* ================= MISSION CONTEXT MENU & REQUEST DIALOGS ================= */
+    function openMissionContextMenu(missionId) {
+      const m = (state.missions || []).find(x => x.id === missionId);
+      if (!m) return;
+      activeContextMissionId = m.id;
+      document.getElementById('ctxMissionTitle').textContent = m.title;
+      document.getElementById('ctxMissionMeta').textContent = `+${m.pts} PT • ${m.category || 'Harian'}`;
+      document.getElementById('missionContextModal').classList.remove('hidden');
+    }
+
+    function closeMissionContextMenu() {
+      document.getElementById('missionContextModal').classList.add('hidden');
+    }
+
+    document.getElementById('ctxCancelBtn').addEventListener('click', closeMissionContextMenu);
+    document.getElementById('missionContextModal').addEventListener('click', (e) => {
+      if (e.target.id === 'missionContextModal') closeMissionContextMenu();
+    });
+
+    // Context Option 1: Request Up Salary
+    document.getElementById('ctxUpSalaryBtn').addEventListener('click', () => {
+      const m = (state.missions || []).find(x => x.id === activeContextMissionId);
+      closeMissionContextMenu();
+      if (!m) return;
+      document.getElementById('upSalaryMissionLabel').textContent = m.title;
+      document.getElementById('upSalaryCurrentPts').textContent = `${m.pts} PT`;
+      document.getElementById('upSalaryNewPtsInput').value = String((Number(m.pts) || 0) + 5);
+      document.getElementById('upSalaryModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('upSalaryNewPtsInput').focus(), 60);
+    });
+
+    document.getElementById('upSalaryCancelBtn').addEventListener('click', () => {
+      document.getElementById('upSalaryModal').classList.add('hidden');
+    });
+    document.getElementById('upSalaryModal').addEventListener('click', (e) => {
+      if (e.target.id === 'upSalaryModal') document.getElementById('upSalaryModal').classList.add('hidden');
+    });
+
+    document.getElementById('upSalarySubmitBtn').addEventListener('click', () => {
+      const m = (state.missions || []).find(x => x.id === activeContextMissionId);
+      if (!m) return;
+      const newPts = parseInt(document.getElementById('upSalaryNewPtsInput').value, 10);
+      if (!newPts || newPts <= 0) {
+        showToast('Masukkan nominal poin yang valid');
+        return;
+      }
+      if (newPts === Number(m.pts)) {
+        showToast('Nominal baru harus berbeda dari poin saat ini');
+        return;
+      }
+      document.getElementById('upSalaryModal').classList.add('hidden');
+      const reqObj = {
+        id: 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+        type: 'up_salary',
+        missionId: m.id,
+        title: m.title,
+        oldPts: Number(m.pts) || 0,
+        newPts,
+        pts: newPts,
+        time: Date.now()
+      };
+      mutateCloudState((s) => {
+        s.pending = (s.pending || []).filter(p => !(p.missionId === m.id && p.type === 'up_salary'));
+        s.pending = [reqObj, ...s.pending];
+      }, 'Request Up Salary dikirim ke Kakak!');
+    });
+
+    // Context Option 2: Request Delete Mission
+    document.getElementById('ctxDeleteMissionBtn').addEventListener('click', () => {
+      const m = (state.missions || []).find(x => x.id === activeContextMissionId);
+      closeMissionContextMenu();
+      if (!m) return;
+      document.getElementById('reqDeleteMissionBox').textContent = `${m.title} (+${m.pts} PT)`;
+      document.getElementById('reqDeleteMissionModal').classList.remove('hidden');
+    });
+
+    document.getElementById('reqDeleteCancelBtn').addEventListener('click', () => {
+      document.getElementById('reqDeleteMissionModal').classList.add('hidden');
+    });
+    document.getElementById('reqDeleteMissionModal').addEventListener('click', (e) => {
+      if (e.target.id === 'reqDeleteMissionModal') document.getElementById('reqDeleteMissionModal').classList.add('hidden');
+    });
+
+    document.getElementById('reqDeleteSubmitBtn').addEventListener('click', () => {
+      const m = (state.missions || []).find(x => x.id === activeContextMissionId);
+      if (!m) return;
+      document.getElementById('reqDeleteMissionModal').classList.add('hidden');
+      const reqObj = {
+        id: 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+        type: 'delete_mission',
+        missionId: m.id,
+        title: m.title,
+        pts: Number(m.pts) || 0,
+        time: Date.now()
+      };
+      mutateCloudState((s) => {
+        s.pending = (s.pending || []).filter(p => !(p.missionId === m.id && p.type === 'delete_mission'));
+        s.pending = [reqObj, ...s.pending];
+      }, 'Request Delete Mission dikirim ke Kakak!');
+    });
+
+    // Plus Icon Next to Mission Count -> Request New Mission Dialog
+    document.getElementById('openReqNewMissionBtn').addEventListener('click', () => {
+      document.getElementById('reqNewMissionTitle').value = '';
+      document.getElementById('reqNewMissionCat').value = 'Harian';
+      document.getElementById('reqNewMissionPts').value = '20';
+      document.getElementById('reqNewMissionModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('reqNewMissionTitle').focus(), 60);
+    });
+
+    document.getElementById('reqNewMissionCancelBtn').addEventListener('click', () => {
+      document.getElementById('reqNewMissionModal').classList.add('hidden');
+    });
+    document.getElementById('reqNewMissionModal').addEventListener('click', (e) => {
+      if (e.target.id === 'reqNewMissionModal') document.getElementById('reqNewMissionModal').classList.add('hidden');
+    });
+
+    document.getElementById('reqNewMissionSubmitBtn').addEventListener('click', () => {
+      const title = document.getElementById('reqNewMissionTitle').value.trim();
+      const category = document.getElementById('reqNewMissionCat').value.trim() || 'Harian';
+      const pts = parseInt(document.getElementById('reqNewMissionPts').value, 10) || 0;
+      if (!title) {
+        showToast('Tulis nama misi yang diusulkan');
+        return;
+      }
+      if (pts <= 0) {
+        showToast('Nominal poin harus lebih dari 0');
+        return;
+      }
+      document.getElementById('reqNewMissionModal').classList.add('hidden');
+      const reqObj = {
+        id: 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+        type: 'new_mission',
+        title,
+        category,
+        pts,
+        time: Date.now()
+      };
+      mutateCloudState((s) => {
+        s.pending = [reqObj, ...(s.pending || [])];
+      }, 'Request Misi Baru dikirim ke Kakak!');
+    });
+
+    /* ================= KAKAK BONUS (+) & PENALTY (−) DIALOG ================= */
+    function openAdjustPtsModal(mode) {
+      adjustPtsMode = mode;
+      const isBonus = mode === 'bonus';
+      const titleEl = document.getElementById('adjustPtsTitle');
+      const subEl = document.getElementById('adjustPtsSub');
+      const submitBtn = document.getElementById('adjustPtsSubmitBtn');
+      titleEl.textContent = isBonus ? 'Kasih Bonus Poin (+)' : 'Kasih Penalti Poin (−)';
+      titleEl.style.color = isBonus ? 'var(--emerald)' : 'var(--rose)';
+      subEl.textContent = isBonus
+        ? 'Masukkan nominal poin bonus untuk Adik'
+        : 'Masukkan nominal pengurangan poin penalti untuk Adik';
+      submitBtn.className = isBonus ? 'btn-success' : 'btn-danger';
+      submitBtn.textContent = isBonus ? 'Kasih Bonus' : 'Kasih Penalti';
+      document.getElementById('adjustPtsAmountInput').value = '';
+      document.getElementById('adjustPtsNoteInput').value = '';
+      document.getElementById('adjustPtsModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('adjustPtsAmountInput').focus(), 60);
+    }
+
+    document.getElementById('openBonusModalBtn').addEventListener('click', () => openAdjustPtsModal('bonus'));
+    document.getElementById('openPenaltyModalBtn').addEventListener('click', () => openAdjustPtsModal('penalty'));
+    document.getElementById('adjustPtsCancelBtn').addEventListener('click', () => {
+      document.getElementById('adjustPtsModal').classList.add('hidden');
+    });
+    document.getElementById('adjustPtsModal').addEventListener('click', (e) => {
+      if (e.target.id === 'adjustPtsModal') document.getElementById('adjustPtsModal').classList.add('hidden');
+    });
+
+    document.getElementById('adjustPtsSubmitBtn').addEventListener('click', () => {
+      const amount = parseInt(document.getElementById('adjustPtsAmountInput').value, 10);
+      if (!amount || amount <= 0) {
+        showToast('Masukkan nominal poin yang valid');
+        return;
+      }
+      const note = document.getElementById('adjustPtsNoteInput').value.trim();
+      const delta = adjustPtsMode === 'bonus' ? amount : -amount;
+      const histLabel = note
+        ? `${adjustPtsMode === 'bonus' ? 'Bonus' : 'Penalti'}: ${note}`
+        : (adjustPtsMode === 'bonus' ? 'Bonus Poin dari Kakak' : 'Penalti Poin dari Kakak');
+      document.getElementById('adjustPtsModal').classList.add('hidden');
+      mutateCloudState((s) => {
+        const nextPts = Math.max(0, (s.points || 0) + delta);
+        const actualDelta = nextPts - (s.points || 0);
+        s.points = nextPts;
+        const histItem = makeHistoryItem(histLabel, actualDelta);
+        s.history = [histItem, ...(s.history || [])].slice(0, 50);
+      }, (delta > 0 ? '+' : '') + delta + ' PT diterapkan');
+    });
+
+    /* ================= MISSION HOLD-DRAG REORDER & LONG-PRESS CONTEXT ================= */
+    (function setupMissionGestures() {
+      const listEl = document.getElementById('adikMissionList');
+      if (!listEl) return;
+
+      listEl.addEventListener('contextmenu', (e) => {
+        if (e.target.closest('.mission-card-item')) {
+          e.preventDefault();
+        }
+      });
+
+      listEl.addEventListener('pointerdown', (e) => {
+        if (e.button !== undefined && e.button !== 0) return;
+        const card = e.target.closest('.mission-card-item');
+        if (!card) return;
+
+        const missionId = card.getAttribute('data-mission-id');
+        const handle = e.target.closest('[data-drag-handle]');
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const pointerId = e.pointerId;
+
+        // CASE A: Hold on Drag Handler -> Reorder mission list
+        if (handle) {
+          e.preventDefault();
+          let dragStarted = false;
+          let holdTimer = null;
+          let cardsSnapshot = [];
+          let startIndex = -1;
+          let targetIndex = -1;
+          let itemStep = 0;
+
+          const activateDrag = () => {
+            dragStarted = true;
+            isDraggingMission = true;
+            suppressNextClick = true;
+            if (navigator.vibrate) {
+              try { navigator.vibrate(18); } catch (_) {}
+            }
+            cardsSnapshot = Array.from(listEl.querySelectorAll('.mission-card-item'));
+            startIndex = cardsSnapshot.indexOf(card);
+            targetIndex = startIndex;
+            const rect0 = cardsSnapshot[0].getBoundingClientRect();
+            const rect1 = cardsSnapshot[1] ? cardsSnapshot[1].getBoundingClientRect() : null;
+            itemStep = rect1 ? (rect1.top - rect0.top) : (rect0.height + 10);
+            card.classList.add('is-dragging');
+            try { handle.setPointerCapture(pointerId); } catch (_) {}
+          };
+
+          holdTimer = setTimeout(activateDrag, 150);
+
+          const onMove = (ev) => {
+            if (ev.pointerId !== pointerId) return;
+            const dy = ev.clientY - startY;
+            if (!dragStarted) {
+              if (Math.abs(dy) > 6) {
+                clearTimeout(holdTimer);
+                activateDrag();
+              } else {
+                return;
+              }
+            }
+            ev.preventDefault();
+            card.style.transform = `translateY(${dy}px) scale(1.015)`;
+
+            const offsetSlots = Math.round(dy / Math.max(40, itemStep));
+            const nextIdx = Math.max(0, Math.min(cardsSnapshot.length - 1, startIndex + offsetSlots));
+            if (nextIdx !== targetIndex) {
+              targetIndex = nextIdx;
+              cardsSnapshot.forEach((el, idx) => {
+                if (el === card) return;
+                let shift = 0;
+                if (startIndex < targetIndex && idx > startIndex && idx <= targetIndex) {
+                  shift = -itemStep;
+                } else if (startIndex > targetIndex && idx >= targetIndex && idx < startIndex) {
+                  shift = itemStep;
+                }
+                el.style.transform = shift ? `translateY(${shift}px)` : '';
+              });
+            }
+          };
+
+          const cleanupDrag = (commit) => {
+            clearTimeout(holdTimer);
+            document.removeEventListener('pointermove', onMove);
+            document.removeEventListener('pointerup', onUp);
+            document.removeEventListener('pointercancel', onCancel);
+
+            if (!dragStarted) return;
+
+            cardsSnapshot.forEach((el) => {
+              el.classList.remove('is-dragging');
+              el.style.transform = '';
+            });
+            isDraggingMission = false;
+
+            if (commit && startIndex !== -1 && targetIndex !== -1 && startIndex !== targetIndex) {
+              const visibleIds = cardsSnapshot.map(el => el.getAttribute('data-mission-id'));
+              const [movedId] = visibleIds.splice(startIndex, 1);
+              visibleIds.splice(targetIndex, 0, movedId);
+
+              const reorderMissions = (allMissions) => {
+                const visibleSet = new Set(visibleIds);
+                const byId = new Map(allMissions.map(m => [m.id, m]));
+                let vPtr = 0;
+                return allMissions.map(m => {
+                  if (visibleSet.has(m.id)) {
+                    const replacement = byId.get(visibleIds[vPtr++]);
+                    return replacement || m;
+                  }
+                  return m;
+                });
+              };
+
+              mutateCloudState((s) => {
+                s.missions = reorderMissions(s.missions || []);
+              }, 'Urutan misi diperbarui');
+            } else {
+              renderAll();
+            }
+          };
+
+          const onUp = (ev) => {
+            if (ev.pointerId !== pointerId) return;
+            cleanupDrag(true);
+          };
+          const onCancel = (ev) => {
+            if (ev.pointerId !== pointerId) return;
+            cleanupDrag(false);
+          };
+
+          document.addEventListener('pointermove', onMove, { passive: false });
+          document.addEventListener('pointerup', onUp);
+          document.addEventListener('pointercancel', onCancel);
+          return;
+        }
+
+        // CASE B: Hold on other part of Mission Card -> Open Context Window
+        if (e.target.closest('button') || e.target.closest('.more-link')) return;
+
+        card.classList.add('is-hold-primed');
+        const longPressTimer = setTimeout(() => {
+          card.classList.remove('is-hold-primed');
+          suppressNextClick = true;
+          if (navigator.vibrate) {
+            try { navigator.vibrate(25); } catch (_) {}
+          }
+          cleanupLongPress();
+          openMissionContextMenu(missionId);
+        }, 460);
+
+        const cancelLongPress = (ev) => {
+          if (ev.pointerId !== pointerId) return;
+          if (ev.type === 'pointermove') {
+            const moved = Math.hypot(ev.clientX - startX, ev.clientY - startY);
+            if (moved <= 10) return;
+          }
+          clearTimeout(longPressTimer);
+          card.classList.remove('is-hold-primed');
+          cleanupLongPress();
+        };
+
+        const cleanupLongPress = () => {
+          document.removeEventListener('pointermove', cancelLongPress);
+          document.removeEventListener('pointerup', cancelLongPress);
+          document.removeEventListener('pointercancel', cancelLongPress);
+        };
+
+        document.addEventListener('pointermove', cancelLongPress, { passive: true });
+        document.addEventListener('pointerup', cancelLongPress);
+        document.addEventListener('pointercancel', cancelLongPress);
+      });
+    })();
 
     loadLocal();
     checkInviteHash();
