@@ -1012,6 +1012,167 @@
       transform: scale(0.95);
     }
 
+    /* ================= KAKAK REMOTE TIMER & STOPWATCH PENALTY ================= */
+    .remote-timer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1.5px solid rgba(255, 255, 255, 0.88);
+      border-radius: 16px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+    }
+
+    .remote-timer-btn {
+      width: 100%;
+      border: none;
+      border-radius: 13px;
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.14s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .remote-timer-btn:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .remote-timer-btn.is-resume {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+    }
+
+    .remote-timer-btn.is-pause {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(217, 119, 6, 0.28);
+    }
+
+    .remote-timer-btn.is-standby {
+      background: rgba(226, 232, 240, 0.72);
+      color: var(--navy-muted);
+      cursor: default;
+    }
+
+    .penalty-stopwatch-box {
+      margin-top: 12px;
+      background: linear-gradient(145deg, rgba(255, 241, 242, 0.82) 0%, rgba(255, 255, 255, 0.72) 100%);
+      border: 1.5px solid rgba(244, 63, 94, 0.28);
+      border-radius: 18px;
+      padding: 13px 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .penalty-stopwatch-box.is-running,
+    .adik-penalty-banner {
+      background: linear-gradient(145deg, rgba(255, 228, 230, 0.92) 0%, rgba(255, 241, 242, 0.88) 100%);
+      border: 1.5px solid rgba(225, 29, 72, 0.45);
+      box-shadow: 0 10px 24px rgba(225, 29, 72, 0.14);
+      animation: penaltyPulseGlow 1.8s ease-in-out infinite;
+    }
+
+    .adik-penalty-banner {
+      border-radius: 22px;
+      padding: 15px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    @keyframes penaltyPulseGlow {
+      0%, 100% { box-shadow: 0 8px 20px rgba(225, 29, 72, 0.12); }
+      50% { box-shadow: 0 10px 28px rgba(225, 29, 72, 0.26); }
+    }
+
+    .penalty-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .penalty-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #9f1239;
+    }
+
+    .penalty-live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e11d48;
+      box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.2);
+    }
+
+    .penalty-rate-pills {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .penalty-rate-chip {
+      border: 1px solid rgba(225, 29, 72, 0.26);
+      background: rgba(255, 255, 255, 0.78);
+      color: #be123c;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .penalty-rate-chip.active {
+      background: #e11d48;
+      border-color: #e11d48;
+      color: #ffffff;
+    }
+
+    .penalty-readout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+
+    .penalty-metric-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #9f1239;
+      opacity: 0.85;
+    }
+
+    .penalty-metric-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 800;
+      color: #881337;
+      margin-top: 2px;
+    }
+
+    .penalty-metric-val.pts {
+      color: #e11d48;
+    }
+
     /* ================= MISSION HEADER ADD BUTTON & DRAG HANDLER ================= */
     .card-head-right {
       display: flex;
@@ -1830,6 +1991,33 @@
 
     <!-- VIEW: ADIK (USER) -->
     <main id="adikView" class="input-group" style="gap: 16px;">
+      <!-- LIVE STOPWATCH PENALTY BANNER (VISIBLE WHEN KAKAK STARTS PENALTY STOPWATCH) -->
+      <section id="adikPenaltyBanner" class="adik-penalty-banner hidden">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+          <div class="penalty-title-wrap">
+            <span class="penalty-live-dot"></span>
+            <span>STOPWATCH PENALTY BERJALAN</span>
+          </div>
+          <span id="adikPenaltyRateBadge" class="badge-pill" style="background:rgba(225,29,72,0.12); color:#be123c; border-color:rgba(225,29,72,0.25);">1 PT/MENIT</span>
+        </div>
+        <div style="font-size:12px; font-weight:600; color:#9f1239; line-height:1.4;">
+          Akumulasi potongan poin terus berjalan sampai dimatikan dari HP Adik atau HP Kakak.
+        </div>
+        <div class="penalty-readout-grid" style="margin-bottom:0;">
+          <div>
+            <div class="penalty-metric-label">Durasi Stopwatch</div>
+            <div id="adikPenaltyTimerDisplay" class="penalty-metric-val">00:00</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="penalty-metric-label">Akumulasi Potongan</div>
+            <div id="adikPenaltyPtsDisplay" class="penalty-metric-val pts">-1 PT</div>
+          </div>
+        </div>
+        <button id="adikStopPenaltyBtn" type="button" class="btn-danger" style="width:100%; font-size:13.5px; padding:13px;">
+          Matikan Penalty (-1 PT)
+        </button>
+      </section>
+
       <!-- Timer Card -->
       <section class="glass-card">
         <div class="card-head">
@@ -2090,7 +2278,7 @@
           </div>
         </div>
 
-        <div class="points-hero" style="margin-bottom: 12px;">
+        <div class="points-hero" style="margin-bottom: 10px;">
           <div>
             <div class="points-label">Saldo Adik</div>
             <div>
@@ -2099,9 +2287,22 @@
             </div>
           </div>
           <div style="text-align: right;">
-            <div class="points-label">Sisa Timer HP</div>
+            <div style="display:flex; align-items:center; justify-content:flex-end; gap:6px; margin-bottom:2px;">
+              <span id="adminTimerStateBadge" class="badge-pill" style="font-size:9.5px; padding:2px 7px;">STANDBY</span>
+              <span class="points-label" style="margin-bottom:0;">Sisa Timer</span>
+            </div>
             <div id="adminTimerValue" style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:800; color:var(--blue);">00:00</div>
           </div>
+        </div>
+
+        <!-- Remote Billing Timer Control (Pause / Resume dari HP Kakak) -->
+        <div class="remote-timer-bar">
+          <button id="adminTimerToggleBtn" type="button" class="remote-timer-btn is-standby">
+            <svg id="adminTimerToggleIcon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <span id="adminTimerToggleLabel">Billing Adik Kosong</span>
+          </button>
         </div>
 
         <div class="quick-pt-grid">
@@ -2115,6 +2316,48 @@
               <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
           </button>
+        </div>
+
+        <!-- Stopwatch Penalty Control (Play dari HP Kakak, Stop dari HP Adik / Kakak) -->
+        <div id="kakakPenaltyBox" class="penalty-stopwatch-box">
+          <div class="penalty-head-row">
+            <div class="penalty-title-wrap">
+              <span id="kakakPenaltyDot" class="penalty-live-dot hidden"></span>
+              <span>Stopwatch Penalty</span>
+            </div>
+            <div id="penaltyRateSelector" class="penalty-rate-pills">
+              <button type="button" class="penalty-rate-chip active" data-penalty-rate="1">1 PT/m</button>
+              <button type="button" class="penalty-rate-chip" data-penalty-rate="2">2 PT/m</button>
+              <button type="button" class="penalty-rate-chip" data-penalty-rate="5">5 PT/m</button>
+            </div>
+          </div>
+
+          <!-- Standby view -->
+          <div id="kakakPenaltyStandbyView">
+            <button id="startPenaltyStopwatchBtn" type="button" class="btn-danger" style="width:100%; font-size:13px; padding:12px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              <span>Play Penalty (Mulai Akumulasi)</span>
+            </button>
+          </div>
+
+          <!-- Running view -->
+          <div id="kakakPenaltyRunningView" class="hidden">
+            <div class="penalty-readout-grid">
+              <div>
+                <div class="penalty-metric-label">Durasi Berjalan</div>
+                <div id="kakakPenaltyTimerDisplay" class="penalty-metric-val">00:00</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="penalty-metric-label">Akumulasi Penalti</div>
+                <div id="kakakPenaltyPtsDisplay" class="penalty-metric-val pts">-1 PT</div>
+              </div>
+            </div>
+            <button id="kakakStopPenaltyBtn" type="button" class="btn-danger" style="width:100%; font-size:13px; padding:12px;">
+              Matikan Penalty (-1 PT)
+            </button>
+          </div>
         </div>
       </section>
 
@@ -2410,6 +2653,9 @@
       timerEndAt: null,
       alarmActive: false,
       alarmTriggeredAt: null,
+      penaltyRunning: false,
+      penaltyStartedAt: null,
+      penaltyRatePerMin: 1,
       missions: [...DEFAULT_MISSIONS],
       pending: [],
       history: [
@@ -2490,6 +2736,9 @@
             adminPin: parsed.adminPin || DEFAULT_PIN,
             alarmActive: Boolean(parsed.alarmActive),
             alarmTriggeredAt: parsed.alarmTriggeredAt || null,
+            penaltyRunning: Boolean(parsed.penaltyRunning),
+            penaltyStartedAt: parsed.penaltyRunning && parsed.penaltyStartedAt ? Number(parsed.penaltyStartedAt) : null,
+            penaltyRatePerMin: Math.max(1, Number(parsed.penaltyRatePerMin) || 1),
             missions: Array.isArray(parsed.missions) && parsed.missions.length ? getOrderedMissions(parsed.missions) : [...DEFAULT_MISSIONS],
             pending: Array.isArray(parsed.pending) ? parsed.pending : [],
             history: pruneExpiredHistory(parsed.history)
@@ -2551,6 +2800,9 @@
         timerEndAt: remote.timerEndAt || null,
         alarmActive: Boolean(remote.alarmActive),
         alarmTriggeredAt: remote.alarmTriggeredAt || null,
+        penaltyRunning: Boolean(remote.penaltyRunning),
+        penaltyStartedAt: remote.penaltyRunning && remote.penaltyStartedAt ? Number(remote.penaltyStartedAt) : null,
+        penaltyRatePerMin: Math.max(1, Number(remote.penaltyRatePerMin) || 1),
         missions: Array.isArray(remote.missions) ? getOrderedMissions(remote.missions) : [...DEFAULT_MISSIONS],
         pending: Array.isArray(remote.pending) ? remote.pending : [],
         history: pruneExpiredHistory(remote.history),
@@ -2582,6 +2834,8 @@
           const prevPending = (state.pending || []).length;
           const prevPoints = state.points || 0;
           const prevAlarm = Boolean(state.alarmActive);
+          const prevTimerRunning = Boolean(state.timerRunning);
+          const prevPenaltyRunning = Boolean(state.penaltyRunning);
           const changed = JSON.stringify(remote) !== JSON.stringify(state);
 
           if (changed) {
@@ -2598,6 +2852,22 @@
               }
             } else if (prevAlarm && !state.alarmActive && currentRole === 'adik') {
               showToast('Alarm telah dimatikan oleh Kakak');
+            }
+
+            if (!prevPenaltyRunning && state.penaltyRunning && currentRole === 'adik') {
+              playChime();
+              showToast('Stopwatch Penalty dijalankan oleh Kakak!');
+            } else if (prevPenaltyRunning && !state.penaltyRunning) {
+              showToast('Stopwatch Penalty dimatikan');
+            }
+
+            if (currentRole === 'adik' && !state.alarmActive && prevTimerRunning !== Boolean(state.timerRunning)) {
+              const leftNow = getEffectiveRemainingSec();
+              if (state.timerRunning && leftNow > 0) {
+                showToast('Billing timer dilanjutkan oleh Kakak');
+              } else if (!state.timerRunning && leftNow > 0) {
+                showToast('Billing timer dijeda oleh Kakak');
+              }
             }
 
             if (state.pending.length > prevPending && currentRole === 'kakak') {
@@ -2755,7 +3025,18 @@
       return Math.max(0, state.timerRemainingSec || 0);
     }
 
+    function getEffectivePenaltyStats() {
+      const rate = Math.max(1, Number(state.penaltyRatePerMin) || 1);
+      if (!state.penaltyRunning || !state.penaltyStartedAt) {
+        return { running: false, elapsedSec: 0, rate, accumulatedPts: 0 };
+      }
+      const elapsedSec = Math.max(0, Math.floor((Date.now() - state.penaltyStartedAt) / 1000));
+      const accumulatedPts = Math.max(1, Math.ceil(Math.max(1, elapsedSec) / 60)) * rate;
+      return { running: true, elapsedSec, rate, accumulatedPts };
+    }
+
     setInterval(() => {
+      let needsRender = false;
       if (state.timerRunning) {
         const left = getEffectiveRemainingSec();
         if (left <= 0) {
@@ -2771,9 +3052,16 @@
             s.alarmActive = true;
             s.alarmTriggeredAt = Date.now();
           }, 'Waktu main HP habis! Alarm berbunyi.');
+          return;
         } else {
-          renderTimerOnly();
+          needsRender = true;
         }
+      }
+      if (state.penaltyRunning) {
+        needsRender = true;
+      }
+      if (needsRender) {
+        renderTimerOnly();
       }
     }, 500);
 
@@ -2832,18 +3120,106 @@
 
       const badge = document.getElementById('timerStateBadge');
       const toggleLabel = document.getElementById('timerToggleLabel');
+      const adminBadge = document.getElementById('adminTimerStateBadge');
+      const adminToggleBtn = document.getElementById('adminTimerToggleBtn');
+      const adminToggleLabel = document.getElementById('adminTimerToggleLabel');
+      const adminToggleIcon = document.getElementById('adminTimerToggleIcon');
+
       if (state.timerRunning && rem > 0) {
         badge.textContent = 'BERJALAN';
         badge.className = 'badge-pill running';
         toggleLabel.textContent = 'JEDA';
+        if (adminBadge) {
+          adminBadge.textContent = 'BERJALAN';
+          adminBadge.className = 'badge-pill running';
+        }
+        if (adminToggleBtn && adminToggleLabel && adminToggleIcon) {
+          adminToggleBtn.className = 'remote-timer-btn is-pause';
+          adminToggleLabel.textContent = 'Pause Billing Adik';
+          adminToggleIcon.innerHTML = '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>';
+        }
       } else if (rem > 0) {
         badge.textContent = 'DIJEDA';
         badge.className = 'badge-pill paused';
         toggleLabel.textContent = 'LANJUT';
+        if (adminBadge) {
+          adminBadge.textContent = 'DIJEDA';
+          adminBadge.className = 'badge-pill paused';
+        }
+        if (adminToggleBtn && adminToggleLabel && adminToggleIcon) {
+          adminToggleBtn.className = 'remote-timer-btn is-resume';
+          adminToggleLabel.textContent = 'Resume Billing Adik';
+          adminToggleIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
+        }
       } else {
         badge.textContent = 'STANDBY';
         badge.className = 'badge-pill';
         toggleLabel.textContent = 'MULAI';
+        if (adminBadge) {
+          adminBadge.textContent = 'STANDBY';
+          adminBadge.className = 'badge-pill';
+        }
+        if (adminToggleBtn && adminToggleLabel && adminToggleIcon) {
+          adminToggleBtn.className = 'remote-timer-btn is-standby';
+          adminToggleLabel.textContent = 'Billing Adik Kosong';
+          adminToggleIcon.innerHTML = '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/><polyline points="12 7 12 12 15 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>';
+        }
+      }
+
+      // Render Stopwatch Penalty state on both Kakak and Adik views
+      const pen = getEffectivePenaltyStats();
+      const kakakPenaltyBox = document.getElementById('kakakPenaltyBox');
+      const kakakPenaltyDot = document.getElementById('kakakPenaltyDot');
+      const penaltyRateSelector = document.getElementById('penaltyRateSelector');
+      const kakakStandbyView = document.getElementById('kakakPenaltyStandbyView');
+      const kakakRunningView = document.getElementById('kakakPenaltyRunningView');
+      const adikPenaltyBanner = document.getElementById('adikPenaltyBanner');
+
+      document.querySelectorAll('[data-penalty-rate]').forEach((chip) => {
+        chip.classList.toggle('active', Number(chip.getAttribute('data-penalty-rate')) === pen.rate);
+      });
+
+      if (pen.running) {
+        const timeStr = formatMMSS(pen.elapsedSec);
+        const ptsStr = '-' + pen.accumulatedPts + ' PT';
+        const stopLabel = 'Matikan Penalty (' + ptsStr + ')';
+
+        if (kakakPenaltyBox) kakakPenaltyBox.classList.add('is-running');
+        if (kakakPenaltyDot) kakakPenaltyDot.classList.remove('hidden');
+        if (penaltyRateSelector) {
+          penaltyRateSelector.innerHTML = `<span class="badge-pill" style="background:rgba(225,29,72,0.14); color:#be123c; border-color:rgba(225,29,72,0.28);">${pen.rate} PT/MENIT</span>`;
+        }
+        if (kakakStandbyView) kakakStandbyView.classList.add('hidden');
+        if (kakakRunningView) kakakRunningView.classList.remove('hidden');
+        const kTimeEl = document.getElementById('kakakPenaltyTimerDisplay');
+        const kPtsEl = document.getElementById('kakakPenaltyPtsDisplay');
+        const kStopBtn = document.getElementById('kakakStopPenaltyBtn');
+        if (kTimeEl) kTimeEl.textContent = timeStr;
+        if (kPtsEl) kPtsEl.textContent = ptsStr;
+        if (kStopBtn) kStopBtn.textContent = stopLabel;
+
+        if (adikPenaltyBanner) adikPenaltyBanner.classList.remove('hidden');
+        const aRateEl = document.getElementById('adikPenaltyRateBadge');
+        const aTimeEl = document.getElementById('adikPenaltyTimerDisplay');
+        const aPtsEl = document.getElementById('adikPenaltyPtsDisplay');
+        const aStopBtn = document.getElementById('adikStopPenaltyBtn');
+        if (aRateEl) aRateEl.textContent = pen.rate + ' PT/MENIT';
+        if (aTimeEl) aTimeEl.textContent = timeStr;
+        if (aPtsEl) aPtsEl.textContent = ptsStr;
+        if (aStopBtn) aStopBtn.textContent = stopLabel;
+      } else {
+        if (kakakPenaltyBox) kakakPenaltyBox.classList.remove('is-running');
+        if (kakakPenaltyDot) kakakPenaltyDot.classList.add('hidden');
+        if (penaltyRateSelector && !penaltyRateSelector.querySelector('[data-penalty-rate]')) {
+          penaltyRateSelector.innerHTML = `
+            <button type="button" class="penalty-rate-chip ${pen.rate === 1 ? 'active' : ''}" data-penalty-rate="1">1 PT/m</button>
+            <button type="button" class="penalty-rate-chip ${pen.rate === 2 ? 'active' : ''}" data-penalty-rate="2">2 PT/m</button>
+            <button type="button" class="penalty-rate-chip ${pen.rate === 5 ? 'active' : ''}" data-penalty-rate="5">5 PT/m</button>
+          `;
+        }
+        if (kakakStandbyView) kakakStandbyView.classList.remove('hidden');
+        if (kakakRunningView) kakakRunningView.classList.add('hidden');
+        if (adikPenaltyBanner) adikPenaltyBanner.classList.add('hidden');
       }
     }
 
@@ -3416,6 +3792,15 @@
         return;
       }
 
+      const penRateBtn = e.target.closest('[data-penalty-rate]');
+      if (penRateBtn && !state.penaltyRunning) {
+        const chosenRate = Math.max(1, parseInt(penRateBtn.getAttribute('data-penalty-rate'), 10) || 1);
+        state.penaltyRatePerMin = chosenRate;
+        persistLocal();
+        renderTimerOnly();
+        return;
+      }
+
       const keyBtn = e.target.closest('[data-key]');
       if (keyBtn) {
         if (pinBuffer.length < 4) {
@@ -3526,16 +3911,21 @@
       pullFromCloud(true);
     });
 
-    document.getElementById('timerToggleBtn').addEventListener('click', () => {
+    function toggleBillingTimer(isFromAdmin = false) {
       const rem = getEffectiveRemainingSec();
       if (rem <= 0) {
-        showToast('Tukar poin dulu untuk menambah waktu!');
+        showToast(isFromAdmin ? 'Adik belum menginput billing waktu' : 'Tukar poin dulu untuk menambah waktu!');
         return;
       }
+      const willPause = Boolean(state.timerRunning);
+      const toastMsg = isFromAdmin
+        ? (willPause ? 'Billing Adik dijeda dari HP Kakak' : 'Billing Adik dilanjutkan dari HP Kakak')
+        : '';
       mutateCloudState((s) => {
         const curRem = (s.timerRunning && s.timerEndAt)
           ? Math.max(0, Math.ceil((s.timerEndAt - Date.now()) / 1000))
           : Math.max(0, s.timerRemainingSec || 0);
+        if (curRem <= 0) return;
         if (s.timerRunning) {
           s.timerRemainingSec = curRem;
           s.timerRunning = false;
@@ -3544,8 +3934,48 @@
           s.timerRunning = true;
           s.timerEndAt = Date.now() + curRem * 1000;
         }
-      });
+      }, toastMsg);
+    }
+
+    document.getElementById('timerToggleBtn').addEventListener('click', () => toggleBillingTimer(false));
+    document.getElementById('adminTimerToggleBtn').addEventListener('click', () => toggleBillingTimer(true));
+
+    // Stopwatch Penalty: Start (Kakak only) & Stop (Kakak or Adik)
+    document.getElementById('startPenaltyStopwatchBtn').addEventListener('click', () => {
+      if (state.penaltyRunning) return;
+      const chosenRate = Math.max(1, Number(state.penaltyRatePerMin) || 1);
+      mutateCloudState((s) => {
+        if (s.penaltyRunning) return;
+        s.penaltyRunning = true;
+        s.penaltyStartedAt = Date.now();
+        s.penaltyRatePerMin = chosenRate;
+      }, 'Stopwatch Penalty dimulai (' + chosenRate + ' PT/menit)!');
     });
+
+    function stopPenaltyStopwatch() {
+      const snap = getEffectivePenaltyStats();
+      if (!snap.running) return;
+      const deductedLabel = '-' + snap.accumulatedPts + ' PT';
+      mutateCloudState((s) => {
+        if (!s.penaltyRunning) return;
+        const rate = Math.max(1, Number(s.penaltyRatePerMin) || 1);
+        const elapsedSec = Math.max(1, Math.floor((Date.now() - (s.penaltyStartedAt || Date.now())) / 1000));
+        const penaltyPts = Math.max(1, Math.ceil(elapsedSec / 60)) * rate;
+        const nextPts = Math.max(0, (s.points || 0) - penaltyPts);
+        const actualDelta = nextPts - (s.points || 0);
+        s.points = nextPts;
+        s.penaltyRunning = false;
+        s.penaltyStartedAt = null;
+        const title = actualDelta === 0
+          ? `Stopwatch Penalty (${formatMMSS(elapsedSec)} • -${penaltyPts} PT)`
+          : `Stopwatch Penalty (${formatMMSS(elapsedSec)} • ${rate} PT/m)`;
+        const histItem = makeHistoryItem(title, actualDelta);
+        s.history = [histItem, ...(s.history || [])].slice(0, 50);
+      }, 'Stopwatch Penalty dimatikan (' + deductedLabel + ')');
+    }
+
+    document.getElementById('kakakStopPenaltyBtn').addEventListener('click', stopPenaltyStopwatch);
+    document.getElementById('adikStopPenaltyBtn').addEventListener('click', stopPenaltyStopwatch);
 
     document.getElementById('timerResetBtn').addEventListener('click', () => {
       mutateCloudState((s) => {
